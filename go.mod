@@ -1,4 +1,4 @@
-module github.com/upbound/upjet-provider-template
+module github.com/appscode/provider-aws
 
 go 1.19
 
