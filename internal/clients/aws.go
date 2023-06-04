@@ -7,6 +7,8 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"github.com/crossplane/crossplane-runtime/pkg/fieldpath"
+	"k8s.io/apimachinery/pkg/runtime"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/pkg/errors"
@@ -25,9 +27,11 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal aws credentials as JSON"
+	errRegionNotFound       = "can not found region for terraform provider config"
 
 	accessKeyID     = "access_key"
 	secretAccessKey = "secret_key"
+	keyRegion       = "region"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -65,11 +69,31 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
+		region, err := getRegion(mg)
+		if err != nil {
+			return ps, errors.Wrap(err, errRegionNotFound)
+		}
+
 		// Set credentials in Terraform provider configuration.
 		ps.Configuration = map[string]any{
 			accessKeyID:     creds[accessKeyID],
 			secretAccessKey: creds[secretAccessKey],
+			keyRegion:       region,
 		}
 		return ps, nil
 	}
+}
+
+func getRegion(obj runtime.Object) (string, error) {
+	fromMap, err := runtime.DefaultUnstructuredConverter.ToUnstructured(obj)
+	if err != nil {
+		return "", errors.Wrap(err, "cannot convert to unstructured")
+	}
+	r, err := fieldpath.Pave(fromMap).GetString("spec.forProvider.region")
+	if fieldpath.IsNotFound(err) {
+		// Region is not required for all resources, e.g. resource in "iam"
+		// group.
+		return "", nil
+	}
+	return r, err
 }
