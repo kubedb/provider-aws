@@ -1,0 +1,20 @@
+apiVersion: security.aws.upbound.io/v1alpha1
+kind: GroupRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/grouprule
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-1
+    cidrBlocks:
+      - 10.2.0.0/16
+    fromPort: 27017
+    toPort: 27017
+    protocol: tcp
+    securityGroupId: sg-08799a52cf252e809
+    type: ingress
+
+---
