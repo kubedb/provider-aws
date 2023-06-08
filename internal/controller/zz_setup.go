@@ -10,6 +10,7 @@ import (
 	"github.com/upbound/upjet/pkg/controller"
 
 	providerconfig "github.com/appscode/provider-aws/internal/controller/providerconfig"
+	grouprule "github.com/appscode/provider-aws/internal/controller/vpc/grouprule"
 	peeringconnection "github.com/appscode/provider-aws/internal/controller/vpc/peeringconnection"
 )
 
@@ -18,6 +19,7 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		providerconfig.Setup,
+		grouprule.Setup,
 		peeringconnection.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
