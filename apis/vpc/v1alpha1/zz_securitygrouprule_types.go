@@ -13,7 +13,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type GroupRuleObservation struct {
+type SecurityGroupRuleObservation struct {
 
 	// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
 	CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
@@ -56,7 +56,7 @@ type GroupRuleObservation struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type GroupRuleParameters struct {
+type SecurityGroupRuleParameters struct {
 
 	// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
 	// +kubebuilder:validation:Optional
@@ -109,28 +109,28 @@ type GroupRuleParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-// GroupRuleSpec defines the desired state of GroupRule
-type GroupRuleSpec struct {
+// SecurityGroupRuleSpec defines the desired state of SecurityGroupRule
+type SecurityGroupRuleSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     GroupRuleParameters `json:"forProvider"`
+	ForProvider     SecurityGroupRuleParameters `json:"forProvider"`
 }
 
-// GroupRuleStatus defines the observed state of GroupRule.
-type GroupRuleStatus struct {
+// SecurityGroupRuleStatus defines the observed state of SecurityGroupRule.
+type SecurityGroupRuleStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        GroupRuleObservation `json:"atProvider,omitempty"`
+	AtProvider        SecurityGroupRuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// GroupRule is the Schema for the GroupRules API. Provides an security group rule resource.
+// SecurityGroupRule is the Schema for the SecurityGroupRules API. Provides an security group rule resource.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,aws}
-type GroupRule struct {
+type SecurityGroupRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.fromPort)",message="fromPort is a required parameter"
@@ -139,27 +139,27 @@ type GroupRule struct {
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.securityGroupId)",message="securityGroupId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.toPort)",message="toPort is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.type)",message="type is a required parameter"
-	Spec   GroupRuleSpec   `json:"spec"`
-	Status GroupRuleStatus `json:"status,omitempty"`
+	Spec   SecurityGroupRuleSpec   `json:"spec"`
+	Status SecurityGroupRuleStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// GroupRuleList contains a list of GroupRules
-type GroupRuleList struct {
+// SecurityGroupRuleList contains a list of SecurityGroupRules
+type SecurityGroupRuleList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []GroupRule `json:"items"`
+	Items           []SecurityGroupRule `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	GroupRule_Kind             = "GroupRule"
-	GroupRule_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: GroupRule_Kind}.String()
-	GroupRule_KindAPIVersion   = GroupRule_Kind + "." + CRDGroupVersion.String()
-	GroupRule_GroupVersionKind = CRDGroupVersion.WithKind(GroupRule_Kind)
+	SecurityGroupRule_Kind             = "SecurityGroupRule"
+	SecurityGroupRule_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: SecurityGroupRule_Kind}.String()
+	SecurityGroupRule_KindAPIVersion   = SecurityGroupRule_Kind + "." + CRDGroupVersion.String()
+	SecurityGroupRule_GroupVersionKind = CRDGroupVersion.WithKind(SecurityGroupRule_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&GroupRule{}, &GroupRuleList{})
+	SchemeBuilder.Register(&SecurityGroupRule{}, &SecurityGroupRuleList{})
 }

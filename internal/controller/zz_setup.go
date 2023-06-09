@@ -10,8 +10,8 @@ import (
 	"github.com/upbound/upjet/pkg/controller"
 
 	providerconfig "github.com/appscode/provider-aws/internal/controller/providerconfig"
-	grouprule "github.com/appscode/provider-aws/internal/controller/vpc/grouprule"
-	peeringconnection "github.com/appscode/provider-aws/internal/controller/vpc/peeringconnection"
+	securitygrouprule "github.com/appscode/provider-aws/internal/controller/vpc/securitygrouprule"
+	vpcpeeringconnection "github.com/appscode/provider-aws/internal/controller/vpc/vpcpeeringconnection"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
@@ -19,8 +19,8 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		providerconfig.Setup,
-		grouprule.Setup,
-		peeringconnection.Setup,
+		securitygrouprule.Setup,
+		vpcpeeringconnection.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err
