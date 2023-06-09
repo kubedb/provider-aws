@@ -5,7 +5,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
-  name: peeringconnections.vpc.aws.upbound.io
+  name: vpcpeeringconnections.vpc.aws.upbound.io
 spec:
   group: vpc.aws.upbound.io
   names:
@@ -13,10 +13,10 @@ spec:
     - crossplane
     - managed
     - aws
-    kind: PeeringConnection
-    listKind: PeeringConnectionList
-    plural: peeringconnections
-    singular: peeringconnection
+    kind: VPCPeeringConnection
+    listKind: VPCPeeringConnectionList
+    plural: vpcpeeringconnections
+    singular: vpcpeeringconnection
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PeeringConnection is the Schema for the PeeringConnections API.
-          Provides a resource to manage a VPC peering connection.
+        description: VPCPeeringConnection is the Schema for the VPCPeeringConnections
+          API. Provides a resource to manage a VPC peering connection.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: PeeringConnectionSpec defines the desired state of PeeringConnection
+            description: VPCPeeringConnectionSpec defines the desired state of VPCPeeringConnection
             properties:
               deletionPolicy:
                 default: Delete
@@ -328,7 +328,8 @@ spec:
             - message: vpcId is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.vpcId)
           status:
-            description: PeeringConnectionStatus defines the observed state of PeeringConnection.
+            description: VPCPeeringConnectionStatus defines the observed state of
+              VPCPeeringConnection.
             properties:
               atProvider:
                 properties:
