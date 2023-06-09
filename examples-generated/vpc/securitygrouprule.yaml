@@ -1,8 +1,8 @@
 apiVersion: vpc.aws.upbound.io/v1alpha1
-kind: GroupRule
+kind: SecurityGroupRule
 metadata:
   annotations:
-    meta.upbound.io/example-id: vpc/v1alpha1/grouprule
+    meta.upbound.io/example-id: vpc/v1alpha1/securitygrouprule
   labels:
     testing.upbound.io/example-name: example
   name: example

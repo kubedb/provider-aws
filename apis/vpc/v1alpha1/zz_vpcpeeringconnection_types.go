@@ -28,7 +28,22 @@ type AccepterParameters struct {
 	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
 
-type PeeringConnectionObservation struct {
+type RequesterObservation struct {
+
+	// Allow a local VPC to resolve public DNS hostnames to
+	// private IP addresses when queried from instances in the peer VPC.
+	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+}
+
+type RequesterParameters struct {
+
+	// Allow a local VPC to resolve public DNS hostnames to
+	// private IP addresses when queried from instances in the peer VPC.
+	// +kubebuilder:validation:Optional
+	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+}
+
+type VPCPeeringConnectionObservation struct {
 
 	// The status of the VPC Peering Connection request.
 	AcceptStatus *string `json:"acceptStatus,omitempty" tf:"accept_status,omitempty"`
@@ -68,7 +83,7 @@ type PeeringConnectionObservation struct {
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
-type PeeringConnectionParameters struct {
+type VPCPeeringConnectionParameters struct {
 
 	// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
 	// the peering connection (a maximum of one).
@@ -116,69 +131,54 @@ type PeeringConnectionParameters struct {
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
-type RequesterObservation struct {
-
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
-}
-
-type RequesterParameters struct {
-
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	// +kubebuilder:validation:Optional
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
-}
-
-// PeeringConnectionSpec defines the desired state of PeeringConnection
-type PeeringConnectionSpec struct {
+// VPCPeeringConnectionSpec defines the desired state of VPCPeeringConnection
+type VPCPeeringConnectionSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     PeeringConnectionParameters `json:"forProvider"`
+	ForProvider     VPCPeeringConnectionParameters `json:"forProvider"`
 }
 
-// PeeringConnectionStatus defines the observed state of PeeringConnection.
-type PeeringConnectionStatus struct {
+// VPCPeeringConnectionStatus defines the observed state of VPCPeeringConnection.
+type VPCPeeringConnectionStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        PeeringConnectionObservation `json:"atProvider,omitempty"`
+	AtProvider        VPCPeeringConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// PeeringConnection is the Schema for the PeeringConnections API. Provides a resource to manage a VPC peering connection.
+// VPCPeeringConnection is the Schema for the VPCPeeringConnections API. Provides a resource to manage a VPC peering connection.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,aws}
-type PeeringConnection struct {
+type VPCPeeringConnection struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.peerVpcId)",message="peerVpcId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.vpcId)",message="vpcId is a required parameter"
-	Spec   PeeringConnectionSpec   `json:"spec"`
-	Status PeeringConnectionStatus `json:"status,omitempty"`
+	Spec   VPCPeeringConnectionSpec   `json:"spec"`
+	Status VPCPeeringConnectionStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// PeeringConnectionList contains a list of PeeringConnections
-type PeeringConnectionList struct {
+// VPCPeeringConnectionList contains a list of VPCPeeringConnections
+type VPCPeeringConnectionList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []PeeringConnection `json:"items"`
+	Items           []VPCPeeringConnection `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	PeeringConnection_Kind             = "PeeringConnection"
-	PeeringConnection_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: PeeringConnection_Kind}.String()
-	PeeringConnection_KindAPIVersion   = PeeringConnection_Kind + "." + CRDGroupVersion.String()
-	PeeringConnection_GroupVersionKind = CRDGroupVersion.WithKind(PeeringConnection_Kind)
+	VPCPeeringConnection_Kind             = "VPCPeeringConnection"
+	VPCPeeringConnection_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: VPCPeeringConnection_Kind}.String()
+	VPCPeeringConnection_KindAPIVersion   = VPCPeeringConnection_Kind + "." + CRDGroupVersion.String()
+	VPCPeeringConnection_GroupVersionKind = CRDGroupVersion.WithKind(VPCPeeringConnection_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&PeeringConnection{}, &PeeringConnectionList{})
+	SchemeBuilder.Register(&VPCPeeringConnection{}, &VPCPeeringConnectionList{})
 }

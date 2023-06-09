@@ -13,18 +13,18 @@ import (
 	"github.com/upbound/upjet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this GroupRule
-func (mg *GroupRule) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this SecurityGroupRule
+func (mg *SecurityGroupRule) GetTerraformResourceType() string {
 	return "aws_security_group_rule"
 }
 
-// GetConnectionDetailsMapping for this GroupRule
-func (tr *GroupRule) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this SecurityGroupRule
+func (tr *SecurityGroupRule) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this GroupRule
-func (tr *GroupRule) GetObservation() (map[string]any, error) {
+// GetObservation of this SecurityGroupRule
+func (tr *SecurityGroupRule) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -33,8 +33,8 @@ func (tr *GroupRule) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this GroupRule
-func (tr *GroupRule) SetObservation(obs map[string]any) error {
+// SetObservation for this SecurityGroupRule
+func (tr *SecurityGroupRule) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -42,16 +42,16 @@ func (tr *GroupRule) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this GroupRule
-func (tr *GroupRule) GetID() string {
+// GetID returns ID of underlying Terraform resource of this SecurityGroupRule
+func (tr *SecurityGroupRule) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this GroupRule
-func (tr *GroupRule) GetParameters() (map[string]any, error) {
+// GetParameters of this SecurityGroupRule
+func (tr *SecurityGroupRule) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -60,8 +60,8 @@ func (tr *GroupRule) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this GroupRule
-func (tr *GroupRule) SetParameters(params map[string]any) error {
+// SetParameters for this SecurityGroupRule
+func (tr *SecurityGroupRule) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -69,10 +69,10 @@ func (tr *GroupRule) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this GroupRule using its observed tfState.
+// LateInitialize this SecurityGroupRule using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *GroupRule) LateInitialize(attrs []byte) (bool, error) {
-	params := &GroupRuleParameters{}
+func (tr *SecurityGroupRule) LateInitialize(attrs []byte) (bool, error) {
+	params := &SecurityGroupRuleParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -83,22 +83,22 @@ func (tr *GroupRule) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *GroupRule) GetTerraformSchemaVersion() int {
+func (tr *SecurityGroupRule) GetTerraformSchemaVersion() int {
 	return 2
 }
 
-// GetTerraformResourceType returns Terraform resource type for this PeeringConnection
-func (mg *PeeringConnection) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this VPCPeeringConnection
+func (mg *VPCPeeringConnection) GetTerraformResourceType() string {
 	return "aws_vpc_peering_connection"
 }
 
-// GetConnectionDetailsMapping for this PeeringConnection
-func (tr *PeeringConnection) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this VPCPeeringConnection
+func (tr *VPCPeeringConnection) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this PeeringConnection
-func (tr *PeeringConnection) GetObservation() (map[string]any, error) {
+// GetObservation of this VPCPeeringConnection
+func (tr *VPCPeeringConnection) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -107,8 +107,8 @@ func (tr *PeeringConnection) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this PeeringConnection
-func (tr *PeeringConnection) SetObservation(obs map[string]any) error {
+// SetObservation for this VPCPeeringConnection
+func (tr *VPCPeeringConnection) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -116,16 +116,16 @@ func (tr *PeeringConnection) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this PeeringConnection
-func (tr *PeeringConnection) GetID() string {
+// GetID returns ID of underlying Terraform resource of this VPCPeeringConnection
+func (tr *VPCPeeringConnection) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this PeeringConnection
-func (tr *PeeringConnection) GetParameters() (map[string]any, error) {
+// GetParameters of this VPCPeeringConnection
+func (tr *VPCPeeringConnection) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -134,8 +134,8 @@ func (tr *PeeringConnection) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this PeeringConnection
-func (tr *PeeringConnection) SetParameters(params map[string]any) error {
+// SetParameters for this VPCPeeringConnection
+func (tr *VPCPeeringConnection) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -143,10 +143,10 @@ func (tr *PeeringConnection) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this PeeringConnection using its observed tfState.
+// LateInitialize this VPCPeeringConnection using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *PeeringConnection) LateInitialize(attrs []byte) (bool, error) {
-	params := &PeeringConnectionParameters{}
+func (tr *VPCPeeringConnection) LateInitialize(attrs []byte) (bool, error) {
+	params := &VPCPeeringConnectionParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -157,6 +157,6 @@ func (tr *PeeringConnection) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *PeeringConnection) GetTerraformSchemaVersion() int {
+func (tr *VPCPeeringConnection) GetTerraformSchemaVersion() int {
 	return 0
 }

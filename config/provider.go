@@ -32,6 +32,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 			RegionAddition(),
+			KindOverrides(),
 		))
 
 	for _, configure := range []func(provider *ujconfig.Provider){

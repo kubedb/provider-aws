@@ -5,7 +5,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
-  name: grouprules.vpc.aws.upbound.io
+  name: securitygrouprules.vpc.aws.upbound.io
 spec:
   group: vpc.aws.upbound.io
   names:
@@ -13,10 +13,10 @@ spec:
     - crossplane
     - managed
     - aws
-    kind: GroupRule
-    listKind: GroupRuleList
-    plural: grouprules
-    singular: grouprule
+    kind: SecurityGroupRule
+    listKind: SecurityGroupRuleList
+    plural: securitygrouprules
+    singular: securitygrouprule
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: GroupRule is the Schema for the GroupRules API. Provides an security
-          group rule resource.
+        description: SecurityGroupRule is the Schema for the SecurityGroupRules API.
+          Provides an security group rule resource.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: GroupRuleSpec defines the desired state of GroupRule
+            description: SecurityGroupRuleSpec defines the desired state of SecurityGroupRule
             properties:
               deletionPolicy:
                 default: Delete
@@ -321,7 +321,7 @@ spec:
             - message: type is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.type)
           status:
-            description: GroupRuleStatus defines the observed state of GroupRule.
+            description: SecurityGroupRuleStatus defines the observed state of SecurityGroupRule.
             properties:
               atProvider:
                 properties:
