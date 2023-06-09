@@ -7,78 +7,154 @@ package v1alpha1
 
 import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 
-// GetCondition of this PeeringConnection.
-func (mg *PeeringConnection) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this SecurityGroupRule.
+func (mg *SecurityGroupRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this PeeringConnection.
-func (mg *PeeringConnection) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this SecurityGroupRule.
+func (mg *SecurityGroupRule) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this PeeringConnection.
-func (mg *PeeringConnection) GetManagementPolicy() xpv1.ManagementPolicy {
+// GetManagementPolicy of this SecurityGroupRule.
+func (mg *SecurityGroupRule) GetManagementPolicy() xpv1.ManagementPolicy {
 	return mg.Spec.ManagementPolicy
 }
 
-// GetProviderConfigReference of this PeeringConnection.
-func (mg *PeeringConnection) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this SecurityGroupRule.
+func (mg *SecurityGroupRule) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this PeeringConnection.
+GetProviderReference of this SecurityGroupRule.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *PeeringConnection) GetProviderReference() *xpv1.Reference {
+func (mg *SecurityGroupRule) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetPublishConnectionDetailsTo of this PeeringConnection.
-func (mg *PeeringConnection) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this SecurityGroupRule.
+func (mg *SecurityGroupRule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this PeeringConnection.
-func (mg *PeeringConnection) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this SecurityGroupRule.
+func (mg *SecurityGroupRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this PeeringConnection.
-func (mg *PeeringConnection) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this SecurityGroupRule.
+func (mg *SecurityGroupRule) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this PeeringConnection.
-func (mg *PeeringConnection) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this SecurityGroupRule.
+func (mg *SecurityGroupRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this PeeringConnection.
-func (mg *PeeringConnection) SetManagementPolicy(r xpv1.ManagementPolicy) {
+// SetManagementPolicy of this SecurityGroupRule.
+func (mg *SecurityGroupRule) SetManagementPolicy(r xpv1.ManagementPolicy) {
 	mg.Spec.ManagementPolicy = r
 }
 
-// SetProviderConfigReference of this PeeringConnection.
-func (mg *PeeringConnection) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this SecurityGroupRule.
+func (mg *SecurityGroupRule) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this PeeringConnection.
+SetProviderReference of this SecurityGroupRule.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *PeeringConnection) SetProviderReference(r *xpv1.Reference) {
+func (mg *SecurityGroupRule) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetPublishConnectionDetailsTo of this PeeringConnection.
-func (mg *PeeringConnection) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this SecurityGroupRule.
+func (mg *SecurityGroupRule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this PeeringConnection.
-func (mg *PeeringConnection) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this SecurityGroupRule.
+func (mg *SecurityGroupRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicy of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
+// GetProviderConfigReference of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+/*
+GetProviderReference of this VPCPeeringConnection.
+Deprecated: Use GetProviderConfigReference.
+*/
+func (mg *VPCPeeringConnection) GetProviderReference() *xpv1.Reference {
+	return mg.Spec.ProviderReference
+}
+
+// GetPublishConnectionDetailsTo of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
+}
+
+// SetProviderConfigReference of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+/*
+SetProviderReference of this VPCPeeringConnection.
+Deprecated: Use SetProviderConfigReference.
+*/
+func (mg *VPCPeeringConnection) SetProviderReference(r *xpv1.Reference) {
+	mg.Spec.ProviderReference = r
+}
+
+// SetPublishConnectionDetailsTo of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this VPCPeeringConnection.
+func (mg *VPCPeeringConnection) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

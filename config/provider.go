@@ -8,6 +8,7 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 	"github.com/appscode/provider-aws/config/peeringconnection"
+	"github.com/appscode/provider-aws/config/security"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
@@ -31,11 +32,13 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 			RegionAddition(),
+			KindOverrides(),
 		))
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		peeringconnection.Configure,
+		security.Configure,
 	} {
 		configure(pc)
 	}
