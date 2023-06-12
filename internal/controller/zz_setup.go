@@ -9,6 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	route "github.com/appscode/provider-aws/internal/controller/ec2/route"
 	providerconfig "github.com/appscode/provider-aws/internal/controller/providerconfig"
 	securitygrouprule "github.com/appscode/provider-aws/internal/controller/vpc/securitygrouprule"
 	vpcpeeringconnection "github.com/appscode/provider-aws/internal/controller/vpc/vpcpeeringconnection"
@@ -18,6 +19,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		route.Setup,
 		providerconfig.Setup,
 		securitygrouprule.Setup,
 		vpcpeeringconnection.Setup,

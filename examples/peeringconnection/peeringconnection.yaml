@@ -1,5 +1,5 @@
 apiVersion: vpc.aws.upbound.io/v1alpha1
-kind: PeeringConnection
+kind: VPCPeeringConnection
 metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/peeringconnection
