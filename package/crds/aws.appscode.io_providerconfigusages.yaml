@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
-  name: providerconfigusages.aws.upbound.io
+  name: providerconfigusages.aws.appscode.io
 spec:
-  group: aws.upbound.io
+  group: aws.appscode.io
   names:
     categories:
     - crossplane

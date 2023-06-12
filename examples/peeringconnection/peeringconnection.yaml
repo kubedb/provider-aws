@@ -1,14 +1,10 @@
-apiVersion: vpc.aws.upbound.io/v1alpha1
+apiVersion: vpc.aws.appscode.io/v1alpha1
 kind: VPCPeeringConnection
 metadata:
-  annotations:
-    meta.upbound.io/example-id: vpc/v1alpha1/peeringconnection
-  labels:
-    testing.upbound.io/example-name: foo
   name: foo
 spec:
   forProvider:
-    peerVpcId: vpc-0876a9e1bc7b373c0
+    peerVpcId: vpc-093420f7e55a3d26a
     vpcId: vpc-0f717f8a18b7a7ee3
     peerRegion: us-east-1
     region: us-east-1

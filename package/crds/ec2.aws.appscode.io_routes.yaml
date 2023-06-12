@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
-  name: vpcpeeringconnections.vpc.aws.upbound.io
+  name: routes.ec2.aws.appscode.io
 spec:
-  group: vpc.aws.upbound.io
+  group: ec2.aws.appscode.io
   names:
     categories:
     - crossplane
     - managed
     - aws
-    kind: VPCPeeringConnection
-    listKind: VPCPeeringConnectionList
-    plural: vpcpeeringconnections
-    singular: vpcpeeringconnection
+    kind: Route
+    listKind: RouteList
+    plural: routes
+    singular: route
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: VPCPeeringConnection is the Schema for the VPCPeeringConnections
-          API. Provides a resource to manage a VPC peering connection.
+        description: Route is the Schema for the Routes API. Provides a resource to
+          create a routing entry in a VPC routing table.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: VPCPeeringConnectionSpec defines the desired state of VPCPeeringConnection
+            description: RouteSpec defines the desired state of Route
             properties:
               deletionPolicy:
                 default: Delete
@@ -68,70 +68,55 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  accepter:
-                    description: An optional configuration block that allows for VPC
-                      Peering Connection options to be set for the VPC that accepts
-                      the peering connection (a maximum of one).
-                    items:
-                      properties:
-                        allowRemoteVpcDnsResolution:
-                          description: Allow a local VPC to resolve public DNS hostnames
-                            to private IP addresses when queried from instances in
-                            the peer VPC.
-                          type: boolean
-                      type: object
-                    type: array
-                  autoAccept:
-                    description: Accept the peering (both VPCs need to be in the same
-                      AWS account and region).
-                    type: boolean
-                  peerOwnerId:
-                    description: The AWS account ID of the owner of the peer VPC.
-                      Defaults to the account ID the AWS provider is currently connected
-                      to.
+                  carrierGatewayId:
+                    description: Identifier of a carrier gateway. This attribute can
+                      only be used when the VPC contains a subnet which is associated
+                      with a Wavelength Zone.
                     type: string
-                  peerRegion:
-                    description: The region of the accepter VPC of the VPC Peering
-                      Connection. auto_accept must be false, and use the aws_vpc_peering_connection_accepter
-                      to manage the accepter side.
+                  coreNetworkArn:
+                    description: The Amazon Resource Name (ARN) of a core network.
                     type: string
-                  peerVpcId:
-                    description: The ID of the VPC with which you are creating the
-                      VPC Peering Connection.
+                  destinationCidrBlock:
+                    description: The destination CIDR block.
+                    type: string
+                  destinationIpv6CidrBlock:
+                    description: The destination IPv6 CIDR block.
+                    type: string
+                  destinationPrefixListId:
+                    description: The ID of a managed prefix list destination.
+                    type: string
+                  egressOnlyGatewayId:
+                    description: Identifier of a VPC Egress Only Internet Gateway.
+                    type: string
+                  gatewayId:
+                    description: Identifier of a VPC internet gateway or a virtual
+                      private gateway. Specify local when updating a previously imported
+                      local route.
+                    type: string
+                  localGatewayId:
+                    description: Identifier of a Outpost local gateway.
+                    type: string
+                  natGatewayId:
+                    description: Identifier of a VPC NAT gateway.
+                    type: string
+                  networkInterfaceId:
+                    description: Identifier of an EC2 network interface.
                     type: string
                   region:
                     description: Region is the region you'd like your resource to
                       be created in.
                     type: string
-                  requester:
-                    description: A optional configuration block that allows for VPC
-                      Peering Connection options to be set for the VPC that requests
-                      the peering connection (a maximum of one).
-                    items:
-                      properties:
-                        allowRemoteVpcDnsResolution:
-                          description: Allow a local VPC to resolve public DNS hostnames
-                            to private IP addresses when queried from instances in
-                            the peer VPC.
-                          type: boolean
-                      type: object
-                    type: array
-                  tags:
-                    additionalProperties:
-                      type: string
-                    description: A map of tags to assign to the resource. If configured
-                      with a provider default_tags configuration block present, tags
-                      with matching keys will overwrite those defined at the provider-level.
-                    type: object
-                  tagsAll:
-                    additionalProperties:
-                      type: string
-                    description: A map of tags assigned to the resource, including
-                      those inherited from the provider default_tags configuration
-                      block.
-                    type: object
-                  vpcId:
-                    description: The ID of the requester VPC.
+                  routeTableId:
+                    description: The ID of the routing table.
+                    type: string
+                  transitGatewayId:
+                    description: Identifier of an EC2 Transit Gateway.
+                    type: string
+                  vpcEndpointId:
+                    description: Identifier of a VPC Endpoint.
+                    type: string
+                  vpcPeeringConnectionId:
+                    description: Identifier of a VPC peering connection.
                     type: string
                 type: object
               managementPolicy:
@@ -321,84 +306,77 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: peerVpcId is a required parameter
-              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.peerVpcId)
             - message: region is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)
-            - message: vpcId is a required parameter
-              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.vpcId)
+            - message: routeTableId is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.routeTableId)
           status:
-            description: VPCPeeringConnectionStatus defines the observed state of
-              VPCPeeringConnection.
+            description: RouteStatus defines the observed state of Route.
             properties:
               atProvider:
                 properties:
-                  acceptStatus:
-                    description: The status of the VPC Peering Connection request.
+                  carrierGatewayId:
+                    description: Identifier of a carrier gateway. This attribute can
+                      only be used when the VPC contains a subnet which is associated
+                      with a Wavelength Zone.
                     type: string
-                  accepter:
-                    description: An optional configuration block that allows for VPC
-                      Peering Connection options to be set for the VPC that accepts
-                      the peering connection (a maximum of one).
-                    items:
-                      properties:
-                        allowRemoteVpcDnsResolution:
-                          description: Allow a local VPC to resolve public DNS hostnames
-                            to private IP addresses when queried from instances in
-                            the peer VPC.
-                          type: boolean
-                      type: object
-                    type: array
-                  autoAccept:
-                    description: Accept the peering (both VPCs need to be in the same
-                      AWS account and region).
-                    type: boolean
+                  coreNetworkArn:
+                    description: The Amazon Resource Name (ARN) of a core network.
+                    type: string
+                  destinationCidrBlock:
+                    description: The destination CIDR block.
+                    type: string
+                  destinationIpv6CidrBlock:
+                    description: The destination IPv6 CIDR block.
+                    type: string
+                  destinationPrefixListId:
+                    description: The ID of a managed prefix list destination.
+                    type: string
+                  egressOnlyGatewayId:
+                    description: Identifier of a VPC Egress Only Internet Gateway.
+                    type: string
+                  gatewayId:
+                    description: Identifier of a VPC internet gateway or a virtual
+                      private gateway. Specify local when updating a previously imported
+                      local route.
+                    type: string
                   id:
-                    description: The ID of the VPC Peering Connection.
+                    description: Route identifier computed from the routing table
+                      identifier and route destination.
                     type: string
-                  peerOwnerId:
-                    description: The AWS account ID of the owner of the peer VPC.
-                      Defaults to the account ID the AWS provider is currently connected
-                      to.
+                  instanceId:
+                    description: Identifier of an EC2 instance.
                     type: string
-                  peerRegion:
-                    description: The region of the accepter VPC of the VPC Peering
-                      Connection. auto_accept must be false, and use the aws_vpc_peering_connection_accepter
-                      to manage the accepter side.
+                  instanceOwnerId:
+                    description: The AWS account ID of the owner of the EC2 instance.
                     type: string
-                  peerVpcId:
-                    description: The ID of the VPC with which you are creating the
-                      VPC Peering Connection.
+                  localGatewayId:
+                    description: Identifier of a Outpost local gateway.
                     type: string
-                  requester:
-                    description: A optional configuration block that allows for VPC
-                      Peering Connection options to be set for the VPC that requests
-                      the peering connection (a maximum of one).
-                    items:
-                      properties:
-                        allowRemoteVpcDnsResolution:
-                          description: Allow a local VPC to resolve public DNS hostnames
-                            to private IP addresses when queried from instances in
-                            the peer VPC.
-                          type: boolean
-                      type: object
-                    type: array
-                  tags:
-                    additionalProperties:
-                      type: string
-                    description: A map of tags to assign to the resource. If configured
-                      with a provider default_tags configuration block present, tags
-                      with matching keys will overwrite those defined at the provider-level.
-                    type: object
-                  tagsAll:
-                    additionalProperties:
-                      type: string
-                    description: A map of tags assigned to the resource, including
-                      those inherited from the provider default_tags configuration
-                      block.
-                    type: object
-                  vpcId:
-                    description: The ID of the requester VPC.
+                  natGatewayId:
+                    description: Identifier of a VPC NAT gateway.
+                    type: string
+                  networkInterfaceId:
+                    description: Identifier of an EC2 network interface.
+                    type: string
+                  origin:
+                    description: How the route was created - CreateRouteTable, CreateRoute
+                      or EnableVgwRoutePropagation.
+                    type: string
+                  routeTableId:
+                    description: The ID of the routing table.
+                    type: string
+                  state:
+                    description: The state of the route - active or blackhole.
+                    type: string
+                  transitGatewayId:
+                    description: Identifier of an EC2 Transit Gateway.
+                    type: string
+                  vpcEndpointId:
+                    description: Identifier of a VPC Endpoint.
+                    type: string
+                  vpcPeeringConnectionId:
+                    description: Identifier of a VPC peering connection.
                     type: string
                 type: object
               conditions:

@@ -1,4 +1,4 @@
-apiVersion: ec2.aws.upbound.io/v1alpha1
+apiVersion: ec2.aws.appscode.io/v1alpha1
 kind: Route
 metadata:
   annotations:

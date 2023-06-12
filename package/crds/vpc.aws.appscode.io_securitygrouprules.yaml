@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
-  name: routes.ec2.aws.upbound.io
+  name: securitygrouprules.vpc.aws.appscode.io
 spec:
-  group: ec2.aws.upbound.io
+  group: vpc.aws.appscode.io
   names:
     categories:
     - crossplane
     - managed
     - aws
-    kind: Route
-    listKind: RouteList
-    plural: routes
-    singular: route
+    kind: SecurityGroupRule
+    listKind: SecurityGroupRuleList
+    plural: securitygrouprules
+    singular: securitygrouprule
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Route is the Schema for the Routes API. Provides a resource to
-          create a routing entry in a VPC routing table.
+        description: SecurityGroupRule is the Schema for the SecurityGroupRules API.
+          Provides an security group rule resource.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: RouteSpec defines the desired state of Route
+            description: SecurityGroupRuleSpec defines the desired state of SecurityGroupRule
             properties:
               deletionPolicy:
                 default: Delete
@@ -68,55 +68,57 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  carrierGatewayId:
-                    description: Identifier of a carrier gateway. This attribute can
-                      only be used when the VPC contains a subnet which is associated
-                      with a Wavelength Zone.
+                  cidrBlocks:
+                    description: List of CIDR blocks. Cannot be specified with source_security_group_id
+                      or self.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Description of the rule.
                     type: string
-                  coreNetworkArn:
-                    description: The Amazon Resource Name (ARN) of a core network.
-                    type: string
-                  destinationCidrBlock:
-                    description: The destination CIDR block.
-                    type: string
-                  destinationIpv6CidrBlock:
-                    description: The destination IPv6 CIDR block.
-                    type: string
-                  destinationPrefixListId:
-                    description: The ID of a managed prefix list destination.
-                    type: string
-                  egressOnlyGatewayId:
-                    description: Identifier of a VPC Egress Only Internet Gateway.
-                    type: string
-                  gatewayId:
-                    description: Identifier of a VPC internet gateway or a virtual
-                      private gateway. Specify local when updating a previously imported
-                      local route.
-                    type: string
-                  localGatewayId:
-                    description: Identifier of a Outpost local gateway.
-                    type: string
-                  natGatewayId:
-                    description: Identifier of a VPC NAT gateway.
-                    type: string
-                  networkInterfaceId:
-                    description: Identifier of an EC2 network interface.
+                  fromPort:
+                    description: Start port (or ICMP type number if protocol is "icmp"
+                      or "icmpv6").
+                    type: number
+                  ipv6CidrBlocks:
+                    description: List of IPv6 CIDR blocks. Cannot be specified with
+                      source_security_group_id or self.
+                    items:
+                      type: string
+                    type: array
+                  prefixListIds:
+                    description: List of Prefix List IDs.
+                    items:
+                      type: string
+                    type: array
+                  protocol:
+                    description: Protocol. If not icmp, icmpv6, tcp, udp, or all use
+                      the protocol number
                     type: string
                   region:
                     description: Region is the region you'd like your resource to
                       be created in.
                     type: string
-                  routeTableId:
-                    description: The ID of the routing table.
+                  securityGroupId:
+                    description: Security group to apply this rule to.
                     type: string
-                  transitGatewayId:
-                    description: Identifier of an EC2 Transit Gateway.
+                  self:
+                    description: Whether the security group itself will be added as
+                      a source to this ingress rule. Cannot be specified with cidr_blocks,
+                      ipv6_cidr_blocks, or source_security_group_id.
+                    type: boolean
+                  sourceSecurityGroupId:
+                    description: Security group id to allow access to/from, depending
+                      on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks,
+                      or self.
                     type: string
-                  vpcEndpointId:
-                    description: Identifier of a VPC Endpoint.
-                    type: string
-                  vpcPeeringConnectionId:
-                    description: Identifier of a VPC peering connection.
+                  toPort:
+                    description: End port (or ICMP code if protocol is "icmp").
+                    type: number
+                  type:
+                    description: Type of rule being created. Valid options are ingress
+                      (inbound) or egress (outbound).
                     type: string
                 type: object
               managementPolicy:
@@ -306,77 +308,78 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: fromPort is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.fromPort)
+            - message: protocol is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.protocol)
             - message: region is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)
-            - message: routeTableId is a required parameter
-              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.routeTableId)
+            - message: securityGroupId is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.securityGroupId)
+            - message: toPort is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.toPort)
+            - message: type is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.type)
           status:
-            description: RouteStatus defines the observed state of Route.
+            description: SecurityGroupRuleStatus defines the observed state of SecurityGroupRule.
             properties:
               atProvider:
                 properties:
-                  carrierGatewayId:
-                    description: Identifier of a carrier gateway. This attribute can
-                      only be used when the VPC contains a subnet which is associated
-                      with a Wavelength Zone.
+                  cidrBlocks:
+                    description: List of CIDR blocks. Cannot be specified with source_security_group_id
+                      or self.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Description of the rule.
                     type: string
-                  coreNetworkArn:
-                    description: The Amazon Resource Name (ARN) of a core network.
-                    type: string
-                  destinationCidrBlock:
-                    description: The destination CIDR block.
-                    type: string
-                  destinationIpv6CidrBlock:
-                    description: The destination IPv6 CIDR block.
-                    type: string
-                  destinationPrefixListId:
-                    description: The ID of a managed prefix list destination.
-                    type: string
-                  egressOnlyGatewayId:
-                    description: Identifier of a VPC Egress Only Internet Gateway.
-                    type: string
-                  gatewayId:
-                    description: Identifier of a VPC internet gateway or a virtual
-                      private gateway. Specify local when updating a previously imported
-                      local route.
-                    type: string
+                  fromPort:
+                    description: Start port (or ICMP type number if protocol is "icmp"
+                      or "icmpv6").
+                    type: number
                   id:
-                    description: Route identifier computed from the routing table
-                      identifier and route destination.
+                    description: ID of the security group rule.
                     type: string
-                  instanceId:
-                    description: Identifier of an EC2 instance.
+                  ipv6CidrBlocks:
+                    description: List of IPv6 CIDR blocks. Cannot be specified with
+                      source_security_group_id or self.
+                    items:
+                      type: string
+                    type: array
+                  prefixListIds:
+                    description: List of Prefix List IDs.
+                    items:
+                      type: string
+                    type: array
+                  protocol:
+                    description: Protocol. If not icmp, icmpv6, tcp, udp, or all use
+                      the protocol number
                     type: string
-                  instanceOwnerId:
-                    description: The AWS account ID of the owner of the EC2 instance.
+                  securityGroupId:
+                    description: Security group to apply this rule to.
                     type: string
-                  localGatewayId:
-                    description: Identifier of a Outpost local gateway.
+                  securityGroupRuleId:
+                    description: If the aws_security_group_rule resource has a single
+                      source or destination then this is the AWS Security Group Rule
+                      resource ID. Otherwise it is empty.
                     type: string
-                  natGatewayId:
-                    description: Identifier of a VPC NAT gateway.
+                  self:
+                    description: Whether the security group itself will be added as
+                      a source to this ingress rule. Cannot be specified with cidr_blocks,
+                      ipv6_cidr_blocks, or source_security_group_id.
+                    type: boolean
+                  sourceSecurityGroupId:
+                    description: Security group id to allow access to/from, depending
+                      on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks,
+                      or self.
                     type: string
-                  networkInterfaceId:
-                    description: Identifier of an EC2 network interface.
-                    type: string
-                  origin:
-                    description: How the route was created - CreateRouteTable, CreateRoute
-                      or EnableVgwRoutePropagation.
-                    type: string
-                  routeTableId:
-                    description: The ID of the routing table.
-                    type: string
-                  state:
-                    description: The state of the route - active or blackhole.
-                    type: string
-                  transitGatewayId:
-                    description: Identifier of an EC2 Transit Gateway.
-                    type: string
-                  vpcEndpointId:
-                    description: Identifier of a VPC Endpoint.
-                    type: string
-                  vpcPeeringConnectionId:
-                    description: Identifier of a VPC peering connection.
+                  toPort:
+                    description: End port (or ICMP code if protocol is "icmp").
+                    type: number
+                  type:
+                    description: Type of rule being created. Valid options are ingress
+                      (inbound) or egress (outbound).
                     type: string
                 type: object
               conditions:
