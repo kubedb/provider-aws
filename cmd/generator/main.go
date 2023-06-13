@@ -11,7 +11,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/pipeline"
 
-	"github.com/appscode/provider-aws/config"
+	"github.com/kubeform/provider-aws/config"
 )
 
 func main() {

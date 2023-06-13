@@ -9,10 +9,10 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
-	route "github.com/appscode/provider-aws/internal/controller/ec2/route"
-	providerconfig "github.com/appscode/provider-aws/internal/controller/providerconfig"
-	securitygrouprule "github.com/appscode/provider-aws/internal/controller/vpc/securitygrouprule"
-	vpcpeeringconnection "github.com/appscode/provider-aws/internal/controller/vpc/vpcpeeringconnection"
+	route "github.com/kubeform/provider-aws/internal/controller/ec2/route"
+	providerconfig "github.com/kubeform/provider-aws/internal/controller/providerconfig"
+	securitygrouprule "github.com/kubeform/provider-aws/internal/controller/vpc/securitygrouprule"
+	vpcpeeringconnection "github.com/kubeform/provider-aws/internal/controller/vpc/vpcpeeringconnection"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

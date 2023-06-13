@@ -7,16 +7,16 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
-	"github.com/appscode/provider-aws/config/peeringconnection"
-	"github.com/appscode/provider-aws/config/routetable"
-	"github.com/appscode/provider-aws/config/security"
+	"github.com/kubeform/provider-aws/config/peeringconnection"
+	"github.com/kubeform/provider-aws/config/routetable"
+	"github.com/kubeform/provider-aws/config/security"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
 
 const (
 	resourcePrefix = "aws"
-	modulePath     = "github.com/appscode/provider-aws"
+	modulePath     = "github.com/kubeform/provider-aws"
 )
 
 //go:embed schema.json
@@ -29,7 +29,7 @@ var providerMetadata string
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
-		ujconfig.WithRootGroup("aws.appscode.io"),
+		ujconfig.WithRootGroup("aws.kubeform.com"),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),

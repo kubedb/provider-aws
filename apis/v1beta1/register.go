@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "aws.appscode.io"
+	Group   = "aws.kubeform.com"
 	Version = "v1beta1"
 )
 
