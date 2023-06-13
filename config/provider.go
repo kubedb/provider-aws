@@ -7,16 +7,16 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
-	"github.com/kubeform/provider-aws/config/peeringconnection"
-	"github.com/kubeform/provider-aws/config/routetable"
-	"github.com/kubeform/provider-aws/config/security"
+	"kubeform.dev/provider-aws/config/peeringconnection"
+	"kubeform.dev/provider-aws/config/routetable"
+	"kubeform.dev/provider-aws/config/security"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
 
 const (
 	resourcePrefix = "aws"
-	modulePath     = "github.com/kubeform/provider-aws"
+	modulePath     = "kubeform.dev/provider-aws"
 )
 
 //go:embed schema.json

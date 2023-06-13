@@ -10,10 +10,10 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/kubeform/provider-aws/apis/ec2/v1alpha1"
-	v1alpha1apis "github.com/kubeform/provider-aws/apis/v1alpha1"
-	v1beta1 "github.com/kubeform/provider-aws/apis/v1beta1"
-	v1alpha1vpc "github.com/kubeform/provider-aws/apis/vpc/v1alpha1"
+	v1alpha1 "kubeform.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha1apis "kubeform.dev/provider-aws/apis/v1alpha1"
+	v1beta1 "kubeform.dev/provider-aws/apis/v1beta1"
+	v1alpha1vpc "kubeform.dev/provider-aws/apis/vpc/v1alpha1"
 )
 
 func init() {

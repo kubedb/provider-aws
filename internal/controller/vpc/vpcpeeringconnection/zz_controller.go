@@ -18,8 +18,8 @@ import (
 	"github.com/upbound/upjet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/kubeform/provider-aws/apis/vpc/v1alpha1"
-	features "github.com/kubeform/provider-aws/internal/features"
+	v1alpha1 "kubeform.dev/provider-aws/apis/vpc/v1alpha1"
+	features "kubeform.dev/provider-aws/internal/features"
 )
 
 // Setup adds a controller that reconciles VPCPeeringConnection managed resources.
