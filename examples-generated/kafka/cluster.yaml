@@ -1,0 +1,71 @@
+apiVersion: kafka.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    brokerNodeGroupInfo:
+    - clientSubnetsRefs:
+      - name: subnet_az1
+      - name: subnet_az2
+      - name: subnet_az3
+      instanceType: kafka.m5.large
+      securityGroupsRefs:
+      - name: sg
+      storageInfo:
+      - ebsStorageInfo:
+        - volumeSize: 1000
+    clusterName: example
+    encryptionInfo:
+    - encryptionAtRestKmsKeyArnSelector:
+        matchLabels:
+          testing.upbound.io/example-name: kms
+    kafkaVersion: 3.2.0
+    loggingInfo:
+    - brokerLogs:
+      - cloudwatchLogs:
+        - enabled: true
+          logGroupSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test
+        firehose:
+        - deliveryStream: ${aws_kinesis_firehose_delivery_stream.test_stream.name}
+          enabled: true
+        s3:
+        - bucketSelector:
+            matchLabels:
+              testing.upbound.io/example-name: bucket
+          enabled: true
+          prefix: logs/msk-
+    numberOfBrokerNodes: 3
+    openMonitoring:
+    - prometheus:
+      - jmxExporter:
+        - enabledInBroker: true
+        nodeExporter:
+        - enabledInBroker: true
+    region: us-west-1
+    tags:
+      foo: bar
+
+---
+
+apiVersion: kms.aws.kubeform.com/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: kms
+  name: kms
+spec:
+  forProvider:
+    description: example
+    region: us-west-1
+
+---
+

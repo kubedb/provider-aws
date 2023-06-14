@@ -1,0 +1,45 @@
+apiVersion: elasticsearch.aws.kubeform.com/v1alpha1
+kind: DomainPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: elasticsearch/v1alpha1/domainpolicy
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    accessPolicies: |
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Action": "es:*",
+                  "Principal": "*",
+                  "Effect": "Allow",
+                  "Condition": {
+                      "IpAddress": {"aws:SourceIp": "127.0.0.1/32"}
+                  },
+                  "Resource": "${aws_elasticsearch_domain.example.arn}/*"
+              }
+          ]
+      }
+    domainName: ${aws_elasticsearch_domain.example.domain_name}
+    region: us-west-1
+
+---
+
+apiVersion: elasticsearch.aws.kubeform.com/v1alpha1
+kind: Domain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: elasticsearch/v1alpha1/domainpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    elasticsearchVersion: "2.3"
+    region: us-west-1
+
+---
+

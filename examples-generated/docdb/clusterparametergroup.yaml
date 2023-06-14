@@ -1,0 +1,19 @@
+apiVersion: docdb.aws.kubeform.com/v1alpha1
+kind: ClusterParameterGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: docdb/v1alpha1/clusterparametergroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: docdb cluster parameter group
+    family: docdb3.6
+    parameter:
+    - name: tls
+      value: enabled
+    region: us-west-1
+
+---
+

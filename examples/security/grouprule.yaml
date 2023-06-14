@@ -10,7 +10,7 @@ spec:
     fromPort: 27017
     toPort: 27017
     protocol: tcp
-    securityGroupId: sg-017917069b07b41ad
+    securityGroupId: sg-1234567890
     type: ingress
 
 ---

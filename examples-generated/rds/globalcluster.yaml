@@ -1,0 +1,109 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: GlobalCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    databaseName: example_db
+    engine: aurora
+    engineVersion: 5.6.mysql_aurora.1.22.2
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+  labels:
+    testing.upbound.io/example-name: primary
+  name: primary
+spec:
+  forProvider:
+    databaseName: example_db
+    dbSubnetGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    engine: aurora
+    engineVersion: 5.6.mysql_aurora.1.22.2
+    globalClusterIdentifier: ${aws_rds_global_cluster.example.id}
+    masterPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    masterUsername: username
+    provider: ${aws.primary}
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+  labels:
+    testing.upbound.io/example-name: secondary
+  name: secondary
+spec:
+  forProvider:
+    dbSubnetGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    engine: aurora
+    engineVersion: 5.6.mysql_aurora.1.22.2
+    globalClusterIdentifier: ${aws_rds_global_cluster.example.id}
+    provider: ${aws.secondary}
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+  labels:
+    testing.upbound.io/example-name: primary
+  name: primary
+spec:
+  forProvider:
+    clusterIdentifier: ${aws_rds_cluster.primary.id}
+    dbSubnetGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    engine: aurora
+    engineVersion: 5.6.mysql_aurora.1.22.2
+    instanceClass: db.r4.large
+    provider: ${aws.primary}
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+  labels:
+    testing.upbound.io/example-name: secondary
+  name: secondary
+spec:
+  forProvider:
+    clusterIdentifier: ${aws_rds_cluster.secondary.id}
+    dbSubnetGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    engine: aurora
+    engineVersion: 5.6.mysql_aurora.1.22.2
+    instanceClass: db.r4.large
+    provider: ${aws.secondary}
+    region: us-west-1
+
+---
+

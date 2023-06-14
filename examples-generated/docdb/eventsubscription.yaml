@@ -1,0 +1,46 @@
+apiVersion: docdb.aws.kubeform.com/v1alpha1
+kind: EventSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: docdb/v1alpha1/eventsubscription
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    enabled: true
+    eventCategories:
+    - creation
+    - failure
+    region: us-west-1
+    snsTopicArn: ${aws_sns_topic.example.arn}
+    sourceIds:
+    - ${aws_docdb_cluster.example.id}
+    sourceType: db-cluster
+
+---
+
+apiVersion: docdb.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: docdb/v1alpha1/eventsubscription
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZones:
+    - ${data.aws_availability_zones.available.names[0]}
+    - ${data.aws_availability_zones.available.names[1]}
+    - ${data.aws_availability_zones.available.names[2]}
+    masterPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    masterUsername: foo
+    region: us-west-1
+    skipFinalSnapshot: true
+
+---
+

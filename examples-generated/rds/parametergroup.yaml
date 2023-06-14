@@ -1,0 +1,20 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ParameterGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/parametergroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    family: mysql5.6
+    parameter:
+    - name: character_set_server
+      value: utf8
+    - name: character_set_client
+      value: utf8
+    region: us-west-1
+
+---
+

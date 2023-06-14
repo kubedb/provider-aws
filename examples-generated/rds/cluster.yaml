@@ -1,0 +1,28 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    availabilityZones:
+    - us-west-2a
+    - us-west-2b
+    - us-west-2c
+    backupRetentionPeriod: 5
+    databaseName: mydb
+    engine: aurora-mysql
+    engineVersion: 5.7.mysql_aurora.2.03.2
+    masterPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    masterUsername: foo
+    preferredBackupWindow: 07:00-09:00
+    region: us-west-1
+
+---
+

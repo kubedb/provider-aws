@@ -1,0 +1,16 @@
+apiVersion: kms.aws.kubeform.com/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/key
+  labels:
+    testing.upbound.io/example-name: a
+  name: a
+spec:
+  forProvider:
+    deletionWindowInDays: 10
+    description: KMS key 1
+    region: us-west-1
+
+---
+

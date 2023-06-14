@@ -1,0 +1,17 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ProxyEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/proxyendpoint
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    dbProxyName: ${aws_db_proxy.test.name}
+    region: us-west-1
+    targetRole: READ_ONLY
+    vpcSubnetIds: ${aws_subnet.test[*].id}
+
+---
+
