@@ -1,0 +1,17 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterRoleAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusterroleassociation
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    dbClusterIdentifier: ${aws_rds_cluster.example.id}
+    featureName: S3_INTEGRATION
+    region: us-west-1
+    roleArn: ${aws_iam_role.example.arn}
+
+---
+

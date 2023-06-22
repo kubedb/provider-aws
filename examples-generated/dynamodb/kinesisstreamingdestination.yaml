@@ -1,0 +1,53 @@
+apiVersion: dynamodb.aws.kubeform.com/v1alpha1
+kind: KinesisStreamingDestination
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-west-1
+    streamArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tableNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: dynamodb.aws.kubeform.com/v1alpha1
+kind: Table
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    attribute:
+    - name: id
+      type: S
+    hashKey: id
+    region: us-west-1
+
+---
+
+apiVersion: kinesis.aws.kubeform.com/v1alpha1
+kind: Stream
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-west-1
+    shardCount: 1
+
+---
+

@@ -1,0 +1,16 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterSnapshot
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clustersnapshot
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    dbClusterIdentifier: ${aws_rds_cluster.example.id}
+    dbClusterSnapshotIdentifier: resourcetestsnapshot1234
+    region: us-west-1
+
+---
+

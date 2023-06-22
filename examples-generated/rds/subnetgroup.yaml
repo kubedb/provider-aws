@@ -1,0 +1,19 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: SubnetGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/subnetgroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    region: us-west-1
+    subnetIds:
+    - ${aws_subnet.frontend.id}
+    - ${aws_subnet.backend.id}
+    tags:
+      Name: My DB subnet group
+
+---
+

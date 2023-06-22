@@ -1,0 +1,21 @@
+apiVersion: memorydb.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: memorydb/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    aclName: open-access
+    nodeType: db.t4g.small
+    numShards: 2
+    region: us-west-1
+    securityGroupIds:
+    - ${aws_security_group.example.id}
+    snapshotRetentionLimit: 7
+    subnetGroupName: ${aws_memorydb_subnet_group.example.id}
+
+---
+

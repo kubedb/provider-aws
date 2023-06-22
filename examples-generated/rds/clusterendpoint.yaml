@@ -1,0 +1,102 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+  labels:
+    testing.upbound.io/example-name: eligible
+  name: eligible
+spec:
+  forProvider:
+    clusterIdentifier: ${aws_rds_cluster.default.id}
+    customEndpointType: READER
+    excludedMembers:
+    - ${aws_rds_cluster_instance.test1.id}
+    - ${aws_rds_cluster_instance.test2.id}
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    availabilityZones:
+    - us-west-2a
+    - us-west-2b
+    - us-west-2c
+    backupRetentionPeriod: 5
+    databaseName: mydb
+    masterPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    masterUsername: foo
+    preferredBackupWindow: 07:00-09:00
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+  labels:
+    testing.upbound.io/example-name: test1
+  name: test1
+spec:
+  forProvider:
+    applyImmediately: true
+    clusterIdentifier: ${aws_rds_cluster.default.id}
+    engine: ${aws_rds_cluster.default.engine}
+    engineVersion: ${aws_rds_cluster.default.engine_version}
+    instanceClass: db.t2.small
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+  labels:
+    testing.upbound.io/example-name: test2
+  name: test2
+spec:
+  forProvider:
+    applyImmediately: true
+    clusterIdentifier: ${aws_rds_cluster.default.id}
+    engine: ${aws_rds_cluster.default.engine}
+    engineVersion: ${aws_rds_cluster.default.engine_version}
+    instanceClass: db.t2.small
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+  labels:
+    testing.upbound.io/example-name: test3
+  name: test3
+spec:
+  forProvider:
+    applyImmediately: true
+    clusterIdentifier: ${aws_rds_cluster.default.id}
+    engine: ${aws_rds_cluster.default.engine}
+    engineVersion: ${aws_rds_cluster.default.engine_version}
+    instanceClass: db.t2.small
+    region: us-west-1
+
+---
+
