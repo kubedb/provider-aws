@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME ?= provider-aws
-PROJECT_REPO ?= github.com/appscode/$(PROJECT_NAME)
+PROJECT_REPO ?= kubeform.dev/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.3.3
 

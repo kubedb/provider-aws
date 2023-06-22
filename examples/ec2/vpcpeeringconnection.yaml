@@ -1,0 +1,13 @@
+apiVersion: ec2.aws.kubeform.com/v1alpha1
+kind: VPCPeeringConnection
+metadata:
+  name: foo
+spec:
+  forProvider:
+    peerOwnerId: ${var.peer_owner_id}
+    peerVpcId: ${aws_vpc.bar.id}
+    region: us-west-1
+    vpcId: ${aws_vpc.foo.id}
+
+---
+

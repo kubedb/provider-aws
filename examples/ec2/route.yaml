@@ -1,0 +1,13 @@
+apiVersion: ec2.aws.kubeform.com/v1alpha1
+kind: Route
+metadata:
+  name: r
+spec:
+  forProvider:
+    destinationCidrBlock: 10.0.1.0/22
+    region: us-west-1
+    routeTableId: rtb-4fbb3ac4
+    vpcPeeringConnectionId: pcx-45ff3dc1
+
+---
+

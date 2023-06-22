@@ -1,4 +1,4 @@
-apiVersion: aws.upbound.io/v1alpha1
+apiVersion: aws.kubeform.com/v1alpha1
 kind: StoreConfig
 metadata:
   name: vault
@@ -17,3 +17,6 @@ spec:
           namespace: crossplane-system
           name: vault-token
           key: token
+
+---
+

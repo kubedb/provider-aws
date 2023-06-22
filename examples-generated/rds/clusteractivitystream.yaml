@@ -1,0 +1,75 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterActivityStream
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    kmsKeyId: ${aws_kms_key.default.key_id}
+    mode: async
+    region: us-west-1
+    resourceArn: ${aws_rds_cluster.default.arn}
+
+---
+
+apiVersion: kms.aws.kubeform.com/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    description: AWS KMS Key to encrypt Database Activity Stream
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    availabilityZones:
+    - us-west-2a
+    - us-west-2b
+    - us-west-2c
+    databaseName: mydb
+    engine: aurora-postgresql
+    engineVersion: "13.4"
+    masterPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    masterUsername: foo
+    region: us-west-1
+
+---
+
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    clusterIdentifier: aurora-cluster-demo
+    engine: aurora-postgresql
+    instanceClass: db.r6g.large
+    region: us-west-1
+
+---
+

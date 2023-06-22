@@ -10,17 +10,35 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/appscode/provider-aws/apis/v1alpha1"
-	v1beta1 "github.com/appscode/provider-aws/apis/v1beta1"
-	v1alpha1vpc "github.com/appscode/provider-aws/apis/vpc/v1alpha1"
+	v1alpha1 "kubeform.dev/provider-aws/apis/docdb/v1alpha1"
+	v1alpha1dynamodb "kubeform.dev/provider-aws/apis/dynamodb/v1alpha1"
+	v1alpha1ec2 "kubeform.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha1elasticache "kubeform.dev/provider-aws/apis/elasticache/v1alpha1"
+	v1alpha1elasticsearch "kubeform.dev/provider-aws/apis/elasticsearch/v1alpha1"
+	v1alpha1kafka "kubeform.dev/provider-aws/apis/kafka/v1alpha1"
+	v1alpha1kinesis "kubeform.dev/provider-aws/apis/kinesis/v1alpha1"
+	v1alpha1kms "kubeform.dev/provider-aws/apis/kms/v1alpha1"
+	v1alpha1memorydb "kubeform.dev/provider-aws/apis/memorydb/v1alpha1"
+	v1alpha1rds "kubeform.dev/provider-aws/apis/rds/v1alpha1"
+	v1alpha1apis "kubeform.dev/provider-aws/apis/v1alpha1"
+	v1beta1 "kubeform.dev/provider-aws/apis/v1beta1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1dynamodb.SchemeBuilder.AddToScheme,
+		v1alpha1ec2.SchemeBuilder.AddToScheme,
+		v1alpha1elasticache.SchemeBuilder.AddToScheme,
+		v1alpha1elasticsearch.SchemeBuilder.AddToScheme,
+		v1alpha1kafka.SchemeBuilder.AddToScheme,
+		v1alpha1kinesis.SchemeBuilder.AddToScheme,
+		v1alpha1kms.SchemeBuilder.AddToScheme,
+		v1alpha1memorydb.SchemeBuilder.AddToScheme,
+		v1alpha1rds.SchemeBuilder.AddToScheme,
+		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
-		v1alpha1vpc.SchemeBuilder.AddToScheme,
 	)
 }
 

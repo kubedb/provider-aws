@@ -1,0 +1,31 @@
+apiVersion: rds.aws.kubeform.com/v1alpha1
+kind: Proxy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rds/v1alpha1/proxy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    auth:
+    - authScheme: SECRETS
+      description: example
+      iamAuth: DISABLED
+      secretArn: ${aws_secretsmanager_secret.example.arn}
+    debugLogging: false
+    engineFamily: MYSQL
+    idleClientTimeout: 1800
+    region: us-west-1
+    requireTls: true
+    roleArn: ${aws_iam_role.example.arn}
+    tags:
+      Key: value
+      Name: example
+    vpcSecurityGroupIds:
+    - ${aws_security_group.example.id}
+    vpcSubnetIds:
+    - ${aws_subnet.example.id}
+
+---
+

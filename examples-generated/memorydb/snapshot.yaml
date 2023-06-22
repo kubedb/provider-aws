@@ -1,0 +1,15 @@
+apiVersion: memorydb.aws.kubeform.com/v1alpha1
+kind: Snapshot
+metadata:
+  annotations:
+    meta.upbound.io/example-id: memorydb/v1alpha1/snapshot
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterName: ${aws_memorydb_cluster.example.name}
+    region: us-west-1
+
+---
+
