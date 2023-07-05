@@ -29,8 +29,8 @@ const (
 	errUnmarshalCredentials = "cannot unmarshal aws credentials as JSON"
 	errRegionNotFound       = "can not found region for terraform provider config"
 
-	accessKeyID     = "access_key"
-	secretAccessKey = "secret_key"
+	accessKeyID     = "aws_access_key_id"
+	secretAccessKey = "aws_secret_access_key"
 	keyRegion       = "region"
 )
 
