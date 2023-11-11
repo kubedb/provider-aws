@@ -1,4 +1,4 @@
-apiVersion: dynamodb.aws.kubeform.com/v1alpha1
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: ContributorInsights
 metadata:
   annotations:

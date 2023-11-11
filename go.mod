@@ -1,4 +1,4 @@
-module kubeform.dev/provider-aws
+module kubedb.dev/provider-aws
 
 go 1.19
 

@@ -1,4 +1,4 @@
-apiVersion: aws.kubeform.com/v1alpha1
+apiVersion: aws.kubedb.com/v1alpha1
 kind: StoreConfig
 metadata:
   name: vault

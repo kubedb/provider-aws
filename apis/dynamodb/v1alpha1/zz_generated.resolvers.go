@@ -10,7 +10,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
 	common "github.com/upbound/provider-aws/config/common"
-	v1alpha1 "kubeform.dev/provider-aws/apis/kinesis/v1alpha1"
+	v1alpha1 "kubedb.dev/provider-aws/apis/kinesis/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 

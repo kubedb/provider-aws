@@ -1,4 +1,4 @@
-apiVersion: rds.aws.kubeform.com/v1alpha1
+apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: GlobalCluster
 metadata:
   annotations:
@@ -15,7 +15,7 @@ spec:
 
 ---
 
-apiVersion: rds.aws.kubeform.com/v1alpha1
+apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
@@ -42,7 +42,7 @@ spec:
 
 ---
 
-apiVersion: rds.aws.kubeform.com/v1alpha1
+apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
@@ -63,7 +63,7 @@ spec:
 
 ---
 
-apiVersion: rds.aws.kubeform.com/v1alpha1
+apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
@@ -85,7 +85,7 @@ spec:
 
 ---
 
-apiVersion: rds.aws.kubeform.com/v1alpha1
+apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:

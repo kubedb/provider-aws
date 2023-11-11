@@ -8,19 +8,19 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 	ujconfig "github.com/upbound/upjet/pkg/config"
-	"kubeform.dev/provider-aws/config/docdb"
-	"kubeform.dev/provider-aws/config/dynamodb"
-	"kubeform.dev/provider-aws/config/ec2"
-	"kubeform.dev/provider-aws/config/elasticache"
-	"kubeform.dev/provider-aws/config/kafka"
-	"kubeform.dev/provider-aws/config/kinesis"
-	"kubeform.dev/provider-aws/config/memorydb"
-	"kubeform.dev/provider-aws/config/rds"
+	"kubedb.dev/provider-aws/config/docdb"
+	"kubedb.dev/provider-aws/config/dynamodb"
+	"kubedb.dev/provider-aws/config/ec2"
+	"kubedb.dev/provider-aws/config/elasticache"
+	"kubedb.dev/provider-aws/config/kafka"
+	"kubedb.dev/provider-aws/config/kinesis"
+	"kubedb.dev/provider-aws/config/memorydb"
+	"kubedb.dev/provider-aws/config/rds"
 )
 
 const (
 	resourcePrefix = "aws"
-	modulePath     = "kubeform.dev/provider-aws"
+	modulePath     = "kubedb.dev/provider-aws"
 )
 
 //go:embed schema.json
@@ -33,7 +33,7 @@ var providerMetadata string
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
-		ujconfig.WithRootGroup("aws.kubeform.com"),
+		ujconfig.WithRootGroup("aws.kubedb.com"),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),

@@ -23,7 +23,7 @@ import (
 	"github.com/upbound/upjet/pkg/config"
 	"github.com/upbound/upjet/pkg/types/comments"
 
-	"kubeform.dev/provider-aws/config/common"
+	"kubedb.dev/provider-aws/config/common"
 )
 
 const (

@@ -216,7 +216,7 @@ type ClusterParameters struct {
 	OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
 
 	// –  The name of the parameter group to associate with this cache cluster.
-	// +crossplane:generate:reference:type=kubeform.dev/provider-aws/apis/elasticache/v1alpha1.ParameterGroup
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.ParameterGroup
 	// +kubebuilder:validation:Optional
 	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 

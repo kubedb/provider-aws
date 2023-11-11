@@ -3,7 +3,7 @@ package kafka
 import (
 	"github.com/upbound/upjet/pkg/config"
 
-	"kubeform.dev/provider-aws/config/common"
+	"kubedb.dev/provider-aws/config/common"
 )
 
 // Configure adds configurations for kafka group.

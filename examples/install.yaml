@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-aws
 spec:
-  package: kubeform/provider-aws:v0.1.0
+  package: kubedb/provider-aws:v0.1.0

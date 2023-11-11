@@ -11,7 +11,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/pipeline"
 
-	"kubeform.dev/provider-aws/config"
+	"kubedb.dev/provider-aws/config"
 )
 
 func main() {
