@@ -1,4 +1,4 @@
-apiVersion: elasticsearch.aws.kubeform.com/v1alpha1
+apiVersion: elasticsearch.aws.kubedb.com/v1alpha1
 kind: DomainSAMLOptions
 metadata:
   annotations:
@@ -17,7 +17,7 @@ spec:
 
 ---
 
-apiVersion: elasticsearch.aws.kubeform.com/v1alpha1
+apiVersion: elasticsearch.aws.kubedb.com/v1alpha1
 kind: Domain
 metadata:
   annotations:

@@ -10,18 +10,18 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "kubeform.dev/provider-aws/apis/docdb/v1alpha1"
-	v1alpha1dynamodb "kubeform.dev/provider-aws/apis/dynamodb/v1alpha1"
-	v1alpha1ec2 "kubeform.dev/provider-aws/apis/ec2/v1alpha1"
-	v1alpha1elasticache "kubeform.dev/provider-aws/apis/elasticache/v1alpha1"
-	v1alpha1elasticsearch "kubeform.dev/provider-aws/apis/elasticsearch/v1alpha1"
-	v1alpha1kafka "kubeform.dev/provider-aws/apis/kafka/v1alpha1"
-	v1alpha1kinesis "kubeform.dev/provider-aws/apis/kinesis/v1alpha1"
-	v1alpha1kms "kubeform.dev/provider-aws/apis/kms/v1alpha1"
-	v1alpha1memorydb "kubeform.dev/provider-aws/apis/memorydb/v1alpha1"
-	v1alpha1rds "kubeform.dev/provider-aws/apis/rds/v1alpha1"
-	v1alpha1apis "kubeform.dev/provider-aws/apis/v1alpha1"
-	v1beta1 "kubeform.dev/provider-aws/apis/v1beta1"
+	v1alpha1 "kubedb.dev/provider-aws/apis/docdb/v1alpha1"
+	v1alpha1dynamodb "kubedb.dev/provider-aws/apis/dynamodb/v1alpha1"
+	v1alpha1ec2 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha1elasticache "kubedb.dev/provider-aws/apis/elasticache/v1alpha1"
+	v1alpha1elasticsearch "kubedb.dev/provider-aws/apis/elasticsearch/v1alpha1"
+	v1alpha1kafka "kubedb.dev/provider-aws/apis/kafka/v1alpha1"
+	v1alpha1kinesis "kubedb.dev/provider-aws/apis/kinesis/v1alpha1"
+	v1alpha1kms "kubedb.dev/provider-aws/apis/kms/v1alpha1"
+	v1alpha1memorydb "kubedb.dev/provider-aws/apis/memorydb/v1alpha1"
+	v1alpha1rds "kubedb.dev/provider-aws/apis/rds/v1alpha1"
+	v1alpha1apis "kubedb.dev/provider-aws/apis/v1alpha1"
+	v1beta1 "kubedb.dev/provider-aws/apis/v1beta1"
 )
 
 func init() {
