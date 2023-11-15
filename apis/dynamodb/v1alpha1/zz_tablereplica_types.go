@@ -33,7 +33,7 @@ type TableReplicaObservation_2 struct {
 	// Storage class of the table replica. Valid values are STANDARD and STANDARD_INFREQUENT_ACCESS. If not used, the table replica will use the same class as the global table.
 	TableClassOverride *string `json:"tableClassOverride,omitempty" tf:"table_class_override,omitempty"`
 
-	// Map of tags to populate on the created table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -47,8 +47,17 @@ type TableReplicaParameters_2 struct {
 	GlobalTableArn *string `json:"globalTableArn,omitempty" tf:"global_table_arn,omitempty"`
 
 	// ARN of the CMK that should be used for the AWS KMS encryption. This argument should only be used if the key is different from the default KMS-managed DynamoDB key, alias/aws/dynamodb. Note: This attribute will not be populated with the ARN of default keys.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/kms/v1beta1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyArn.
+	// +kubebuilder:validation:Optional
+	KMSKeyArnRef *v1.Reference `json:"kmsKeyArnRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyArn.
+	// +kubebuilder:validation:Optional
+	KMSKeyArnSelector *v1.Selector `json:"kmsKeyArnSelector,omitempty" tf:"-"`
 
 	// Whether to enable Point In Time Recovery for the replica. Default is false.
 	// +kubebuilder:validation:Optional
@@ -63,13 +72,9 @@ type TableReplicaParameters_2 struct {
 	// +kubebuilder:validation:Optional
 	TableClassOverride *string `json:"tableClassOverride,omitempty" tf:"table_class_override,omitempty"`
 
-	// Map of tags to populate on the created table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // TableReplicaSpec defines the desired state of TableReplica

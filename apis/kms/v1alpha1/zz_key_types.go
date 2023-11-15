@@ -60,7 +60,7 @@ type KeyObservation struct {
 	// A valid policy JSON document. Although this is a key policy, not an IAM policy, an aws_iam_policy_document, in the form that designates a principal, can be used.
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -121,13 +121,9 @@ type KeyParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // KeySpec defines the desired state of Key

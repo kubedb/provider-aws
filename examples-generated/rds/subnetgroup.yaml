@@ -9,9 +9,9 @@ metadata:
 spec:
   forProvider:
     region: us-west-1
-    subnetIds:
-    - ${aws_subnet.frontend.id}
-    - ${aws_subnet.backend.id}
+    subnetIdRefs:
+    - name: frontend
+    - name: backend
     tags:
       Name: My DB subnet group
 

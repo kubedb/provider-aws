@@ -12,8 +12,8 @@ spec:
     nodeType: db.t4g.small
     numShards: 2
     region: us-west-1
-    securityGroupIds:
-    - ${aws_security_group.example.id}
+    securityGroupIdRefs:
+    - name: example
     snapshotRetentionLimit: 7
     subnetGroupName: ${aws_memorydb_subnet_group.example.id}
 

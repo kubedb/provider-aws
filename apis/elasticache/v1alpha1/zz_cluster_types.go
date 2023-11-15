@@ -137,7 +137,7 @@ type ClusterObservation struct {
 	// create the resource.
 	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -249,7 +249,18 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ReplicationGroupID *string `json:"replicationGroupId,omitempty" tf:"replication_group_id,omitempty"`
 
+	// References to SecurityGroup in ec2 to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+
 	// –  One or more VPC security groups associated with the cache cluster
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
+	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -273,13 +284,9 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 type LogDeliveryConfigurationObservation struct {

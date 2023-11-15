@@ -104,7 +104,7 @@ type ClusterObservation struct {
 	// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -138,8 +138,17 @@ type ClusterParameters struct {
 	FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
 
 	// ARN of the KMS key used to encrypt the cluster at rest.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/kms/v1beta1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyArn.
+	// +kubebuilder:validation:Optional
+	KMSKeyArnRef *v1.Reference `json:"kmsKeyArnRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyArn.
+	// +kubebuilder:validation:Optional
+	KMSKeyArnSelector *v1.Selector `json:"kmsKeyArnSelector,omitempty" tf:"-"`
 
 	// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
 	// +kubebuilder:validation:Optional
@@ -170,7 +179,18 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"-"`
 
+	// References to SecurityGroup in ec2 to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+
 	// Set of VPC Security Group ID-s to associate with this cluster.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
+	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -202,13 +222,9 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 type EndpointObservation struct {

@@ -41,8 +41,17 @@ type ClusterActivityStreamParameters struct {
 	EngineNativeAuditFieldsIncluded *bool `json:"engineNativeAuditFieldsIncluded,omitempty" tf:"engine_native_audit_fields_included,omitempty"`
 
 	// The AWS KMS key identifier for encrypting messages in the database activity stream. The AWS KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/kms/v1beta1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// Specifies the mode of the database activity stream. Database events such as a change or access generate an activity stream event. The database session can handle these events either synchronously or asynchronously. One of: sync, async.
 	// +kubebuilder:validation:Optional
@@ -82,7 +91,6 @@ type ClusterActivityStreamStatus struct {
 type ClusterActivityStream struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.kmsKeyId)",message="kmsKeyId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.mode)",message="mode is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.resourceArn)",message="resourceArn is a required parameter"

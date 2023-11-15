@@ -50,7 +50,7 @@ type UserObservation struct {
 	// Indicates a password is not required for this user.
 	NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
 
-	// A list of tags to be added to this resource. A tag is a key-value pair.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
@@ -86,12 +86,9 @@ type UserParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"-"`
 
-	// A list of tags to be added to this resource. A tag is a key-value pair.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
 	// The username of the user.
 	// +kubebuilder:validation:Optional

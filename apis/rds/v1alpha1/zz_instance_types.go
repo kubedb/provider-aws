@@ -290,7 +290,7 @@ type InstanceObservation struct {
 	// "gp2" if not.
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -513,8 +513,18 @@ type InstanceParameters struct {
 	// information on the AWS
 	// Documentation
 	// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/iam/v1beta1.Role
+	// +crossplane:generate:reference:extractor=github.com/upbound/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate monitoringRoleArn.
+	// +kubebuilder:validation:Optional
+	MonitoringRoleArnRef *v1.Reference `json:"monitoringRoleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate monitoringRoleArn.
+	// +kubebuilder:validation:Optional
+	MonitoringRoleArnSelector *v1.Selector `json:"monitoringRoleArnSelector,omitempty" tf:"-"`
 
 	// Specifies if the RDS instance is multi-AZ
 	// +kubebuilder:validation:Optional
@@ -627,13 +637,9 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
 	// Time zone of the DB instance. timezone is currently
 	// only supported by Microsoft SQL Server. The timezone can only be set on
@@ -647,8 +653,19 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Username *string `json:"username,omitempty" tf:"username,omitempty"`
 
+	// References to SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+	// +kubebuilder:validation:Optional
+	VPCSecurityGroupIDRefs []v1.Reference `json:"vpcSecurityGroupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+	// +kubebuilder:validation:Optional
+	VPCSecurityGroupIDSelector *v1.Selector `json:"vpcSecurityGroupIdSelector,omitempty" tf:"-"`
+
 	// List of VPC security groups to
 	// associate.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=VPCSecurityGroupIDRefs
+	// +crossplane:generate:reference:selectorFieldName=VPCSecurityGroupIDSelector
 	// +kubebuilder:validation:Optional
 	VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
 }

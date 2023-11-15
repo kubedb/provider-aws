@@ -9,8 +9,10 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta11 "github.com/upbound/provider-aws/apis/kms/v1beta1"
-	v1beta1 "github.com/upbound/provider-aws/apis/s3/v1beta1"
+	v1beta12 "github.com/upbound/provider-aws/apis/ec2/v1beta1"
+	v1beta13 "github.com/upbound/provider-aws/apis/iam/v1beta1"
+	v1beta1 "github.com/upbound/provider-aws/apis/kms/v1beta1"
+	v1beta11 "github.com/upbound/provider-aws/apis/s3/v1beta1"
 	common "github.com/upbound/provider-aws/config/common"
 	v1alpha1 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -21,6 +23,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -38,6 +41,22 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	}
 	mg.Spec.ForProvider.DBSubnetGroupName = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DBSubnetGroupNameRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
+		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
+		To: reference.To{
+			List:    &v1beta1.KeyList{},
+			Managed: &v1beta1.Key{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
+	}
+	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.RestoreToPointInTime); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -64,8 +83,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 			Reference:    mg.Spec.ForProvider.S3Import[i3].BucketNameRef,
 			Selector:     mg.Spec.ForProvider.S3Import[i3].BucketNameSelector,
 			To: reference.To{
-				List:    &v1beta1.BucketList{},
-				Managed: &v1beta1.Bucket{},
+				List:    &v1beta11.BucketList{},
+				Managed: &v1beta11.Bucket{},
 			},
 		})
 		if err != nil {
@@ -75,6 +94,47 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		mg.Spec.ForProvider.S3Import[i3].BucketNameRef = rsp.ResolvedReference
 
 	}
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.VPCSecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
+		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
+		To: reference.To{
+			List:    &v1beta12.SecurityGroupList{},
+			Managed: &v1beta12.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.VPCSecurityGroupIds")
+	}
+	mg.Spec.ForProvider.VPCSecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.VPCSecurityGroupIDRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this ClusterActivityStream.
+func (mg *ClusterActivityStream) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
+		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
+		To: reference.To{
+			List:    &v1beta1.KeyList{},
+			Managed: &v1beta1.Key{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
+	}
+	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -103,13 +163,29 @@ func (mg *ClusterInstance) ResolveReferences(ctx context.Context, c client.Reade
 	mg.Spec.ForProvider.DBSubnetGroupNameRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MonitoringRoleArn),
+		Extract:      common.ARNExtractor(),
+		Reference:    mg.Spec.ForProvider.MonitoringRoleArnRef,
+		Selector:     mg.Spec.ForProvider.MonitoringRoleArnSelector,
+		To: reference.To{
+			List:    &v1beta13.RoleList{},
+			Managed: &v1beta13.Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.MonitoringRoleArn")
+	}
+	mg.Spec.ForProvider.MonitoringRoleArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.MonitoringRoleArnRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PerformanceInsightsKMSKeyID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.PerformanceInsightsKMSKeyIDRef,
 		Selector:     mg.Spec.ForProvider.PerformanceInsightsKMSKeyIDSelector,
 		To: reference.To{
-			List:    &v1beta11.KeyList{},
-			Managed: &v1beta11.Key{},
+			List:    &v1beta1.KeyList{},
+			Managed: &v1beta1.Key{},
 		},
 	})
 	if err != nil {
@@ -121,11 +197,90 @@ func (mg *ClusterInstance) ResolveReferences(ctx context.Context, c client.Reade
 	return nil
 }
 
+// ResolveReferences of this ClusterRoleAssociation.
+func (mg *ClusterRoleAssociation) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleArn),
+		Extract:      common.ARNExtractor(),
+		Reference:    mg.Spec.ForProvider.RoleArnRef,
+		Selector:     mg.Spec.ForProvider.RoleArnSelector,
+		To: reference.To{
+			List:    &v1beta13.RoleList{},
+			Managed: &v1beta13.Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoleArn")
+	}
+	mg.Spec.ForProvider.RoleArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RoleArnRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this DBInstanceAutomatedBackupsReplication.
+func (mg *DBInstanceAutomatedBackupsReplication) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
+		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
+		To: reference.To{
+			List:    &v1beta1.KeyList{},
+			Managed: &v1beta1.Key{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
+	}
+	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this DBSnapshotCopy.
+func (mg *DBSnapshotCopy) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
+		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
+		To: reference.To{
+			List:    &v1beta1.KeyList{},
+			Managed: &v1beta1.Key{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
+	}
+	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this Instance.
 func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -159,6 +314,159 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MonitoringRoleArn),
+		Extract:      common.ARNExtractor(),
+		Reference:    mg.Spec.ForProvider.MonitoringRoleArnRef,
+		Selector:     mg.Spec.ForProvider.MonitoringRoleArnSelector,
+		To: reference.To{
+			List:    &v1beta13.RoleList{},
+			Managed: &v1beta13.Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.MonitoringRoleArn")
+	}
+	mg.Spec.ForProvider.MonitoringRoleArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.MonitoringRoleArnRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.VPCSecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
+		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
+		To: reference.To{
+			List:    &v1beta12.SecurityGroupList{},
+			Managed: &v1beta12.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.VPCSecurityGroupIds")
+	}
+	mg.Spec.ForProvider.VPCSecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.VPCSecurityGroupIDRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this InstanceRoleAssociation.
+func (mg *InstanceRoleAssociation) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleArn),
+		Extract:      common.ARNExtractor(),
+		Reference:    mg.Spec.ForProvider.RoleArnRef,
+		Selector:     mg.Spec.ForProvider.RoleArnSelector,
+		To: reference.To{
+			List:    &v1beta13.RoleList{},
+			Managed: &v1beta13.Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoleArn")
+	}
+	mg.Spec.ForProvider.RoleArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RoleArnRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Proxy.
+func (mg *Proxy) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleArn),
+		Extract:      common.ARNExtractor(),
+		Reference:    mg.Spec.ForProvider.RoleArnRef,
+		Selector:     mg.Spec.ForProvider.RoleArnSelector,
+		To: reference.To{
+			List:    &v1beta13.RoleList{},
+			Managed: &v1beta13.Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoleArn")
+	}
+	mg.Spec.ForProvider.RoleArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RoleArnRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.VPCSecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
+		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
+		To: reference.To{
+			List:    &v1beta12.SecurityGroupList{},
+			Managed: &v1beta12.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.VPCSecurityGroupIds")
+	}
+	mg.Spec.ForProvider.VPCSecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.VPCSecurityGroupIDRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this ProxyEndpoint.
+func (mg *ProxyEndpoint) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.VPCSecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
+		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
+		To: reference.To{
+			List:    &v1beta12.SecurityGroupList{},
+			Managed: &v1beta12.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.VPCSecurityGroupIds")
+	}
+	mg.Spec.ForProvider.VPCSecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.VPCSecurityGroupIDRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this SubnetGroup.
+func (mg *SubnetGroup) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SubnetIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.SubnetIDRefs,
+		Selector:      mg.Spec.ForProvider.SubnetIDSelector,
+		To: reference.To{
+			List:    &v1beta12.SubnetList{},
+			Managed: &v1beta12.Subnet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SubnetIds")
+	}
+	mg.Spec.ForProvider.SubnetIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SubnetIDRefs = mrsp.ResolvedReferences
 
 	return nil
 }

@@ -27,7 +27,7 @@ type SubnetGroupObservation struct {
 	// Set of VPC Subnet ID-s for the subnet group. At least one subnet must be provided.
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -48,17 +48,24 @@ type SubnetGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"-"`
 
+	// References to Subnet in ec2 to populate subnetIds.
+	// +kubebuilder:validation:Optional
+	SubnetIDRefs []v1.Reference `json:"subnetIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Subnet in ec2 to populate subnetIds.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// Set of VPC Subnet ID-s for the subnet group. At least one subnet must be provided.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.Subnet
+	// +crossplane:generate:reference:refFieldName=SubnetIDRefs
+	// +crossplane:generate:reference:selectorFieldName=SubnetIDSelector
 	// +kubebuilder:validation:Optional
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // SubnetGroupSpec defines the desired state of SubnetGroup
@@ -86,7 +93,6 @@ type SubnetGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.subnetIds)",message="subnetIds is a required parameter"
 	Spec   SubnetGroupSpec   `json:"spec"`
 	Status SubnetGroupStatus `json:"status,omitempty"`
 }

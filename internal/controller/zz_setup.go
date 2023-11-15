@@ -25,6 +25,9 @@ import (
 	tag "kubedb.dev/provider-aws/internal/controller/dynamodb/tag"
 	route "kubedb.dev/provider-aws/internal/controller/ec2/route"
 	securitygrouprule "kubedb.dev/provider-aws/internal/controller/ec2/securitygrouprule"
+	subnet "kubedb.dev/provider-aws/internal/controller/ec2/subnet"
+	vpc "kubedb.dev/provider-aws/internal/controller/ec2/vpc"
+	vpcendpoint "kubedb.dev/provider-aws/internal/controller/ec2/vpcendpoint"
 	vpcpeeringconnection "kubedb.dev/provider-aws/internal/controller/ec2/vpcpeeringconnection"
 	clusterelasticache "kubedb.dev/provider-aws/internal/controller/elasticache/cluster"
 	parametergroup "kubedb.dev/provider-aws/internal/controller/elasticache/parametergroup"
@@ -88,6 +91,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		tag.Setup,
 		route.Setup,
 		securitygrouprule.Setup,
+		subnet.Setup,
+		vpc.Setup,
+		vpcendpoint.Setup,
 		vpcpeeringconnection.Setup,
 		clusterelasticache.Setup,
 		parametergroup.Setup,

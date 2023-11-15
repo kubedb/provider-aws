@@ -183,7 +183,7 @@ type ClusterObservation struct {
 	// (Forces new for Multi-AZ DB clusters) Specifies the storage type to be associated with the DB cluster. For Aurora DB clusters, storage_type modifications can be done in-place. For Multi-AZ DB Clusters, the iops argument must also be set. Valid values are: "", aurora-iopt1 (Aurora DB Clusters); io1 (Multi-AZ DB Clusters). Default: "" (Aurora DB Clusters); io1 (Multi-AZ DB Clusters).
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -300,8 +300,17 @@ type ClusterParameters struct {
 	Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
 
 	// ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/kms/v1beta1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if master_password is provided.
 	// +kubebuilder:validation:Optional
@@ -380,15 +389,22 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	// References to SecurityGroup in ec2 to populate vpcSecurityGroupIds.
 	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+	VPCSecurityGroupIDRefs []v1.Reference `json:"vpcSecurityGroupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+	// +kubebuilder:validation:Optional
+	VPCSecurityGroupIDSelector *v1.Selector `json:"vpcSecurityGroupIdSelector,omitempty" tf:"-"`
 
 	// List of VPC security groups to associate with the Cluster
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=VPCSecurityGroupIDRefs
+	// +crossplane:generate:reference:selectorFieldName=VPCSecurityGroupIDSelector
 	// +kubebuilder:validation:Optional
 	VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
 }

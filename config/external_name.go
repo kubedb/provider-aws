@@ -64,6 +64,15 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"aws_security_group_rule":    config.IdentifierFromProvider,
 	"aws_route":                  route(),
 
+	//vpc
+	//
+	// Imported using the id: vpc-23123
+	"aws_vpc": config.IdentifierFromProvider,
+	// Imported using the vpc endpoint id: vpce-3ecf2a57
+	"aws_vpc_endpoint": config.IdentifierFromProvider,
+	// Imported using the subnet id: subnet-9d4a7b6c
+	"aws_subnet": config.IdentifierFromProvider,
+
 	// docdb
 	//
 	// DocDB Clusters can be imported using the cluster_identifier

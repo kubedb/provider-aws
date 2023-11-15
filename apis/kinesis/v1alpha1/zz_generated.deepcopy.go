@@ -10,6 +10,7 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -228,6 +229,16 @@ func (in *StreamParameters) DeepCopyInto(out *StreamParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -263,21 +274,6 @@ func (in *StreamParameters) DeepCopyInto(out *StreamParameters) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
 		*out = make(map[string]*string, len(*in))
 		for key, val := range *in {
 			var outVal *string

@@ -26,6 +26,9 @@ import (
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	name := managed.ControllerName(v1alpha1.ClusterEndpoint_GroupVersionKind.String())
 	var initializers managed.InitializerChain
+	for _, i := range o.Provider.Resources["aws_rds_cluster_endpoint"].InitializerFns {
+		initializers = append(initializers, i(mgr.GetClient()))
+	}
 	initializers = append(initializers, managed.NewNameAsExternalName(mgr.GetClient()))
 	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
 	if o.SecretStoreConfigGVK != nil {

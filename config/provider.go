@@ -36,8 +36,15 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithRootGroup("aws.kubedb.com"),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
-			ExternalNameConfigurations(),
+			KindOverrides(),
 			RegionAddition(),
+			TagsAllRemoval(),
+			IdentifierAssignedByAWS(),
+			KnownReferencers(),
+			AddExternalTagsField(),
+			ExternalNameConfigurations(),
+			NamePrefixRemoval(),
+			DocumentationForTags(),
 		))
 
 	// API group overrides from Terraform import statements

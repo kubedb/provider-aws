@@ -44,8 +44,18 @@ type InstanceRoleAssociationParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/iam/v1beta1.Role
+	// +crossplane:generate:reference:extractor=github.com/upbound/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnRef *v1.Reference `json:"roleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnSelector *v1.Selector `json:"roleArnSelector,omitempty" tf:"-"`
 }
 
 // InstanceRoleAssociationSpec defines the desired state of InstanceRoleAssociation
@@ -75,7 +85,6 @@ type InstanceRoleAssociation struct {
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbInstanceIdentifier)",message="dbInstanceIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.featureName)",message="featureName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.roleArn)",message="roleArn is a required parameter"
 	Spec   InstanceRoleAssociationSpec   `json:"spec"`
 	Status InstanceRoleAssociationStatus `json:"status,omitempty"`
 }

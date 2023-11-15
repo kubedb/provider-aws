@@ -11,7 +11,9 @@ spec:
     peerOwnerId: ${var.peer_owner_id}
     peerVpcId: ${aws_vpc.bar.id}
     region: us-west-1
-    vpcId: ${aws_vpc.foo.id}
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
 
 ---
 

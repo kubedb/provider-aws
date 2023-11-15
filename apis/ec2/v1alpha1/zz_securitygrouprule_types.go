@@ -88,8 +88,17 @@ type SecurityGroupRuleParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Security group to apply this rule to.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
+
+	// Reference to a SecurityGroup in ec2 to populate securityGroupId.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDRef *v1.Reference `json:"securityGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup in ec2 to populate securityGroupId.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
 	// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
 	// +kubebuilder:validation:Optional
@@ -136,7 +145,6 @@ type SecurityGroupRule struct {
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.fromPort)",message="fromPort is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.protocol)",message="protocol is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.securityGroupId)",message="securityGroupId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.toPort)",message="toPort is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.type)",message="type is a required parameter"
 	Spec   SecurityGroupRuleSpec   `json:"spec"`

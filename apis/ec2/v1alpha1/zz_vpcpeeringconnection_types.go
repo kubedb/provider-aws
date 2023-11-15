@@ -73,7 +73,7 @@ type VPCPeeringConnectionObservation struct {
 	// the peering connection (a maximum of one).
 	Requester []RequesterObservation `json:"requester,omitempty" tf:"requester,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -118,17 +118,22 @@ type VPCPeeringConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	Requester []RequesterParameters `json:"requester,omitempty" tf:"requester,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
-
 	// The ID of the requester VPC.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.VPC
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in ec2 to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in ec2 to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 // VPCPeeringConnectionSpec defines the desired state of VPCPeeringConnection
@@ -157,7 +162,6 @@ type VPCPeeringConnection struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.peerVpcId)",message="peerVpcId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.vpcId)",message="vpcId is a required parameter"
 	Spec   VPCPeeringConnectionSpec   `json:"spec"`
 	Status VPCPeeringConnectionStatus `json:"status,omitempty"`
 }

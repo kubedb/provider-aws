@@ -829,21 +829,6 @@ func (in *DomainParameters) DeepCopyInto(out *DomainParameters) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
 	if in.VPCOptions != nil {
 		in, out := &in.VPCOptions, &out.VPCOptions
 		*out = make([]VPCOptionsParameters, len(*in))

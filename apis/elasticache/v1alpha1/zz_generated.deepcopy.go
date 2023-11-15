@@ -535,6 +535,18 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecurityGroupIDRefs != nil {
+		in, out := &in.SecurityGroupIDRefs, &out.SecurityGroupIDRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SecurityGroupIDSelector != nil {
+		in, out := &in.SecurityGroupIDSelector, &out.SecurityGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecurityGroupIds != nil {
 		in, out := &in.SecurityGroupIds, &out.SecurityGroupIds
 		*out = make([]*string, len(*in))
@@ -579,21 +591,6 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
 		*out = make(map[string]*string, len(*in))
 		for key, val := range *in {
 			var outVal *string
@@ -891,21 +888,6 @@ func (in *ParameterGroupParameters) DeepCopyInto(out *ParameterGroupParameters) 
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
 		*out = make(map[string]*string, len(*in))
 		for key, val := range *in {
 			var outVal *string
@@ -1563,6 +1545,18 @@ func (in *ReplicationGroupParameters) DeepCopyInto(out *ReplicationGroupParamete
 		*out = new(float64)
 		**out = **in
 	}
+	if in.SecurityGroupIDRefs != nil {
+		in, out := &in.SecurityGroupIDRefs, &out.SecurityGroupIDRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SecurityGroupIDSelector != nil {
+		in, out := &in.SecurityGroupIDSelector, &out.SecurityGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecurityGroupIds != nil {
 		in, out := &in.SecurityGroupIds, &out.SecurityGroupIds
 		*out = make([]*string, len(*in))
@@ -1628,21 +1622,6 @@ func (in *ReplicationGroupParameters) DeepCopyInto(out *ReplicationGroupParamete
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
 		*out = make(map[string]*string, len(*in))
 		for key, val := range *in {
 			var outVal *string
@@ -1861,6 +1840,18 @@ func (in *SubnetGroupParameters) DeepCopyInto(out *SubnetGroupParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SubnetIDRefs != nil {
+		in, out := &in.SubnetIDRefs, &out.SubnetIDRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SubnetIds != nil {
 		in, out := &in.SubnetIds, &out.SubnetIds
 		*out = make([]*string, len(*in))
@@ -1874,21 +1865,6 @@ func (in *SubnetGroupParameters) DeepCopyInto(out *SubnetGroupParameters) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
 		*out = make(map[string]*string, len(*in))
 		for key, val := range *in {
 			var outVal *string
@@ -2133,21 +2109,6 @@ func (in *UserGroupParameters) DeepCopyInto(out *UserGroupParameters) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
 	if in.UserIDRefs != nil {
 		in, out := &in.UserIDRefs, &out.UserIDRefs
 		*out = make([]v1.Reference, len(*in))
@@ -2372,21 +2333,6 @@ func (in *UserParameters) DeepCopyInto(out *UserParameters) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				in, out := &val, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TagsAll != nil {
-		in, out := &in.TagsAll, &out.TagsAll
 		*out = make(map[string]*string, len(*in))
 		for key, val := range *in {
 			var outVal *string

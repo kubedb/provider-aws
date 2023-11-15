@@ -102,7 +102,7 @@ type ClusterInstanceObservation struct {
 	// Specifies whether the DB cluster is encrypted.
 	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
 
-	// Map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -172,8 +172,18 @@ type ClusterInstanceParameters struct {
 	MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
 
 	// ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs. You can find more information on the AWS Documentation what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/iam/v1beta1.Role
+	// +crossplane:generate:reference:extractor=github.com/upbound/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate monitoringRoleArn.
+	// +kubebuilder:validation:Optional
+	MonitoringRoleArnRef *v1.Reference `json:"monitoringRoleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate monitoringRoleArn.
+	// +kubebuilder:validation:Optional
+	MonitoringRoleArnSelector *v1.Selector `json:"monitoringRoleArnSelector,omitempty" tf:"-"`
 
 	// Specifies whether Performance Insights is enabled or not.
 	// +kubebuilder:validation:Optional
@@ -217,13 +227,9 @@ type ClusterInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"-"`
 
-	// Map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	// Key-value map of resource tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // ClusterInstanceSpec defines the desired state of ClusterInstance

@@ -40,12 +40,14 @@ spec:
     idleClientTimeout: 1800
     region: us-west-1
     requireTls: true
-    roleArn: ${aws_iam_role.example.arn}
+    roleArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     tags:
       Key: value
       Name: example
-    vpcSecurityGroupIds:
-    - ${aws_security_group.example.id}
+    vpcSecurityGroupIdRefs:
+    - name: example
     vpcSubnetIds:
     - ${aws_subnet.example.id}
 

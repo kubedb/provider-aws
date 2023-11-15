@@ -69,3 +69,75 @@ spec:
 
 ---
 
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: subnet_az1
+  name: subnet-az1
+spec:
+  forProvider:
+    availabilityZone: ${data.aws_availability_zones.azs.names[0]}
+    cidrBlock: 192.168.0.0/24
+    region: us-west-1
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: subnet_az2
+  name: subnet-az2
+spec:
+  forProvider:
+    availabilityZone: ${data.aws_availability_zones.azs.names[1]}
+    cidrBlock: 192.168.1.0/24
+    region: us-west-1
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: subnet_az3
+  name: subnet-az3
+spec:
+  forProvider:
+    availabilityZone: ${data.aws_availability_zones.azs.names[2]}
+    cidrBlock: 192.168.2.0/24
+    region: us-west-1
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 192.168.0.0/22
+    region: us-west-1
+
+---
+

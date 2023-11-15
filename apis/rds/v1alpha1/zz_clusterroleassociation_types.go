@@ -44,8 +44,18 @@ type ClusterRoleAssociationParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Cluster.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/iam/v1beta1.Role
+	// +crossplane:generate:reference:extractor=github.com/upbound/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnRef *v1.Reference `json:"roleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnSelector *v1.Selector `json:"roleArnSelector,omitempty" tf:"-"`
 }
 
 // ClusterRoleAssociationSpec defines the desired state of ClusterRoleAssociation
@@ -75,7 +85,6 @@ type ClusterRoleAssociation struct {
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbClusterIdentifier)",message="dbClusterIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.featureName)",message="featureName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.roleArn)",message="roleArn is a required parameter"
 	Spec   ClusterRoleAssociationSpec   `json:"spec"`
 	Status ClusterRoleAssociationStatus `json:"status,omitempty"`
 }

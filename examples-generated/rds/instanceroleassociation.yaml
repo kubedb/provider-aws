@@ -11,7 +11,9 @@ spec:
     dbInstanceIdentifier: ${aws_db_instance.example.identifier}
     featureName: S3_INTEGRATION
     region: us-west-1
-    roleArn: ${aws_iam_role.example.arn}
+    roleArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
 
 ---
 
