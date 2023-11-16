@@ -11,9 +11,7 @@ spec:
     dbClusterIdentifier: ${aws_rds_cluster.example.id}
     featureName: S3_INTEGRATION
     region: us-west-1
-    roleArnSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    roleArn: ${aws_iam_role.example.arn}
 
 ---
 

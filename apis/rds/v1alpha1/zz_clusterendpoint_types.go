@@ -36,7 +36,7 @@ type ClusterEndpointObservation struct {
 	// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
 	StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
 
-	// Key-value map of resource tags.
+	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -66,9 +66,13 @@ type ClusterEndpointParameters struct {
 	// +kubebuilder:validation:Optional
 	StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
 
-	// Key-value map of resource tags.
+	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	// +kubebuilder:validation:Optional
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // ClusterEndpointSpec defines the desired state of ClusterEndpoint

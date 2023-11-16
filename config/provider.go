@@ -38,13 +38,8 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithDefaultResourceOptions(
 			KindOverrides(),
 			RegionAddition(),
-			TagsAllRemoval(),
-			IdentifierAssignedByAWS(),
 			KnownReferencers(),
-			AddExternalTagsField(),
 			ExternalNameConfigurations(),
-			NamePrefixRemoval(),
-			DocumentationForTags(),
 		))
 
 	// API group overrides from Terraform import statements

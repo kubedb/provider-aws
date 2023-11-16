@@ -61,7 +61,7 @@ type BrokerNodeGroupInfoParameters struct {
 	AzDistribution *string `json:"azDistribution,omitempty" tf:"az_distribution,omitempty"`
 
 	// A list of subnets to connect to in client VPC (documentation).
-	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.Subnet
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	ClientSubnets []*string `json:"clientSubnets,omitempty" tf:"client_subnets,omitempty"`
 
@@ -82,7 +82,7 @@ type BrokerNodeGroupInfoParameters struct {
 	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
 
 	// A list of the security groups to associate with the elastic network interfaces to control who can communicate with the cluster.
-	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
@@ -142,17 +142,8 @@ type CloudwatchLogsParameters struct {
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
 	// Name of the Cloudwatch Log Group to deliver logs to.
-	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/cloudwatchlogs/v1beta1.Group
 	// +kubebuilder:validation:Optional
 	LogGroup *string `json:"logGroup,omitempty" tf:"log_group,omitempty"`
-
-	// Reference to a Group in cloudwatchlogs to populate logGroup.
-	// +kubebuilder:validation:Optional
-	LogGroupRef *v1.Reference `json:"logGroupRef,omitempty" tf:"-"`
-
-	// Selector for a Group in cloudwatchlogs to populate logGroup.
-	// +kubebuilder:validation:Optional
-	LogGroupSelector *v1.Selector `json:"logGroupSelector,omitempty" tf:"-"`
 }
 
 type ClusterObservation struct {
@@ -219,7 +210,7 @@ type ClusterObservation struct {
 	// Controls storage mode for supported storage tiers. Valid values are: LOCAL or TIERED.
 	StorageMode *string `json:"storageMode,omitempty" tf:"storage_mode,omitempty"`
 
-	// Key-value map of resource tags.
+	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -283,9 +274,13 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	StorageMode *string `json:"storageMode,omitempty" tf:"storage_mode,omitempty"`
 
-	// Key-value map of resource tags.
+	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	// +kubebuilder:validation:Optional
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 type ConfigurationInfoObservation struct {
@@ -373,8 +368,8 @@ type EncryptionInfoObservation struct {
 type EncryptionInfoParameters struct {
 
 	// The ARN of the KMS key used for encryption at rest of the broker data volumes.
-	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/kms/v1beta1.Key
-	// +crossplane:generate:reference:extractor=github.com/upbound/provider-aws/config/common.ARNExtractor()
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	EncryptionAtRestKMSKeyArn *string `json:"encryptionAtRestKmsKeyArn,omitempty" tf:"encryption_at_rest_kms_key_arn,omitempty"`
 
@@ -531,17 +526,8 @@ type S3Observation struct {
 type S3Parameters struct {
 
 	// Name of the S3 bucket to deliver logs to.
-	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/s3/v1beta1.Bucket
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
-
-	// Reference to a Bucket in s3 to populate bucket.
-	// +kubebuilder:validation:Optional
-	BucketRef *v1.Reference `json:"bucketRef,omitempty" tf:"-"`
-
-	// Selector for a Bucket in s3 to populate bucket.
-	// +kubebuilder:validation:Optional
-	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
 	// Controls whether provisioned throughput is enabled or not. Default value: false.
 	// +kubebuilder:validation:Required

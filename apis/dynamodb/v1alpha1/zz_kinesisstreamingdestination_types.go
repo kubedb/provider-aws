@@ -35,7 +35,7 @@ type KinesisStreamingDestinationParameters struct {
 
 	// The ARN for a Kinesis data stream. This must exist in the same account and region as the DynamoDB table.
 	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kinesis/v1alpha1.Stream
-	// +crossplane:generate:reference:extractor=github.com/upbound/provider-aws/config/common.TerraformID()
+	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.TerraformID()
 	// +kubebuilder:validation:Optional
 	StreamArn *string `json:"streamArn,omitempty" tf:"stream_arn,omitempty"`
 

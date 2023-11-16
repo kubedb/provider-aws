@@ -245,7 +245,7 @@ type TableObservation struct {
 	// Default value is STANDARD.
 	TableClass *string `json:"tableClass,omitempty" tf:"table_class,omitempty"`
 
-	// Key-value map of resource tags.
+	// A map of tags to populate on the created table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -336,9 +336,13 @@ type TableParameters struct {
 	// +kubebuilder:validation:Optional
 	TableClass *string `json:"tableClass,omitempty" tf:"table_class,omitempty"`
 
-	// Key-value map of resource tags.
+	// A map of tags to populate on the created table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	// +kubebuilder:validation:Optional
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
 	// Number of write units for this table. If the billing_mode is PROVISIONED, this field is required.
 	// +kubebuilder:validation:Optional

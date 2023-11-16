@@ -88,7 +88,7 @@ type SecurityGroupRuleParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Security group to apply this rule to.
-	// +crossplane:generate:reference:type=github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 

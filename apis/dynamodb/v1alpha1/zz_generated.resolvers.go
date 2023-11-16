@@ -9,9 +9,9 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta1 "github.com/upbound/provider-aws/apis/kms/v1beta1"
-	common "github.com/upbound/provider-aws/config/common"
 	v1alpha1 "kubedb.dev/provider-aws/apis/kinesis/v1alpha1"
+	v1alpha11 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
+	common "kubedb.dev/provider-aws/config/common"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -122,8 +122,8 @@ func (mg *TableReplica) ResolveReferences(ctx context.Context, c client.Reader) 
 		Reference:    mg.Spec.ForProvider.KMSKeyArnRef,
 		Selector:     mg.Spec.ForProvider.KMSKeyArnSelector,
 		To: reference.To{
-			List:    &v1beta1.KeyList{},
-			Managed: &v1beta1.Key{},
+			List:    &v1alpha11.KeyList{},
+			Managed: &v1alpha11.Key{},
 		},
 	})
 	if err != nil {

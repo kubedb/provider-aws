@@ -12,4 +12,15 @@ func Configure(p *config.Provider) {
 		r.UseAsync = true
 		r.ShortGroup = "ec2"
 	})
+
+	p.AddResourceConfigurator("aws_subnet", func(r *config.Resource) {
+		r.LateInitializer = config.LateInitializer{
+			// NOTE(muvaf): Conflicts with AvailabilityZone. See the following
+			// for more details: https://github.com/crossplane/upjet/issues/107
+			IgnoredFields: []string{
+				"availability_zone_id",
+			},
+		}
+		r.UseAsync = true
+	})
 }

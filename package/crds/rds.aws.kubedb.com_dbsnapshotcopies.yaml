@@ -168,7 +168,16 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Key-value map of resource tags.
+                    description: Key-value map of resource tags. If configured with
+                      a provider default_tags configuration block present, tags with
+                      matching keys will overwrite those defined at the provider-level.
+                    type: object
+                  tagsAll:
+                    additionalProperties:
+                      type: string
+                    description: A map of tags assigned to the resource, including
+                      those inherited from the provider default_tags configuration
+                      block.
                     type: object
                   targetCustomAvailabilityZone:
                     description: The external custom Availability Zone.
@@ -439,7 +448,9 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Key-value map of resource tags.
+                    description: Key-value map of resource tags. If configured with
+                      a provider default_tags configuration block present, tags with
+                      matching keys will overwrite those defined at the provider-level.
                     type: object
                   tagsAll:
                     additionalProperties:

@@ -9,8 +9,8 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta1 "github.com/upbound/provider-aws/apis/ec2/v1beta1"
-	v1beta11 "github.com/upbound/provider-aws/apis/kms/v1beta1"
+	v1alpha1 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha11 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -44,8 +44,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		References:    mg.Spec.ForProvider.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIDSelector,
 		To: reference.To{
-			List:    &v1beta1.SecurityGroupList{},
-			Managed: &v1beta1.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -71,8 +71,8 @@ func (mg *ReplicationGroup) ResolveReferences(ctx context.Context, c client.Read
 		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
 		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
 		To: reference.To{
-			List:    &v1beta11.KeyList{},
-			Managed: &v1beta11.Key{},
+			List:    &v1alpha11.KeyList{},
+			Managed: &v1alpha11.Key{},
 		},
 	})
 	if err != nil {
@@ -87,8 +87,8 @@ func (mg *ReplicationGroup) ResolveReferences(ctx context.Context, c client.Read
 		References:    mg.Spec.ForProvider.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIDSelector,
 		To: reference.To{
-			List:    &v1beta1.SecurityGroupList{},
-			Managed: &v1beta1.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -129,8 +129,8 @@ func (mg *SubnetGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 		References:    mg.Spec.ForProvider.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.SubnetIDSelector,
 		To: reference.To{
-			List:    &v1beta1.SubnetList{},
-			Managed: &v1beta1.Subnet{},
+			List:    &v1alpha1.SubnetList{},
+			Managed: &v1alpha1.Subnet{},
 		},
 	})
 	if err != nil {

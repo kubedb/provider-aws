@@ -7,7 +7,6 @@ require (
 	github.com/crossplane/crossplane-tools v0.0.0-20230327091744-4236bf732aa5
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0
 	github.com/pkg/errors v0.9.1
-	github.com/upbound/provider-aws v0.36.0
 	github.com/upbound/upjet v0.9.0-rc.0.0.20230502154751-645d7260d814
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/api v0.26.3

@@ -64,6 +64,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"aws_security_group_rule":    config.IdentifierFromProvider,
 	"aws_route":                  route(),
 
+	"aws_security_group": config.IdentifierFromProvider,
+
 	//vpc
 	//
 	// Imported using the id: vpc-23123
@@ -167,7 +169,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// RDS DB Proxy Targets can be imported using the db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)
 	"aws_db_proxy_target": config.IdentifierFromProvider,
 	// NOTE(turkenf): The resource aws_db_security_group is deprecated,
-	// Please see: https://github.com/upbound/provider-aws/issues/696
+	// Please see: https://kubedb.dev/provider-aws/issues/696
 	// aws_db_snapshot can be imported by using the snapshot identifier
 	"aws_db_snapshot": config.ParameterAsIdentifier("db_snapshot_identifier"),
 	// RDS Aurora Cluster Database Activity Streams can be imported using the resource_arn
@@ -204,7 +206,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
-// table ExternalNameConfigs and sets the version of those resources to v1beta1
+// table ExternalNameConfigs and sets the version of those resources to v1alpha1
 // assuming they will be tested.
 func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {

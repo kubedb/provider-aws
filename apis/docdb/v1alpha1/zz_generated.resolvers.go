@@ -9,8 +9,8 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta11 "github.com/upbound/provider-aws/apis/ec2/v1beta1"
-	v1beta1 "github.com/upbound/provider-aws/apis/kms/v1beta1"
+	v1alpha11 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha1 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -28,8 +28,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
 		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
 		To: reference.To{
-			List:    &v1beta1.KeyList{},
-			Managed: &v1beta1.Key{},
+			List:    &v1alpha1.KeyList{},
+			Managed: &v1alpha1.Key{},
 		},
 	})
 	if err != nil {
@@ -44,8 +44,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
 		To: reference.To{
-			List:    &v1beta11.SecurityGroupList{},
-			Managed: &v1beta11.SecurityGroup{},
+			List:    &v1alpha11.SecurityGroupList{},
+			Managed: &v1alpha11.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -96,8 +96,8 @@ func (mg *SubnetGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 		References:    mg.Spec.ForProvider.SubnetIdsRefs,
 		Selector:      mg.Spec.ForProvider.SubnetIdsSelector,
 		To: reference.To{
-			List:    &v1beta11.SubnetList{},
-			Managed: &v1beta11.Subnet{},
+			List:    &v1alpha11.SubnetList{},
+			Managed: &v1alpha11.Subnet{},
 		},
 	})
 	if err != nil {

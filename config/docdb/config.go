@@ -18,7 +18,7 @@ func Configure(p *config.Provider) {
 
 	p.AddResourceConfigurator("aws_docdb_subnet_group", func(r *config.Resource) {
 		r.References["subnet_ids"] = config.Reference{
-			Type: "github.com/upbound/provider-aws/apis/ec2/v1beta1.Subnet",
+			Type: "kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet",
 		}
 	})
 }

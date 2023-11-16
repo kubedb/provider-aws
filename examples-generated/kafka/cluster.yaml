@@ -29,16 +29,12 @@ spec:
     - brokerLogs:
       - cloudwatchLogs:
         - enabled: true
-          logGroupSelector:
-            matchLabels:
-              testing.upbound.io/example-name: test
+          logGroup: ${aws_cloudwatch_log_group.test.name}
         firehose:
         - deliveryStream: ${aws_kinesis_firehose_delivery_stream.test_stream.name}
           enabled: true
         s3:
-        - bucketSelector:
-            matchLabels:
-              testing.upbound.io/example-name: bucket
+        - bucket: ${aws_s3_bucket.bucket.id}
           enabled: true
           prefix: logs/msk-
     numberOfBrokerNodes: 3
@@ -66,6 +62,23 @@ spec:
   forProvider:
     description: example
     region: us-west-1
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: sg
+  name: sg
+spec:
+  forProvider:
+    region: us-west-1
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
 
 ---
 

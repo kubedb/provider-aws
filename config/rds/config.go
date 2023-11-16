@@ -35,9 +35,6 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("aws_rds_cluster", func(r *config.Resource) {
 		// Mutually exclusive with aws_rds_cluster_role_association
 		config.MoveToStatus(r.TerraformResource, "iam_roles")
-		r.References["s3_import.bucket_name"] = config.Reference{
-			Type: "github.com/upbound/provider-aws/apis/s3/v1beta1.Bucket",
-		}
 		r.References["restore_to_point_in_time.source_cluster_identifier"] = config.Reference{
 			Type: "Cluster",
 		}
@@ -67,20 +64,17 @@ func Configure(p *config.Provider) {
 		r.References["restore_to_point_in_time.source_db_instance_identifier"] = config.Reference{
 			Type: "Instance",
 		}
-		r.References["s3_import.bucket_name"] = config.Reference{
-			Type: "github.com/upbound/provider-aws/apis/s3/v1beta1.Bucket",
-		}
 		r.References["kms_key_id"] = config.Reference{
-			Type: "github.com/upbound/provider-aws/apis/kms/v1beta1.Key",
+			Type: "kubedb.dev/provider-aws/apis/kms/v1alpha1.Key",
 		}
 		r.References["performance_insights_kms_key_id"] = config.Reference{
-			Type: "github.com/upbound/provider-aws/apis/kms/v1beta1.Key",
+			Type: "kubedb.dev/provider-aws/apis/kms/v1alpha1.Key",
 		}
 		r.References["restore_to_point_in_time.source_cluster_identifier"] = config.Reference{
 			Type: "Cluster",
 		}
 		r.References["security_group_names"] = config.Reference{
-			Type:              "github.com/upbound/provider-aws/apis/ec2/v1beta1.SecurityGroup",
+			Type:              "kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup",
 			RefFieldName:      "SecurityGroupNameRefs",
 			SelectorFieldName: "SecurityGroupNameSelector",
 		}
@@ -143,8 +137,8 @@ func Configure(p *config.Provider) {
 			"master DB user. If you set autoGeneratePassword to true, the Secret" +
 			" referenced here will be created or updated with generated password" +
 			" if it does not already contain one."
-		r.MetaResource.ArgumentDocs["engine"] = "- (Required unless a `snapshotIdentifier` or `replicateSourceDb` is provided) The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1beta1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html)."
-		r.MetaResource.ArgumentDocs["engine_version"] = "- (Optional) The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1beta1)'s engine version'."
+		r.MetaResource.ArgumentDocs["engine"] = "- (Required unless a `snapshotIdentifier` or `replicateSourceDb` is provided) The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html)."
+		r.MetaResource.ArgumentDocs["engine_version"] = "- (Optional) The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s engine version'."
 	})
 
 	p.AddResourceConfigurator("aws_db_proxy", func(r *config.Resource) {

@@ -26,9 +26,6 @@ import (
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	name := managed.ControllerName(v1alpha1.UserGroup_GroupVersionKind.String())
 	var initializers managed.InitializerChain
-	for _, i := range o.Provider.Resources["aws_elasticache_user_group"].InitializerFns {
-		initializers = append(initializers, i(mgr.GetClient()))
-	}
 	initializers = append(initializers, managed.NewNameAsExternalName(mgr.GetClient()))
 	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
 	if o.SecretStoreConfigGVK != nil {

@@ -265,7 +265,7 @@ spec:
                     description: The database engine to use. For supported values,
                       see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine must match
-                      the [DB Cluster](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1beta1)'s
+                      the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
                       engine'. For information on the difference between the available
                       Aurora MySQL engines see Comparison in the [Amazon RDS Release
                       Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
@@ -278,7 +278,7 @@ spec:
                       supported values, see the EngineVersion parameter in [API action
                       CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine version must
-                      match the [DB Cluster](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1beta1)'s
+                      match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
                       engine version'.
                     type: string
                   finalSnapshotIdentifier:
@@ -418,79 +418,6 @@ spec:
                       more information on the AWS Documentation what IAM permissions
                       are needed to allow Enhanced Monitoring for RDS Instances.
                     type: string
-                  monitoringRoleArnRef:
-                    description: Reference to a Role in iam to populate monitoringRoleArn.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  monitoringRoleArnSelector:
-                    description: Selector for a Role in iam to populate monitoringRoleArn.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
                   multiAz:
                     description: Specifies if the RDS instance is multi-AZ
                     type: boolean
@@ -673,7 +600,16 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Key-value map of resource tags.
+                    description: A map of tags to assign to the resource. If configured
+                      with a provider default_tags configuration block present, tags
+                      with matching keys will overwrite those defined at the provider-level.
+                    type: object
+                  tagsAll:
+                    additionalProperties:
+                      type: string
+                    description: A map of tags assigned to the resource, including
+                      those inherited from the provider default_tags configuration
+                      block.
                     type: object
                   timezone:
                     description: Time zone of the DB instance. timezone is currently
@@ -1090,7 +1026,7 @@ spec:
                     description: The database engine to use. For supported values,
                       see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine must match
-                      the [DB Cluster](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1beta1)'s
+                      the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
                       engine'. For information on the difference between the available
                       Aurora MySQL engines see Comparison in the [Amazon RDS Release
                       Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
@@ -1103,7 +1039,7 @@ spec:
                       supported values, see the EngineVersion parameter in [API action
                       CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine version must
-                      match the [DB Cluster](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1beta1)'s
+                      match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
                       engine version'.
                     type: string
                   engineVersionActual:
@@ -1382,7 +1318,9 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Key-value map of resource tags.
+                    description: A map of tags to assign to the resource. If configured
+                      with a provider default_tags configuration block present, tags
+                      with matching keys will overwrite those defined at the provider-level.
                     type: object
                   tagsAll:
                     additionalProperties:

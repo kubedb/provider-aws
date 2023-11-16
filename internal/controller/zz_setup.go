@@ -24,6 +24,7 @@ import (
 	tablereplica "kubedb.dev/provider-aws/internal/controller/dynamodb/tablereplica"
 	tag "kubedb.dev/provider-aws/internal/controller/dynamodb/tag"
 	route "kubedb.dev/provider-aws/internal/controller/ec2/route"
+	securitygroup "kubedb.dev/provider-aws/internal/controller/ec2/securitygroup"
 	securitygrouprule "kubedb.dev/provider-aws/internal/controller/ec2/securitygrouprule"
 	subnet "kubedb.dev/provider-aws/internal/controller/ec2/subnet"
 	vpc "kubedb.dev/provider-aws/internal/controller/ec2/vpc"
@@ -90,6 +91,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		tablereplica.Setup,
 		tag.Setup,
 		route.Setup,
+		securitygroup.Setup,
 		securitygrouprule.Setup,
 		subnet.Setup,
 		vpc.Setup,

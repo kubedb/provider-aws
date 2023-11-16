@@ -400,7 +400,15 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Key-value map of resource tags.
+                    description: Map of tags to assign to the resource. If configured
+                      with a provider default_tags configuration block present, tags
+                      with matching keys will overwrite those defined at the provider-level.
+                    type: object
+                  tagsAll:
+                    additionalProperties:
+                      type: string
+                    description: Map of tags assigned to the resource, including those
+                      inherited from the provider default_tags configuration block.
                     type: object
                 type: object
               managementPolicy:
@@ -809,7 +817,9 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Key-value map of resource tags.
+                    description: Map of tags to assign to the resource. If configured
+                      with a provider default_tags configuration block present, tags
+                      with matching keys will overwrite those defined at the provider-level.
                     type: object
                   tagsAll:
                     additionalProperties:

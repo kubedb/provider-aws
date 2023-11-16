@@ -1,0 +1,38 @@
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ec2/v1alpha1/securitygroup
+  labels:
+    testing.upbound.io/example-name: allow_tls
+  name: allow-tls
+spec:
+  forProvider:
+    description: Allow TLS inbound traffic
+    egress:
+    - cidrBlocks:
+      - 0.0.0.0/0
+      fromPort: 0
+      ipv6CidrBlocks:
+      - ::/0
+      protocol: "-1"
+      toPort: 0
+    ingress:
+    - cidrBlocks:
+      - ${aws_vpc.main.cidr_block}
+      description: TLS from VPC
+      fromPort: 443
+      ipv6CidrBlocks:
+      - ${aws_vpc.main.ipv6_cidr_block}
+      protocol: tcp
+      toPort: 443
+    name: allow_tls
+    region: us-west-1
+    tags:
+      Name: allow_tls
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: main
+
+---
+
