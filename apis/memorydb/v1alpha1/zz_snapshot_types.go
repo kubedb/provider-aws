@@ -88,8 +88,17 @@ type SnapshotObservation struct {
 type SnapshotParameters struct {
 
 	// Name of the MemoryDB cluster to take a snapshot of.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/memorydb/v1alpha1.Cluster
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
+
+	// Reference to a Cluster in memorydb to populate clusterName.
+	// +kubebuilder:validation:Optional
+	ClusterNameRef *v1.Reference `json:"clusterNameRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in memorydb to populate clusterName.
+	// +kubebuilder:validation:Optional
+	ClusterNameSelector *v1.Selector `json:"clusterNameSelector,omitempty" tf:"-"`
 
 	// ARN of the KMS key used to encrypt the snapshot at rest.
 	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
@@ -142,7 +151,6 @@ type SnapshotStatus struct {
 type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterName)",message="clusterName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   SnapshotSpec   `json:"spec"`
 	Status SnapshotStatus `json:"status,omitempty"`

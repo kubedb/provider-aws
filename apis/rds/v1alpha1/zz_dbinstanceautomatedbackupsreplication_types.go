@@ -60,8 +60,18 @@ type DBInstanceAutomatedBackupsReplicationParameters struct {
 	RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
 	// The Amazon Resource Name (ARN) of the source DB instance for the replicated automated backups, for example, arn:aws:rds:us-west-2:123456789012:db:mydatabase.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	SourceDBInstanceArn *string `json:"sourceDbInstanceArn,omitempty" tf:"source_db_instance_arn,omitempty"`
+
+	// Reference to a Instance in rds to populate sourceDbInstanceArn.
+	// +kubebuilder:validation:Optional
+	SourceDBInstanceArnRef *v1.Reference `json:"sourceDbInstanceArnRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in rds to populate sourceDbInstanceArn.
+	// +kubebuilder:validation:Optional
+	SourceDBInstanceArnSelector *v1.Selector `json:"sourceDbInstanceArnSelector,omitempty" tf:"-"`
 }
 
 // DBInstanceAutomatedBackupsReplicationSpec defines the desired state of DBInstanceAutomatedBackupsReplication
@@ -89,7 +99,6 @@ type DBInstanceAutomatedBackupsReplication struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.sourceDbInstanceArn)",message="sourceDbInstanceArn is a required parameter"
 	Spec   DBInstanceAutomatedBackupsReplicationSpec   `json:"spec"`
 	Status DBInstanceAutomatedBackupsReplicationStatus `json:"status,omitempty"`
 }

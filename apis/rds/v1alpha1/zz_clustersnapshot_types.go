@@ -71,8 +71,18 @@ type ClusterSnapshotObservation struct {
 type ClusterSnapshotParameters struct {
 
 	// The DB Cluster Identifier from which to take the snapshot.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
+
+	// Reference to a Cluster in rds to populate dbClusterIdentifier.
+	// +kubebuilder:validation:Optional
+	DBClusterIdentifierRef *v1.Reference `json:"dbClusterIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in rds to populate dbClusterIdentifier.
+	// +kubebuilder:validation:Optional
+	DBClusterIdentifierSelector *v1.Selector `json:"dbClusterIdentifierSelector,omitempty" tf:"-"`
 
 	// The Identifier for the snapshot.
 	// +kubebuilder:validation:Optional
@@ -116,7 +126,6 @@ type ClusterSnapshotStatus struct {
 type ClusterSnapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbClusterIdentifier)",message="dbClusterIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbClusterSnapshotIdentifier)",message="dbClusterSnapshotIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   ClusterSnapshotSpec   `json:"spec"`

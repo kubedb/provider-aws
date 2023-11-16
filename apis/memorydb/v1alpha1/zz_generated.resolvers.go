@@ -9,6 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
+	resource "github.com/upbound/upjet/pkg/resource"
 	v1alpha11 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
 	v1alpha1 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -54,6 +55,22 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.SecurityGroupIDRefs = mrsp.ResolvedReferences
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubnetGroupName),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.SubnetGroupNameRef,
+		Selector:     mg.Spec.ForProvider.SubnetGroupNameSelector,
+		To: reference.To{
+			List:    &SubnetGroupList{},
+			Managed: &SubnetGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SubnetGroupName")
+	}
+	mg.Spec.ForProvider.SubnetGroupName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SubnetGroupNameRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -63,6 +80,22 @@ func (mg *Snapshot) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 	var rsp reference.ResolutionResponse
 	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClusterName),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ClusterNameRef,
+		Selector:     mg.Spec.ForProvider.ClusterNameSelector,
+		To: reference.To{
+			List:    &ClusterList{},
+			Managed: &Cluster{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ClusterName")
+	}
+	mg.Spec.ForProvider.ClusterName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClusterNameRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyArn),

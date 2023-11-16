@@ -63,8 +63,18 @@ type ClusterActivityStreamParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// The Amazon Resource Name (ARN) of the DB cluster.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	ResourceArn *string `json:"resourceArn,omitempty" tf:"resource_arn,omitempty"`
+
+	// Reference to a Cluster in rds to populate resourceArn.
+	// +kubebuilder:validation:Optional
+	ResourceArnRef *v1.Reference `json:"resourceArnRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in rds to populate resourceArn.
+	// +kubebuilder:validation:Optional
+	ResourceArnSelector *v1.Selector `json:"resourceArnSelector,omitempty" tf:"-"`
 }
 
 // ClusterActivityStreamSpec defines the desired state of ClusterActivityStream
@@ -93,7 +103,6 @@ type ClusterActivityStream struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.mode)",message="mode is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.resourceArn)",message="resourceArn is a required parameter"
 	Spec   ClusterActivityStreamSpec   `json:"spec"`
 	Status ClusterActivityStreamStatus `json:"status,omitempty"`
 }

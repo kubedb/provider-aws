@@ -1225,6 +1225,16 @@ func (in *ClusterSnapshotParameters) DeepCopyInto(out *ClusterSnapshotParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.DBClusterIdentifierRef != nil {
+		in, out := &in.DBClusterIdentifierRef, &out.DBClusterIdentifierRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DBClusterIdentifierSelector != nil {
+		in, out := &in.DBClusterIdentifierSelector, &out.DBClusterIdentifierSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -1800,6 +1810,16 @@ func (in *GlobalClusterParameters) DeepCopyInto(out *GlobalClusterParameters) {
 		in, out := &in.SourceDBClusterIdentifier, &out.SourceDBClusterIdentifier
 		*out = new(string)
 		**out = **in
+	}
+	if in.SourceDBClusterIdentifierRef != nil {
+		in, out := &in.SourceDBClusterIdentifierRef, &out.SourceDBClusterIdentifierRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourceDBClusterIdentifierSelector != nil {
+		in, out := &in.SourceDBClusterIdentifierSelector, &out.SourceDBClusterIdentifierSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StorageEncrypted != nil {
 		in, out := &in.StorageEncrypted, &out.StorageEncrypted

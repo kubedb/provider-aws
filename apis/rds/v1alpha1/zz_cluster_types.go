@@ -321,8 +321,18 @@ type ClusterParameters struct {
 	MasterPasswordSecretRef *v1.SecretKeySelector `json:"masterPasswordSecretRef,omitempty" tf:"-"`
 
 	// Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If not specified, the default KMS key for your Amazon Web Services account is used.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("key_id",true)
 	// +kubebuilder:validation:Optional
 	MasterUserSecretKMSKeyID *string `json:"masterUserSecretKmsKeyId,omitempty" tf:"master_user_secret_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate masterUserSecretKmsKeyId.
+	// +kubebuilder:validation:Optional
+	MasterUserSecretKMSKeyIDRef *v1.Reference `json:"masterUserSecretKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate masterUserSecretKmsKeyId.
+	// +kubebuilder:validation:Optional
+	MasterUserSecretKMSKeyIDSelector *v1.Selector `json:"masterUserSecretKmsKeyIdSelector,omitempty" tf:"-"`
 
 	// Username for the master DB user. Please refer to the RDS Naming Constraints. This argument does not support in-place updates and cannot be changed during a restore from snapshot.
 	// +kubebuilder:validation:Optional

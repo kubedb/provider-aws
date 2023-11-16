@@ -1728,6 +1728,16 @@ func (in *TableReplicaParameters_2) DeepCopyInto(out *TableReplicaParameters_2) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.GlobalTableArnRef != nil {
+		in, out := &in.GlobalTableArnRef, &out.GlobalTableArnRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GlobalTableArnSelector != nil {
+		in, out := &in.GlobalTableArnSelector, &out.GlobalTableArnSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.KMSKeyArn != nil {
 		in, out := &in.KMSKeyArn, &out.KMSKeyArn
 		*out = new(string)

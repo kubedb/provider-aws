@@ -31,8 +31,17 @@ type InstanceRoleAssociationObservation struct {
 type InstanceRoleAssociationParameters struct {
 
 	// DB Instance Identifier to associate with the IAM Role.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
+
+	// Reference to a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
 
 	// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
 	// +kubebuilder:validation:Optional
@@ -72,7 +81,6 @@ type InstanceRoleAssociationStatus struct {
 type InstanceRoleAssociation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbInstanceIdentifier)",message="dbInstanceIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.featureName)",message="featureName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.roleArn)",message="roleArn is a required parameter"

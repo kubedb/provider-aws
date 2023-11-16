@@ -8,7 +8,9 @@ metadata:
   name: eligible
 spec:
   forProvider:
-    clusterIdentifier: ${aws_rds_cluster.default.id}
+    clusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
     customEndpointType: READER
     excludedMembers:
     - ${aws_rds_cluster_instance.test1.id}
@@ -54,7 +56,9 @@ metadata:
 spec:
   forProvider:
     applyImmediately: true
-    clusterIdentifier: ${aws_rds_cluster.default.id}
+    clusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
     engine: ${aws_rds_cluster.default.engine}
     engineVersion: ${aws_rds_cluster.default.engine_version}
     instanceClass: db.t2.small
@@ -73,7 +77,9 @@ metadata:
 spec:
   forProvider:
     applyImmediately: true
-    clusterIdentifier: ${aws_rds_cluster.default.id}
+    clusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
     engine: ${aws_rds_cluster.default.engine}
     engineVersion: ${aws_rds_cluster.default.engine_version}
     instanceClass: db.t2.small
@@ -92,7 +98,9 @@ metadata:
 spec:
   forProvider:
     applyImmediately: true
-    clusterIdentifier: ${aws_rds_cluster.default.id}
+    clusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
     engine: ${aws_rds_cluster.default.engine}
     engineVersion: ${aws_rds_cluster.default.engine_version}
     instanceClass: db.t2.small

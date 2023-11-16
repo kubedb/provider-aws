@@ -215,8 +215,18 @@ type ClusterParameters struct {
 	SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
 
 	// The name of the subnet group to be used for the cluster. Defaults to a subnet group consisting of default VPC subnets.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/memorydb/v1alpha1.SubnetGroup
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+
+	// Reference to a SubnetGroup in memorydb to populate subnetGroupName.
+	// +kubebuilder:validation:Optional
+	SubnetGroupNameRef *v1.Reference `json:"subnetGroupNameRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetGroup in memorydb to populate subnetGroupName.
+	// +kubebuilder:validation:Optional
+	SubnetGroupNameSelector *v1.Selector `json:"subnetGroupNameSelector,omitempty" tf:"-"`
 
 	// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
 	// +kubebuilder:validation:Optional

@@ -209,21 +209,14 @@ func KnownReferencers() config.ResourceOption { //nolint:gocyclo
 				continue
 			}
 			switch {
-			/*case strings.HasSuffix(k, "role_arn"):
-			r.References[k] = config.Reference{
-				Type:      "kubedb.dev/provider-aws/apis/iam/v1alpha1.Role",
-				Extractor: common.PathARNExtractor,
-			}*/
+
 			case strings.HasSuffix(k, "security_group_ids"):
 				r.References[k] = config.Reference{
 					Type:              "kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup",
 					RefFieldName:      name.NewFromSnake(strings.TrimSuffix(k, "s")).Camel + "Refs",
 					SelectorFieldName: name.NewFromSnake(strings.TrimSuffix(k, "s")).Camel + "Selector",
 				}
-				/*case r.ShortGroup == "glue" && k == "database_name":
-				r.References["database_name"] = config.Reference{
-					Type: "kubedb.dev/provider-aws/apis/glue/v1alpha1.CatalogDatabase",
-				}*/
+
 			}
 			switch k {
 			case "vpc_id":

@@ -31,8 +31,17 @@ type DomainPolicyParameters struct {
 	AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
 
 	// Name of the domain.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticsearch/v1alpha1.Domain
 	// +kubebuilder:validation:Optional
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
+	// Reference to a Domain in elasticsearch to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
+
+	// Selector for a Domain in elasticsearch to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-
@@ -65,7 +74,6 @@ type DomainPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.accessPolicies)",message="accessPolicies is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.domainName)",message="domainName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   DomainPolicySpec   `json:"spec"`
 	Status DomainPolicyStatus `json:"status,omitempty"`

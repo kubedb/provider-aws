@@ -8,6 +8,7 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 	ujconfig "github.com/upbound/upjet/pkg/config"
+	"github.com/upbound/upjet/pkg/registry/reference"
 	"kubedb.dev/provider-aws/config/docdb"
 	"kubedb.dev/provider-aws/config/dynamodb"
 	"kubedb.dev/provider-aws/config/ec2"
@@ -35,6 +36,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithRootGroup("aws.kubedb.com"),
 		ujconfig.WithFeaturesPackage("internal/features"),
+		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
 		ujconfig.WithDefaultResourceOptions(
 			KindOverrides(),
 			RegionAddition(),

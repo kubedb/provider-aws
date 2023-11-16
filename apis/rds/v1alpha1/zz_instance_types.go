@@ -494,8 +494,18 @@ type InstanceParameters struct {
 	ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
 
 	// The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If not specified, the default KMS key for your Amazon Web Services account is used.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("key_id",true)
 	// +kubebuilder:validation:Optional
 	MasterUserSecretKMSKeyID *string `json:"masterUserSecretKmsKeyId,omitempty" tf:"master_user_secret_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate masterUserSecretKmsKeyId.
+	// +kubebuilder:validation:Optional
+	MasterUserSecretKMSKeyIDRef *v1.Reference `json:"masterUserSecretKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate masterUserSecretKmsKeyId.
+	// +kubebuilder:validation:Optional
+	MasterUserSecretKMSKeyIDSelector *v1.Selector `json:"masterUserSecretKmsKeyIdSelector,omitempty" tf:"-"`
 
 	// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
 	// +kubebuilder:validation:Optional
@@ -584,8 +594,17 @@ type InstanceParameters struct {
 	// specify a kms_key_id. See DB Instance Replication and Working with
 	// PostgreSQL and MySQL Read Replicas
 	// for more information on using Replication.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	ReplicateSourceDB *string `json:"replicateSourceDb,omitempty" tf:"replicate_source_db,omitempty"`
+
+	// Reference to a Instance in rds to populate replicateSourceDb.
+	// +kubebuilder:validation:Optional
+	ReplicateSourceDBRef *v1.Reference `json:"replicateSourceDbRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in rds to populate replicateSourceDb.
+	// +kubebuilder:validation:Optional
+	ReplicateSourceDBSelector *v1.Selector `json:"replicateSourceDbSelector,omitempty" tf:"-"`
 
 	// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
 	// +kubebuilder:validation:Optional

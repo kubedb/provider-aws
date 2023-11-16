@@ -105,8 +105,18 @@ type VPCPeeringConnectionParameters struct {
 	PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
 
 	// The ID of the VPC with which you are creating the VPC Peering Connection.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerVPCID *string `json:"peerVpcId,omitempty" tf:"peer_vpc_id,omitempty"`
+
+	// Reference to a VPC in ec2 to populate peerVpcId.
+	// +kubebuilder:validation:Optional
+	PeerVPCIDRef *v1.Reference `json:"peerVpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in ec2 to populate peerVpcId.
+	// +kubebuilder:validation:Optional
+	PeerVPCIDSelector *v1.Selector `json:"peerVpcIdSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-
@@ -164,7 +174,6 @@ type VPCPeeringConnectionStatus struct {
 type VPCPeeringConnection struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.peerVpcId)",message="peerVpcId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   VPCPeeringConnectionSpec   `json:"spec"`
 	Status VPCPeeringConnectionStatus `json:"status,omitempty"`

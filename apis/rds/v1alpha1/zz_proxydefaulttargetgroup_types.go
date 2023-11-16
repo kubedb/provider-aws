@@ -79,8 +79,17 @@ type ProxyDefaultTargetGroupParameters struct {
 	ConnectionPoolConfig []ConnectionPoolConfigParameters `json:"connectionPoolConfig,omitempty" tf:"connection_pool_config,omitempty"`
 
 	// Name of the RDS DB Proxy.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Proxy
 	// +kubebuilder:validation:Optional
 	DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
+
+	// Reference to a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameRef *v1.Reference `json:"dbProxyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameSelector *v1.Selector `json:"dbProxyNameSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-
@@ -112,7 +121,6 @@ type ProxyDefaultTargetGroupStatus struct {
 type ProxyDefaultTargetGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbProxyName)",message="dbProxyName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   ProxyDefaultTargetGroupSpec   `json:"spec"`
 	Status ProxyDefaultTargetGroupStatus `json:"status,omitempty"`

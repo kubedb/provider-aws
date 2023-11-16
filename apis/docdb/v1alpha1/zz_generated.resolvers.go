@@ -9,6 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
+	resource "github.com/upbound/upjet/pkg/resource"
 	v1alpha11 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
 	v1alpha1 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -79,6 +80,58 @@ func (mg *ClusterInstance) ResolveReferences(ctx context.Context, c client.Reade
 	}
 	mg.Spec.ForProvider.ClusterIdentifier = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClusterIdentifierRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ClusterSnapshot.
+func (mg *ClusterSnapshot) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DBClusterIdentifier),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.DBClusterIdentifierRef,
+		Selector:     mg.Spec.ForProvider.DBClusterIdentifierSelector,
+		To: reference.To{
+			List:    &ClusterList{},
+			Managed: &Cluster{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DBClusterIdentifier")
+	}
+	mg.Spec.ForProvider.DBClusterIdentifier = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DBClusterIdentifierRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this GlobalCluster.
+func (mg *GlobalCluster) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SourceDBClusterIdentifier),
+		Extract:      resource.ExtractParamPath("arn", true),
+		Reference:    mg.Spec.ForProvider.SourceDBClusterIdentifierRef,
+		Selector:     mg.Spec.ForProvider.SourceDBClusterIdentifierSelector,
+		To: reference.To{
+			List:    &ClusterList{},
+			Managed: &Cluster{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SourceDBClusterIdentifier")
+	}
+	mg.Spec.ForProvider.SourceDBClusterIdentifier = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SourceDBClusterIdentifierRef = rsp.ResolvedReference
 
 	return nil
 }

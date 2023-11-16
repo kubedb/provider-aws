@@ -31,8 +31,18 @@ type ClusterRoleAssociationObservation struct {
 type ClusterRoleAssociationParameters struct {
 
 	// DB Cluster Identifier to associate with the IAM Role.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
+
+	// Reference to a Cluster in rds to populate dbClusterIdentifier.
+	// +kubebuilder:validation:Optional
+	DBClusterIdentifierRef *v1.Reference `json:"dbClusterIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in rds to populate dbClusterIdentifier.
+	// +kubebuilder:validation:Optional
+	DBClusterIdentifierSelector *v1.Selector `json:"dbClusterIdentifierSelector,omitempty" tf:"-"`
 
 	// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
 	// +kubebuilder:validation:Optional
@@ -72,7 +82,6 @@ type ClusterRoleAssociationStatus struct {
 type ClusterRoleAssociation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbClusterIdentifier)",message="dbClusterIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.featureName)",message="featureName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.roleArn)",message="roleArn is a required parameter"

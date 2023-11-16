@@ -15,7 +15,9 @@ spec:
       maxIdleConnectionsPercent: 50
       sessionPinningFilters:
       - EXCLUDE_VARIABLE_SETS
-    dbProxyName: ${aws_db_proxy.example.name}
+    dbProxyNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     region: us-west-1
 
 ---

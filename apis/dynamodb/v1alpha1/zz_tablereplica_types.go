@@ -43,8 +43,18 @@ type TableReplicaObservation_2 struct {
 type TableReplicaParameters_2 struct {
 
 	// ARN of the main or global table which this resource will replicate.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/dynamodb/v1alpha1.Table
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	GlobalTableArn *string `json:"globalTableArn,omitempty" tf:"global_table_arn,omitempty"`
+
+	// Reference to a Table in dynamodb to populate globalTableArn.
+	// +kubebuilder:validation:Optional
+	GlobalTableArnRef *v1.Reference `json:"globalTableArnRef,omitempty" tf:"-"`
+
+	// Selector for a Table in dynamodb to populate globalTableArn.
+	// +kubebuilder:validation:Optional
+	GlobalTableArnSelector *v1.Selector `json:"globalTableArnSelector,omitempty" tf:"-"`
 
 	// ARN of the CMK that should be used for the AWS KMS encryption. This argument should only be used if the key is different from the default KMS-managed DynamoDB key, alias/aws/dynamodb. Note: This attribute will not be populated with the ARN of default keys.
 	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
@@ -105,7 +115,6 @@ type TableReplicaStatus struct {
 type TableReplica struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.globalTableArn)",message="globalTableArn is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   TableReplicaSpec   `json:"spec"`
 	Status TableReplicaStatus `json:"status,omitempty"`

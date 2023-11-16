@@ -9,6 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
+	resource "github.com/upbound/upjet/pkg/resource"
 	v1alpha1 "kubedb.dev/provider-aws/apis/kinesis/v1alpha1"
 	v1alpha11 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	common "kubedb.dev/provider-aws/config/common"
@@ -115,6 +116,22 @@ func (mg *TableReplica) ResolveReferences(ctx context.Context, c client.Reader) 
 
 	var rsp reference.ResolutionResponse
 	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GlobalTableArn),
+		Extract:      resource.ExtractParamPath("arn", true),
+		Reference:    mg.Spec.ForProvider.GlobalTableArnRef,
+		Selector:     mg.Spec.ForProvider.GlobalTableArnSelector,
+		To: reference.To{
+			List:    &TableList{},
+			Managed: &Table{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.GlobalTableArn")
+	}
+	mg.Spec.ForProvider.GlobalTableArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.GlobalTableArnRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyArn),

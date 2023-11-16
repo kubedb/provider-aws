@@ -2699,6 +2699,16 @@ func (in *VPCPeeringConnectionParameters) DeepCopyInto(out *VPCPeeringConnection
 		*out = new(string)
 		**out = **in
 	}
+	if in.PeerVPCIDRef != nil {
+		in, out := &in.PeerVPCIDRef, &out.PeerVPCIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PeerVPCIDSelector != nil {
+		in, out := &in.PeerVPCIDSelector, &out.PeerVPCIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)

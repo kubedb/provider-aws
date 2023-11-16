@@ -73,7 +73,9 @@ metadata:
   name: primary
 spec:
   forProvider:
-    clusterIdentifier: ${aws_rds_cluster.primary.id}
+    clusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: primary
     dbSubnetGroupNameSelector:
       matchLabels:
         testing.upbound.io/example-name: example
@@ -95,7 +97,9 @@ metadata:
   name: secondary
 spec:
   forProvider:
-    clusterIdentifier: ${aws_rds_cluster.secondary.id}
+    clusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: secondary
     dbSubnetGroupNameSelector:
       matchLabels:
         testing.upbound.io/example-name: example

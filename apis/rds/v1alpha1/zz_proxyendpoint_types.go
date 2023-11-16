@@ -51,8 +51,17 @@ type ProxyEndpointObservation struct {
 type ProxyEndpointParameters struct {
 
 	// The name of the DB proxy associated with the DB proxy endpoint that you create.
-	// +kubebuilder:validation:Required
-	DBProxyName *string `json:"dbProxyName" tf:"db_proxy_name,omitempty"`
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Proxy
+	// +kubebuilder:validation:Optional
+	DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
+
+	// Reference to a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameRef *v1.Reference `json:"dbProxyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameSelector *v1.Selector `json:"dbProxyNameSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-

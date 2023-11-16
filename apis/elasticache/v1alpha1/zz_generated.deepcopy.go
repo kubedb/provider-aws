@@ -535,6 +535,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ReplicationGroupIDRef != nil {
+		in, out := &in.ReplicationGroupIDRef, &out.ReplicationGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ReplicationGroupIDSelector != nil {
+		in, out := &in.ReplicationGroupIDSelector, &out.ReplicationGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecurityGroupIDRefs != nil {
 		in, out := &in.SecurityGroupIDRefs, &out.SecurityGroupIDRefs
 		*out = make([]v1.Reference, len(*in))
@@ -588,6 +598,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		in, out := &in.SubnetGroupName, &out.SubnetGroupName
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetGroupNameRef != nil {
+		in, out := &in.SubnetGroupNameRef, &out.SubnetGroupNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetGroupNameSelector != nil {
+		in, out := &in.SubnetGroupNameSelector, &out.SubnetGroupNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags

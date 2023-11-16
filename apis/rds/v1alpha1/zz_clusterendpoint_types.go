@@ -46,8 +46,18 @@ type ClusterEndpointObservation struct {
 type ClusterEndpointParameters struct {
 
 	// The cluster identifier.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ClusterIdentifier *string `json:"clusterIdentifier,omitempty" tf:"cluster_identifier,omitempty"`
+
+	// Reference to a Cluster in rds to populate clusterIdentifier.
+	// +kubebuilder:validation:Optional
+	ClusterIdentifierRef *v1.Reference `json:"clusterIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in rds to populate clusterIdentifier.
+	// +kubebuilder:validation:Optional
+	ClusterIdentifierSelector *v1.Selector `json:"clusterIdentifierSelector,omitempty" tf:"-"`
 
 	// The type of the endpoint. One of: READER , ANY .
 	// +kubebuilder:validation:Optional
@@ -99,7 +109,6 @@ type ClusterEndpointStatus struct {
 type ClusterEndpoint struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterIdentifier)",message="clusterIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.customEndpointType)",message="customEndpointType is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   ClusterEndpointSpec   `json:"spec"`

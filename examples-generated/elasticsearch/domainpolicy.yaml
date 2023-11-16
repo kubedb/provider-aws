@@ -23,7 +23,9 @@ spec:
               }
           ]
       }
-    domainName: ${aws_elasticsearch_domain.example.domain_name}
+    domainNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     region: us-west-1
 
 ---

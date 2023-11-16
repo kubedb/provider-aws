@@ -9,6 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
+	resource "github.com/upbound/upjet/pkg/resource"
 	v1alpha1 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
 	v1alpha11 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -38,6 +39,22 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	mg.Spec.ForProvider.ParameterGroupName = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ParameterGroupNameRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ReplicationGroupID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.ReplicationGroupIDRef,
+		Selector:     mg.Spec.ForProvider.ReplicationGroupIDSelector,
+		To: reference.To{
+			List:    &ReplicationGroupList{},
+			Managed: &ReplicationGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ReplicationGroupID")
+	}
+	mg.Spec.ForProvider.ReplicationGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ReplicationGroupIDRef = rsp.ResolvedReference
+
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityGroupIds),
 		Extract:       reference.ExternalName(),
@@ -53,6 +70,22 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	}
 	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.SecurityGroupIDRefs = mrsp.ResolvedReferences
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubnetGroupName),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.SubnetGroupNameRef,
+		Selector:     mg.Spec.ForProvider.SubnetGroupNameSelector,
+		To: reference.To{
+			List:    &SubnetGroupList{},
+			Managed: &SubnetGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SubnetGroupName")
+	}
+	mg.Spec.ForProvider.SubnetGroupName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SubnetGroupNameRef = rsp.ResolvedReference
 
 	return nil
 }

@@ -56,12 +56,30 @@ type ProxyTargetParameters struct {
 	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
 	// DB instance identifier.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
+	// Reference to a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
+
 	// The name of the DB proxy.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Proxy
 	// +kubebuilder:validation:Optional
 	DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
+
+	// Reference to a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameRef *v1.Reference `json:"dbProxyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameSelector *v1.Selector `json:"dbProxyNameSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-
@@ -97,7 +115,6 @@ type ProxyTargetStatus struct {
 type ProxyTarget struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbProxyName)",message="dbProxyName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.targetGroupName)",message="targetGroupName is a required parameter"
 	Spec   ProxyTargetSpec   `json:"spec"`

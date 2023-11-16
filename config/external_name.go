@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/upbound/upjet/pkg/config"
+	"kubedb.dev/provider-aws/config/common"
 	"strings"
 )
 
@@ -211,6 +212,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
 		if e, ok := ExternalNameConfigs[r.Name]; ok {
+			r.Version = common.VersionV1Alpha1
 			r.ExternalName = e
 		}
 	}

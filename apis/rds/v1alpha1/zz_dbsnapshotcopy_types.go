@@ -123,8 +123,18 @@ type DBSnapshotCopyParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Snapshot identifier of the source snapshot.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Snapshot
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("db_snapshot_arn",true)
 	// +kubebuilder:validation:Optional
 	SourceDBSnapshotIdentifier *string `json:"sourceDbSnapshotIdentifier,omitempty" tf:"source_db_snapshot_identifier,omitempty"`
+
+	// Reference to a Snapshot in rds to populate sourceDbSnapshotIdentifier.
+	// +kubebuilder:validation:Optional
+	SourceDBSnapshotIdentifierRef *v1.Reference `json:"sourceDbSnapshotIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Snapshot in rds to populate sourceDbSnapshotIdentifier.
+	// +kubebuilder:validation:Optional
+	SourceDBSnapshotIdentifierSelector *v1.Selector `json:"sourceDbSnapshotIdentifierSelector,omitempty" tf:"-"`
 
 	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	// +kubebuilder:validation:Optional
@@ -168,7 +178,6 @@ type DBSnapshotCopy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.sourceDbSnapshotIdentifier)",message="sourceDbSnapshotIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.targetDbSnapshotIdentifier)",message="targetDbSnapshotIdentifier is a required parameter"
 	Spec   DBSnapshotCopySpec   `json:"spec"`
 	Status DBSnapshotCopyStatus `json:"status,omitempty"`

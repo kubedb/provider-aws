@@ -766,6 +766,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SubnetGroupNameRef != nil {
+		in, out := &in.SubnetGroupNameRef, &out.SubnetGroupNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetGroupNameSelector != nil {
+		in, out := &in.SubnetGroupNameSelector, &out.SubnetGroupNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TLSEnabled != nil {
 		in, out := &in.TLSEnabled, &out.TLSEnabled
 		*out = new(bool)
@@ -1416,6 +1426,16 @@ func (in *SnapshotParameters) DeepCopyInto(out *SnapshotParameters) {
 		in, out := &in.ClusterName, &out.ClusterName
 		*out = new(string)
 		**out = **in
+	}
+	if in.ClusterNameRef != nil {
+		in, out := &in.ClusterNameRef, &out.ClusterNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClusterNameSelector != nil {
+		in, out := &in.ClusterNameSelector, &out.ClusterNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.KMSKeyArn != nil {
 		in, out := &in.KMSKeyArn, &out.KMSKeyArn

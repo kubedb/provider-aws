@@ -82,8 +82,17 @@ type SnapshotObservation struct {
 type SnapshotParameters struct {
 
 	// The DB Instance Identifier from which to take the snapshot.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
+
+	// Reference to a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-
@@ -127,7 +136,6 @@ type SnapshotStatus struct {
 type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbInstanceIdentifier)",message="dbInstanceIdentifier is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
 	Spec   SnapshotSpec   `json:"spec"`
 	Status SnapshotStatus `json:"status,omitempty"`

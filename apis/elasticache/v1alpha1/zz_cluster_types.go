@@ -246,8 +246,18 @@ type ClusterParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.ReplicationGroup
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ReplicationGroupID *string `json:"replicationGroupId,omitempty" tf:"replication_group_id,omitempty"`
+
+	// Reference to a ReplicationGroup in elasticache to populate replicationGroupId.
+	// +kubebuilder:validation:Optional
+	ReplicationGroupIDRef *v1.Reference `json:"replicationGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a ReplicationGroup in elasticache to populate replicationGroupId.
+	// +kubebuilder:validation:Optional
+	ReplicationGroupIDSelector *v1.Selector `json:"replicationGroupIdSelector,omitempty" tf:"-"`
 
 	// References to SecurityGroup in ec2 to populate securityGroupIds.
 	// +kubebuilder:validation:Optional
@@ -281,8 +291,17 @@ type ClusterParameters struct {
 	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
 	// create the resource.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.SubnetGroup
 	// +kubebuilder:validation:Optional
 	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+
+	// Reference to a SubnetGroup in elasticache to populate subnetGroupName.
+	// +kubebuilder:validation:Optional
+	SubnetGroupNameRef *v1.Reference `json:"subnetGroupNameRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetGroup in elasticache to populate subnetGroupName.
+	// +kubebuilder:validation:Optional
+	SubnetGroupNameSelector *v1.Selector `json:"subnetGroupNameSelector,omitempty" tf:"-"`
 
 	// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	// +kubebuilder:validation:Optional

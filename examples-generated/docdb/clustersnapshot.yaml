@@ -8,7 +8,9 @@ metadata:
   name: example
 spec:
   forProvider:
-    dbClusterIdentifier: ${aws_docdb_cluster.example.id}
+    dbClusterIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     region: us-west-1
 
 ---

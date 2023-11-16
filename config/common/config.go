@@ -23,9 +23,9 @@ const (
 	// function in this package.
 	PathTerraformIDExtractor = SelfPackagePath + ".TerraformID()"
 
-	// Versionv1alpha1 is used for resources that meet the v1alpha1 criteria
+	// VersionV1Alpha1 is used for resources that meet the v1alpha1 criteria
 	// here: https://github.com/upbound/arch/pull/33
-	Versionv1alpha1 = "v1alpha1"
+	VersionV1Alpha1 = "v1alpha1"
 )
 
 // ARNExtractor extracts ARN of the resources from "status.atProvider.arn" which
