@@ -14,6 +14,3 @@ spec:
     featureName: S3_INTEGRATION
     region: us-west-1
     roleArn: ${aws_iam_role.example.arn}
-
----
-

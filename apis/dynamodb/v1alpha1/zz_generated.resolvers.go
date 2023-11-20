@@ -8,8 +8,8 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	resource "github.com/upbound/upjet/pkg/resource"
 	v1alpha1 "kubedb.dev/provider-aws/apis/kinesis/v1alpha1"
 	v1alpha11 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	common "kubedb.dev/provider-aws/config/common"

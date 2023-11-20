@@ -52,6 +52,3 @@ spec:
       namespace: upbound-system
     region: us-west-1
     username: foo
-
----
-

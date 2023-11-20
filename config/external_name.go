@@ -7,8 +7,8 @@ package config
 import (
 	"context"
 	"fmt"
+	"github.com/crossplane/upjet/pkg/config"
 	"github.com/pkg/errors"
-	"github.com/upbound/upjet/pkg/config"
 	"kubedb.dev/provider-aws/config/common"
 	"strings"
 )

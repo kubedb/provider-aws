@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,33 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type DBSnapshotCopyInitParameters struct {
+
+	// Whether to copy existing tags. Defaults to false.
+	CopyTags *bool `json:"copyTags,omitempty" tf:"copy_tags,omitempty"`
+
+	// The Destination region to place snapshot copy.
+	DestinationRegion *string `json:"destinationRegion,omitempty" tf:"destination_region,omitempty"`
+
+	// The name of an option group to associate with the copy of the snapshot.
+	OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
+
+	// he URL that contains a Signature Version 4 signed request.
+	PresignedURL *string `json:"presignedUrl,omitempty" tf:"presigned_url,omitempty"`
+
+	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+	// The external custom Availability Zone.
+	TargetCustomAvailabilityZone *string `json:"targetCustomAvailabilityZone,omitempty" tf:"target_custom_availability_zone,omitempty"`
+
+	// The Identifier for the snapshot.
+	TargetDBSnapshotIdentifier *string `json:"targetDbSnapshotIdentifier,omitempty" tf:"target_db_snapshot_identifier,omitempty"`
+}
 
 type DBSnapshotCopyObservation struct {
 
@@ -124,7 +155,7 @@ type DBSnapshotCopyParameters struct {
 
 	// Snapshot identifier of the source snapshot.
 	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Snapshot
-	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("db_snapshot_arn",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("db_snapshot_arn",true)
 	// +kubebuilder:validation:Optional
 	SourceDBSnapshotIdentifier *string `json:"sourceDbSnapshotIdentifier,omitempty" tf:"source_db_snapshot_identifier,omitempty"`
 
@@ -157,6 +188,17 @@ type DBSnapshotCopyParameters struct {
 type DBSnapshotCopySpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     DBSnapshotCopyParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider DBSnapshotCopyInitParameters `json:"initProvider,omitempty"`
 }
 
 // DBSnapshotCopyStatus defines the observed state of DBSnapshotCopy.
@@ -177,8 +219,8 @@ type DBSnapshotCopyStatus struct {
 type DBSnapshotCopy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.targetDbSnapshotIdentifier)",message="targetDbSnapshotIdentifier is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.targetDbSnapshotIdentifier) || (has(self.initProvider) && has(self.initProvider.targetDbSnapshotIdentifier))",message="spec.forProvider.targetDbSnapshotIdentifier is a required parameter"
 	Spec   DBSnapshotCopySpec   `json:"spec"`
 	Status DBSnapshotCopyStatus `json:"status,omitempty"`
 }

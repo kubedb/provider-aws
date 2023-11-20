@@ -13,6 +13,3 @@ spec:
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: main
-
----
-

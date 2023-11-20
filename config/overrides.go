@@ -1,11 +1,11 @@
 package config
 
 import (
+	"github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/types/comments"
+	"github.com/crossplane/upjet/pkg/types/name"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
-	"github.com/upbound/upjet/pkg/config"
-	"github.com/upbound/upjet/pkg/types/comments"
-	"github.com/upbound/upjet/pkg/types/name"
 	"strings"
 )
 

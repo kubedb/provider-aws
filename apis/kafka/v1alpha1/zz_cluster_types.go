@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,14 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type BrokerLogsInitParameters struct {
+	CloudwatchLogs []CloudwatchLogsInitParameters `json:"cloudwatchLogs,omitempty" tf:"cloudwatch_logs,omitempty"`
+
+	Firehose []FirehoseInitParameters `json:"firehose,omitempty" tf:"firehose,omitempty"`
+
+	S3 []S3InitParameters `json:"s3,omitempty" tf:"s3,omitempty"`
+}
 
 type BrokerLogsObservation struct {
 	CloudwatchLogs []CloudwatchLogsObservation `json:"cloudwatchLogs,omitempty" tf:"cloudwatch_logs,omitempty"`
@@ -31,6 +43,21 @@ type BrokerLogsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	S3 []S3Parameters `json:"s3,omitempty" tf:"s3,omitempty"`
+}
+
+type BrokerNodeGroupInfoInitParameters struct {
+
+	// The distribution of broker nodes across availability zones (documentation). Currently the only valid value is DEFAULT.
+	AzDistribution *string `json:"azDistribution,omitempty" tf:"az_distribution,omitempty"`
+
+	// Information about the cluster access configuration. See below. For security reasons, you can't turn on public access while creating an MSK cluster. However, you can update an existing cluster to make it publicly accessible. You can also create a new cluster and then update it to make it publicly accessible (documentation).
+	ConnectivityInfo []ConnectivityInfoInitParameters `json:"connectivityInfo,omitempty" tf:"connectivity_info,omitempty"`
+
+	// Specify the instance type to use for the kafka brokersE.g., kafka.m5.large. (Pricing info)
+	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// A block that contains information about storage volumes attached to MSK broker nodes. See below.
+	StorageInfo []StorageInfoInitParameters `json:"storageInfo,omitempty" tf:"storage_info,omitempty"`
 }
 
 type BrokerNodeGroupInfoObservation struct {
@@ -78,7 +105,7 @@ type BrokerNodeGroupInfoParameters struct {
 	ConnectivityInfo []ConnectivityInfoParameters `json:"connectivityInfo,omitempty" tf:"connectivity_info,omitempty"`
 
 	// Specify the instance type to use for the kafka brokersE.g., kafka.m5.large. (Pricing info)
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
 
 	// A list of the security groups to associate with the elastic network interfaces to control who can communicate with the cluster.
@@ -97,6 +124,18 @@ type BrokerNodeGroupInfoParameters struct {
 	// A block that contains information about storage volumes attached to MSK broker nodes. See below.
 	// +kubebuilder:validation:Optional
 	StorageInfo []StorageInfoParameters `json:"storageInfo,omitempty" tf:"storage_info,omitempty"`
+}
+
+type ClientAuthenticationInitParameters struct {
+
+	// Configuration block for specifying SASL client authentication. See below.
+	Sasl []SaslInitParameters `json:"sasl,omitempty" tf:"sasl,omitempty"`
+
+	// Configuration block for specifying TLS client authentication. See below.
+	TLS []TLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+
+	// Enables unauthenticated access.
+	Unauthenticated *bool `json:"unauthenticated,omitempty" tf:"unauthenticated,omitempty"`
 }
 
 type ClientAuthenticationObservation struct {
@@ -126,6 +165,15 @@ type ClientAuthenticationParameters struct {
 	Unauthenticated *bool `json:"unauthenticated,omitempty" tf:"unauthenticated,omitempty"`
 }
 
+type CloudwatchLogsInitParameters struct {
+
+	// Controls whether provisioned throughput is enabled or not. Default value: false.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Name of the Cloudwatch Log Group to deliver logs to.
+	LogGroup *string `json:"logGroup,omitempty" tf:"log_group,omitempty"`
+}
+
 type CloudwatchLogsObservation struct {
 
 	// Controls whether provisioned throughput is enabled or not. Default value: false.
@@ -138,12 +186,54 @@ type CloudwatchLogsObservation struct {
 type CloudwatchLogsParameters struct {
 
 	// Controls whether provisioned throughput is enabled or not. Default value: false.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
 	// Name of the Cloudwatch Log Group to deliver logs to.
 	// +kubebuilder:validation:Optional
 	LogGroup *string `json:"logGroup,omitempty" tf:"log_group,omitempty"`
+}
+
+type ClusterInitParameters struct {
+
+	// Configuration block for the broker nodes of the Kafka cluster.
+	BrokerNodeGroupInfo []BrokerNodeGroupInfoInitParameters `json:"brokerNodeGroupInfo,omitempty" tf:"broker_node_group_info,omitempty"`
+
+	// Configuration block for specifying a client authentication. See below.
+	ClientAuthentication []ClientAuthenticationInitParameters `json:"clientAuthentication,omitempty" tf:"client_authentication,omitempty"`
+
+	// Name of the MSK cluster.
+	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
+
+	// Configuration block for specifying a MSK Configuration to attach to Kafka brokers. See below.
+	ConfigurationInfo []ConfigurationInfoInitParameters `json:"configurationInfo,omitempty" tf:"configuration_info,omitempty"`
+
+	// Configuration block for specifying encryption. See below.
+	EncryptionInfo []EncryptionInfoInitParameters `json:"encryptionInfo,omitempty" tf:"encryption_info,omitempty"`
+
+	// Specify the desired enhanced MSK CloudWatch monitoring level. See Monitoring Amazon MSK with Amazon CloudWatch
+	EnhancedMonitoring *string `json:"enhancedMonitoring,omitempty" tf:"enhanced_monitoring,omitempty"`
+
+	// Specify the desired Kafka software version.
+	KafkaVersion *string `json:"kafkaVersion,omitempty" tf:"kafka_version,omitempty"`
+
+	// Configuration block for streaming broker logs to Cloudwatch/S3/Kinesis Firehose. See below.
+	LoggingInfo []LoggingInfoInitParameters `json:"loggingInfo,omitempty" tf:"logging_info,omitempty"`
+
+	// The desired total number of broker nodes in the kafka cluster.  It must be a multiple of the number of specified client subnets.
+	NumberOfBrokerNodes *float64 `json:"numberOfBrokerNodes,omitempty" tf:"number_of_broker_nodes,omitempty"`
+
+	// Configuration block for JMX and Node monitoring for the MSK cluster. See below.
+	OpenMonitoring []OpenMonitoringInitParameters `json:"openMonitoring,omitempty" tf:"open_monitoring,omitempty"`
+
+	// Controls storage mode for supported storage tiers. Valid values are: LOCAL or TIERED.
+	StorageMode *string `json:"storageMode,omitempty" tf:"storage_mode,omitempty"`
+
+	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 type ClusterObservation struct {
@@ -283,6 +373,15 @@ type ClusterParameters struct {
 	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
+type ConfigurationInfoInitParameters struct {
+
+	// Amazon Resource Name (ARN) of the MSK Configuration to use in the cluster.
+	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+
+	// Revision of the MSK Configuration to use in the cluster.
+	Revision *float64 `json:"revision,omitempty" tf:"revision,omitempty"`
+}
+
 type ConfigurationInfoObservation struct {
 
 	// Amazon Resource Name (ARN) of the MSK Configuration to use in the cluster.
@@ -295,12 +394,18 @@ type ConfigurationInfoObservation struct {
 type ConfigurationInfoParameters struct {
 
 	// Amazon Resource Name (ARN) of the MSK Configuration to use in the cluster.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Arn *string `json:"arn" tf:"arn,omitempty"`
 
 	// Revision of the MSK Configuration to use in the cluster.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Revision *float64 `json:"revision" tf:"revision,omitempty"`
+}
+
+type ConnectivityInfoInitParameters struct {
+
+	// Access control settings for brokers. See below.
+	PublicAccess []PublicAccessInitParameters `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
 }
 
 type ConnectivityInfoObservation struct {
@@ -314,6 +419,15 @@ type ConnectivityInfoParameters struct {
 	// Access control settings for brokers. See below.
 	// +kubebuilder:validation:Optional
 	PublicAccess []PublicAccessParameters `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
+}
+
+type EBSStorageInfoInitParameters struct {
+
+	// A block that contains EBS volume provisioned throughput information. To provision storage throughput, you must choose broker type kafka.m5.4xlarge or larger. See below.
+	ProvisionedThroughput []ProvisionedThroughputInitParameters `json:"provisionedThroughput,omitempty" tf:"provisioned_throughput,omitempty"`
+
+	// The size in GiB of the EBS volume for the data drive on each broker node. Minimum value of 1 and maximum value of 16384.
+	VolumeSize *float64 `json:"volumeSize,omitempty" tf:"volume_size,omitempty"`
 }
 
 type EBSStorageInfoObservation struct {
@@ -336,6 +450,15 @@ type EBSStorageInfoParameters struct {
 	VolumeSize *float64 `json:"volumeSize,omitempty" tf:"volume_size,omitempty"`
 }
 
+type EncryptionInTransitInitParameters struct {
+
+	// Encryption setting for data in transit between clients and brokers. Valid values: TLS, TLS_PLAINTEXT, and PLAINTEXT. Default value is TLS.
+	ClientBroker *string `json:"clientBroker,omitempty" tf:"client_broker,omitempty"`
+
+	// Whether data communication among broker nodes is encrypted. Default value: true.
+	InCluster *bool `json:"inCluster,omitempty" tf:"in_cluster,omitempty"`
+}
+
 type EncryptionInTransitObservation struct {
 
 	// Encryption setting for data in transit between clients and brokers. Valid values: TLS, TLS_PLAINTEXT, and PLAINTEXT. Default value is TLS.
@@ -354,6 +477,12 @@ type EncryptionInTransitParameters struct {
 	// Whether data communication among broker nodes is encrypted. Default value: true.
 	// +kubebuilder:validation:Optional
 	InCluster *bool `json:"inCluster,omitempty" tf:"in_cluster,omitempty"`
+}
+
+type EncryptionInfoInitParameters struct {
+
+	// Configuration block to specify encryption in transit. See below.
+	EncryptionInTransit []EncryptionInTransitInitParameters `json:"encryptionInTransit,omitempty" tf:"encryption_in_transit,omitempty"`
 }
 
 type EncryptionInfoObservation struct {
@@ -386,6 +515,15 @@ type EncryptionInfoParameters struct {
 	EncryptionInTransit []EncryptionInTransitParameters `json:"encryptionInTransit,omitempty" tf:"encryption_in_transit,omitempty"`
 }
 
+type FirehoseInitParameters struct {
+
+	// Name of the Kinesis Data Firehose delivery stream to deliver logs to.
+	DeliveryStream *string `json:"deliveryStream,omitempty" tf:"delivery_stream,omitempty"`
+
+	// Controls whether provisioned throughput is enabled or not. Default value: false.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type FirehoseObservation struct {
 
 	// Name of the Kinesis Data Firehose delivery stream to deliver logs to.
@@ -402,8 +540,14 @@ type FirehoseParameters struct {
 	DeliveryStream *string `json:"deliveryStream,omitempty" tf:"delivery_stream,omitempty"`
 
 	// Controls whether provisioned throughput is enabled or not. Default value: false.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+}
+
+type JmxExporterInitParameters struct {
+
+	// Indicates whether you want to enable or disable the JMX Exporter.
+	EnabledInBroker *bool `json:"enabledInBroker,omitempty" tf:"enabled_in_broker,omitempty"`
 }
 
 type JmxExporterObservation struct {
@@ -415,8 +559,14 @@ type JmxExporterObservation struct {
 type JmxExporterParameters struct {
 
 	// Indicates whether you want to enable or disable the JMX Exporter.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	EnabledInBroker *bool `json:"enabledInBroker" tf:"enabled_in_broker,omitempty"`
+}
+
+type LoggingInfoInitParameters struct {
+
+	// Configuration block for Broker Logs settings for logging info. See below.
+	BrokerLogs []BrokerLogsInitParameters `json:"brokerLogs,omitempty" tf:"broker_logs,omitempty"`
 }
 
 type LoggingInfoObservation struct {
@@ -428,8 +578,14 @@ type LoggingInfoObservation struct {
 type LoggingInfoParameters struct {
 
 	// Configuration block for Broker Logs settings for logging info. See below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	BrokerLogs []BrokerLogsParameters `json:"brokerLogs" tf:"broker_logs,omitempty"`
+}
+
+type NodeExporterInitParameters struct {
+
+	// Indicates whether you want to enable or disable the JMX Exporter.
+	EnabledInBroker *bool `json:"enabledInBroker,omitempty" tf:"enabled_in_broker,omitempty"`
 }
 
 type NodeExporterObservation struct {
@@ -441,8 +597,14 @@ type NodeExporterObservation struct {
 type NodeExporterParameters struct {
 
 	// Indicates whether you want to enable or disable the JMX Exporter.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	EnabledInBroker *bool `json:"enabledInBroker" tf:"enabled_in_broker,omitempty"`
+}
+
+type OpenMonitoringInitParameters struct {
+
+	// Configuration block for Prometheus settings for open monitoring. See below.
+	Prometheus []PrometheusInitParameters `json:"prometheus,omitempty" tf:"prometheus,omitempty"`
 }
 
 type OpenMonitoringObservation struct {
@@ -454,8 +616,17 @@ type OpenMonitoringObservation struct {
 type OpenMonitoringParameters struct {
 
 	// Configuration block for Prometheus settings for open monitoring. See below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Prometheus []PrometheusParameters `json:"prometheus" tf:"prometheus,omitempty"`
+}
+
+type PrometheusInitParameters struct {
+
+	// Configuration block for JMX Exporter. See below.
+	JmxExporter []JmxExporterInitParameters `json:"jmxExporter,omitempty" tf:"jmx_exporter,omitempty"`
+
+	// Configuration block for Node Exporter. See below.
+	NodeExporter []NodeExporterInitParameters `json:"nodeExporter,omitempty" tf:"node_exporter,omitempty"`
 }
 
 type PrometheusObservation struct {
@@ -478,6 +649,15 @@ type PrometheusParameters struct {
 	NodeExporter []NodeExporterParameters `json:"nodeExporter,omitempty" tf:"node_exporter,omitempty"`
 }
 
+type ProvisionedThroughputInitParameters struct {
+
+	// Controls whether provisioned throughput is enabled or not. Default value: false.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Throughput value of the EBS volumes for the data drive on each kafka broker node in MiB per second. The minimum value is 250. The maximum value varies between broker type. You can refer to the valid values for the maximum volume throughput at the following documentation on throughput bottlenecks
+	VolumeThroughput *float64 `json:"volumeThroughput,omitempty" tf:"volume_throughput,omitempty"`
+}
+
 type ProvisionedThroughputObservation struct {
 
 	// Controls whether provisioned throughput is enabled or not. Default value: false.
@@ -498,6 +678,12 @@ type ProvisionedThroughputParameters struct {
 	VolumeThroughput *float64 `json:"volumeThroughput,omitempty" tf:"volume_throughput,omitempty"`
 }
 
+type PublicAccessInitParameters struct {
+
+	// Public access type. Valida values: DISABLED, SERVICE_PROVIDED_EIPS.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
 type PublicAccessObservation struct {
 
 	// Public access type. Valida values: DISABLED, SERVICE_PROVIDED_EIPS.
@@ -509,6 +695,18 @@ type PublicAccessParameters struct {
 	// Public access type. Valida values: DISABLED, SERVICE_PROVIDED_EIPS.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type S3InitParameters struct {
+
+	// Name of the S3 bucket to deliver logs to.
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Controls whether provisioned throughput is enabled or not. Default value: false.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Prefix to append to the folder name.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
 type S3Observation struct {
@@ -530,12 +728,21 @@ type S3Parameters struct {
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
 	// Controls whether provisioned throughput is enabled or not. Default value: false.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
 	// Prefix to append to the folder name.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type SaslInitParameters struct {
+
+	// Enables IAM client authentication. Defaults to false.
+	IAM *bool `json:"iam,omitempty" tf:"iam,omitempty"`
+
+	// Enables SCRAM client authentication via AWS Secrets Manager. Defaults to false.
+	Scram *bool `json:"scram,omitempty" tf:"scram,omitempty"`
 }
 
 type SaslObservation struct {
@@ -558,6 +765,12 @@ type SaslParameters struct {
 	Scram *bool `json:"scram,omitempty" tf:"scram,omitempty"`
 }
 
+type StorageInfoInitParameters struct {
+
+	// A block that contains EBS volume information. See below.
+	EBSStorageInfo []EBSStorageInfoInitParameters `json:"ebsStorageInfo,omitempty" tf:"ebs_storage_info,omitempty"`
+}
+
 type StorageInfoObservation struct {
 
 	// A block that contains EBS volume information. See below.
@@ -569,6 +782,12 @@ type StorageInfoParameters struct {
 	// A block that contains EBS volume information. See below.
 	// +kubebuilder:validation:Optional
 	EBSStorageInfo []EBSStorageInfoParameters `json:"ebsStorageInfo,omitempty" tf:"ebs_storage_info,omitempty"`
+}
+
+type TLSInitParameters struct {
+
+	// List of ACM Certificate Authority Amazon Resource Names (ARNs).
+	CertificateAuthorityArns []*string `json:"certificateAuthorityArns,omitempty" tf:"certificate_authority_arns,omitempty"`
 }
 
 type TLSObservation struct {
@@ -588,6 +807,17 @@ type TLSParameters struct {
 type ClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ClusterParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterStatus defines the observed state of Cluster.
@@ -608,11 +838,11 @@ type ClusterStatus struct {
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.brokerNodeGroupInfo)",message="brokerNodeGroupInfo is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterName)",message="clusterName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.kafkaVersion)",message="kafkaVersion is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.numberOfBrokerNodes)",message="numberOfBrokerNodes is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.brokerNodeGroupInfo) || (has(self.initProvider) && has(self.initProvider.brokerNodeGroupInfo))",message="spec.forProvider.brokerNodeGroupInfo is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.clusterName) || (has(self.initProvider) && has(self.initProvider.clusterName))",message="spec.forProvider.clusterName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.kafkaVersion) || (has(self.initProvider) && has(self.initProvider.kafkaVersion))",message="spec.forProvider.kafkaVersion is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.numberOfBrokerNodes) || (has(self.initProvider) && has(self.initProvider.numberOfBrokerNodes))",message="spec.forProvider.numberOfBrokerNodes is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
 	Spec   ClusterSpec   `json:"spec"`
 	Status ClusterStatus `json:"status,omitempty"`
 }

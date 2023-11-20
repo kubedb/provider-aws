@@ -7,8 +7,8 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
-	ujconfig "github.com/upbound/upjet/pkg/config"
-	"github.com/upbound/upjet/pkg/registry/reference"
+	ujconfig "github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/registry/reference"
 	"kubedb.dev/provider-aws/config/docdb"
 	"kubedb.dev/provider-aws/config/dynamodb"
 	"kubedb.dev/provider-aws/config/ec2"

@@ -41,6 +41,3 @@ spec:
     masterUsername: foo
     region: us-west-1
     skipFinalSnapshot: true
-
----
-

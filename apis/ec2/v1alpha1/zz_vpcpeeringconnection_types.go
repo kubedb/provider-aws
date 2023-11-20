@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,13 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type AccepterInitParameters struct {
+
+	// Allow a local VPC to resolve public DNS hostnames to
+	// private IP addresses when queried from instances in the peer VPC.
+	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+}
 
 type AccepterObservation struct {
 
@@ -28,6 +39,13 @@ type AccepterParameters struct {
 	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
 
+type RequesterInitParameters struct {
+
+	// Allow a local VPC to resolve public DNS hostnames to
+	// private IP addresses when queried from instances in the peer VPC.
+	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+}
+
 type RequesterObservation struct {
 
 	// Allow a local VPC to resolve public DNS hostnames to
@@ -41,6 +59,34 @@ type RequesterParameters struct {
 	// private IP addresses when queried from instances in the peer VPC.
 	// +kubebuilder:validation:Optional
 	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+}
+
+type VPCPeeringConnectionInitParameters struct {
+
+	// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
+	// the peering connection (a maximum of one).
+	Accepter []AccepterInitParameters `json:"accepter,omitempty" tf:"accepter,omitempty"`
+
+	// Accept the peering (both VPCs need to be in the same AWS account and region).
+	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
+
+	// The AWS account ID of the owner of the peer VPC.
+	// Defaults to the account ID the AWS provider is currently connected to.
+	PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
+
+	// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
+	// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
+	PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
+
+	// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
+	// the peering connection (a maximum of one).
+	Requester []RequesterInitParameters `json:"requester,omitempty" tf:"requester,omitempty"`
+
+	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 type VPCPeeringConnectionObservation struct {
@@ -106,7 +152,7 @@ type VPCPeeringConnectionParameters struct {
 
 	// The ID of the VPC with which you are creating the VPC Peering Connection.
 	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
-	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerVPCID *string `json:"peerVpcId,omitempty" tf:"peer_vpc_id,omitempty"`
 
@@ -154,6 +200,17 @@ type VPCPeeringConnectionParameters struct {
 type VPCPeeringConnectionSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     VPCPeeringConnectionParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider VPCPeeringConnectionInitParameters `json:"initProvider,omitempty"`
 }
 
 // VPCPeeringConnectionStatus defines the observed state of VPCPeeringConnection.
@@ -174,7 +231,7 @@ type VPCPeeringConnectionStatus struct {
 type VPCPeeringConnection struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
 	Spec   VPCPeeringConnectionSpec   `json:"spec"`
 	Status VPCPeeringConnectionStatus `json:"status,omitempty"`
 }

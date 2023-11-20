@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/upbound/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/config"
 )
 
 var KindMap = map[string]string{

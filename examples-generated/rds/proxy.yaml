@@ -26,6 +26,3 @@ spec:
     - name: example
     vpcSubnetIds:
     - ${aws_subnet.example.id}
-
----
-
