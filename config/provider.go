@@ -72,8 +72,8 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get the Terraform provider schema with generation mode set to %t", generationProvider)
 	}
-	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		//ujconfig.WithIncludeList(ExternalNameConfigured()),
+	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, (providerMetadata),
+		ujconfig.WithIncludeList(CLIReconciledResourceList()),
 		ujconfig.WithNoForkIncludeList(NoForkResourceList()),
 		ujconfig.WithRootGroup("aws.kubedb.com"),
 		ujconfig.WithFeaturesPackage("internal/features"),
@@ -122,17 +122,3 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 	}
 	return l
 }*/
-
-// NoForkResourceList returns the list of resources that have external
-// name configured in ExternalNameConfigs table and to be reconciled under
-// the no-fork architecture.
-func NoForkResourceList() []string {
-	l := make([]string, len(ExternalNameConfigs))
-	i := 0
-	for name := range ExternalNameConfigs {
-		// Expected format is regex and we'd like to have exact matches.
-		l[i] = name + "$"
-		i++
-	}
-	return l
-}
