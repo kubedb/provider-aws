@@ -59,18 +59,18 @@ func FormattedIdentifierFromProvider(separator string, keys ...string) config.Ex
 
 var CLIReconciledExternalNameConfigs = map[string]config.ExternalName{
 	// Imported by using the id: sgr-02108b27edd666983
-	"aws_vpc_security_group_egress_rule": vpcSecurityGroupRule(),
+	//"aws_vpc_security_group_egress_rule": vpcSecurityGroupRule(),
 	// Imported by using the id: sgr-02108b27edd666983
-	"aws_vpc_security_group_ingress_rule": vpcSecurityGroupRule(),
+	//"aws_vpc_security_group_ingress_rule": vpcSecurityGroupRule(),
 	// AppConfig Environments can be imported by using the environment ID and application ID separated by a colon (:)
 	// terraform-plugin-framework
 	"aws_appconfig_environment": config.IdentifierFromProvider,
 	// us-west-2_abc123/3ho4ek12345678909nh3fmhpko
-	"aws_cognito_user_pool_client": FormattedIdentifierFromProvider("", "name"),
+	//"aws_cognito_user_pool_client": FormattedIdentifierFromProvider("", "name"),
 	// simpledb
 	//
 	// SimpleDB Domains can be imported using the name
-	"aws_simpledb_domain": config.NameAsIdentifier,
+	//"aws_simpledb_domain": config.NameAsIdentifier,
 }
 
 func vpcSecurityGroupRule() config.ExternalName {

@@ -7,7 +7,7 @@ import (
 var KindMap = map[string]string{
 	"aws_security_group_rule":    "SecurityGroupRule",
 	"aws_vpc_peering_connection": "VPCPeeringConnection",
-	"aws_rote":                   "Route",
+	"aws_route":                  "Route",
 }
 
 // KindOverrides overrides the kind of the resources given in KindMap.

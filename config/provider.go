@@ -36,7 +36,7 @@ var (
 	providerSchema string
 
 	//go:embed provider-metadata.yaml
-	providerMetadata []byte
+	providerMetadata string
 )
 
 // workaround for the TF AWS v4.67.0-based no-fork release: We would like to
@@ -72,7 +72,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get the Terraform provider schema with generation mode set to %t", generationProvider)
 	}
-	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, (providerMetadata),
+	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithIncludeList(CLIReconciledResourceList()),
 		ujconfig.WithNoForkIncludeList(NoForkResourceList()),
 		ujconfig.WithRootGroup("aws.kubedb.com"),
