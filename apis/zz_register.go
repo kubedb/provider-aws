@@ -14,7 +14,9 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "kubedb.dev/provider-aws/apis/docdb/v1alpha1"
+	v1alpha1 "kubedb.dev/provider-aws/apis/appconfig/v1alpha1"
+	v1alpha1cognito "kubedb.dev/provider-aws/apis/cognito/v1alpha1"
+	v1alpha1docdb "kubedb.dev/provider-aws/apis/docdb/v1alpha1"
 	v1alpha1dynamodb "kubedb.dev/provider-aws/apis/dynamodb/v1alpha1"
 	v1alpha1ec2 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
 	v1alpha1elasticache "kubedb.dev/provider-aws/apis/elasticache/v1alpha1"
@@ -24,14 +26,18 @@ import (
 	v1alpha1kms "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	v1alpha1memorydb "kubedb.dev/provider-aws/apis/memorydb/v1alpha1"
 	v1alpha1rds "kubedb.dev/provider-aws/apis/rds/v1alpha1"
+	v1alpha1simpledb "kubedb.dev/provider-aws/apis/simpledb/v1alpha1"
 	v1alpha1apis "kubedb.dev/provider-aws/apis/v1alpha1"
 	v1beta1 "kubedb.dev/provider-aws/apis/v1beta1"
+	v1alpha1vpc "kubedb.dev/provider-aws/apis/vpc/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1cognito.SchemeBuilder.AddToScheme,
+		v1alpha1docdb.SchemeBuilder.AddToScheme,
 		v1alpha1dynamodb.SchemeBuilder.AddToScheme,
 		v1alpha1ec2.SchemeBuilder.AddToScheme,
 		v1alpha1elasticache.SchemeBuilder.AddToScheme,
@@ -41,8 +47,10 @@ func init() {
 		v1alpha1kms.SchemeBuilder.AddToScheme,
 		v1alpha1memorydb.SchemeBuilder.AddToScheme,
 		v1alpha1rds.SchemeBuilder.AddToScheme,
+		v1alpha1simpledb.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
+		v1alpha1vpc.SchemeBuilder.AddToScheme,
 	)
 }
 

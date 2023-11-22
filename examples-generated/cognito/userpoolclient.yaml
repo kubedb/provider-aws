@@ -1,0 +1,12 @@
+apiVersion: cognito.aws.kubedb.com/v1alpha1
+kind: UserPoolClient
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cognito/v1alpha1/userpoolclient
+  labels:
+    testing.upbound.io/example-name: client
+  name: client
+spec:
+  forProvider:
+    region: us-west-1
+    userPoolId: ${aws_cognito_user_pool.pool.id}
