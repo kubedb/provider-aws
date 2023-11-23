@@ -64,13 +64,15 @@ var CLIReconciledExternalNameConfigs = map[string]config.ExternalName{
 	//"aws_vpc_security_group_ingress_rule": vpcSecurityGroupRule(),
 	// AppConfig Environments can be imported by using the environment ID and application ID separated by a colon (:)
 	// terraform-plugin-framework
-	"aws_appconfig_environment": config.IdentifierFromProvider,
+	//"aws_appconfig_environment": config.IdentifierFromProvider,
 	// us-west-2_abc123/3ho4ek12345678909nh3fmhpko
 	//"aws_cognito_user_pool_client": FormattedIdentifierFromProvider("", "name"),
 	// simpledb
 	//
 	// SimpleDB Domains can be imported using the name
 	//"aws_simpledb_domain": config.NameAsIdentifier,
+	// DynamoDB tables can be imported using the name
+	"aws_dynamodb_table": config.NameAsIdentifier,
 }
 
 func vpcSecurityGroupRule() config.ExternalName {
@@ -126,8 +128,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// DynamoDB table replicas can be imported using the table-name:main-region
 	"aws_dynamodb_table_replica": config.IdentifierFromProvider,
-	// DynamoDB tables can be imported using the name
-	"aws_dynamodb_table": config.NameAsIdentifier,
+
 	// DynamoDB Global Tables can be imported using the global table name
 	"aws_dynamodb_global_table": config.NameAsIdentifier,
 	// aws_dynamodb_tag can be imported by using the DynamoDB resource identifier and key, separated by a comma (,)
