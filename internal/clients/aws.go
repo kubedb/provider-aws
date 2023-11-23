@@ -6,7 +6,6 @@ package clients
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/crossplane/crossplane-runtime/pkg/fieldpath"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
@@ -26,22 +25,32 @@ import (
 
 const (
 	// error messages
-	errNoProviderConfig     = "no providerConfigRef provided"
-	errGetProviderConfig    = "cannot get referenced ProviderConfig"
-	errTrackUsage           = "cannot track ProviderConfig usage"
-	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal aws credentials as JSON"
-	errRegionNotFound       = "can not found region for terraform provider config"
+	//errNoProviderConfig     = "no providerConfigRef provided"
+	//errGetProviderConfig    = "cannot get referenced ProviderConfig"
+	//errTrackUsage           = "cannot track ProviderConfig usage"
+	//errExtractCredentials   = "cannot extract credentials"
+	//errUnmarshalCredentials = "cannot unmarshal aws credentials as JSON"
+	//errRegionNotFound       = "can not found region for terraform provider config"
 
-	accessKeyID     = "access_key"
-	secretAccessKey = "secret_key"
+	//accessKeyID     = "access_key"
+	keyAccessKeyID = "access_key"
+	//secretAccessKey = "secret_key"
+	keySecretAccessKey = "secret_key"
+
 	keyRegion       = "region"
+	keySessionToken = "token"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
 func TerraformSetupBuilder(version, providerSource, providerVersion string, mta *schema.Provider) terraform.SetupFn {
 	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
+
+		pc := &v1beta1.ProviderConfig{}
+		var err error
+		if err = client.Get(ctx, types.NamespacedName{Name: mg.GetProviderConfigReference().Name}, pc); err != nil {
+			return terraform.Setup{}, errors.Wrapf(err, "cannot get referenced Provider: %s", mg.GetProviderConfigReference().Name)
+		}
 		ps := terraform.Setup{
 			Version: version,
 			Requirement: terraform.ProviderRequirement{
@@ -50,21 +59,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, mta 
 			},
 		}
 
-		configRef := mg.GetProviderConfigReference()
-		if configRef == nil {
-			return ps, errors.New(errNoProviderConfig)
-		}
-		pc := &v1beta1.ProviderConfig{}
-		if err := client.Get(ctx, types.NamespacedName{Name: configRef.Name}, pc); err != nil {
-			return ps, errors.Wrap(err, errGetProviderConfig)
-		}
-
-		t := resource.NewProviderConfigUsageTracker(client, &v1beta1.ProviderConfigUsage{})
-		if err := t.Track(ctx, mg); err != nil {
-			return ps, errors.Wrap(err, errTrackUsage)
-		}
-
-		err := pushDownTerraformSetupBuilder(ctx, client, mg, pc, &ps)
+		err = pushDownTerraformSetupBuilder(ctx, client, mg, pc, &ps)
 		if err != nil {
 			return terraform.Setup{}, errors.Wrap(err, "cannot build terraform configuration")
 		}
@@ -86,36 +81,37 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, mta 
 	}
 }
 
-func pushDownTerraformSetupBuilder(ctx context.Context, client client.Client, mg resource.Managed, pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
-	data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, client, pc.Spec.Credentials.CommonCredentialSelectors)
+func pushDownTerraformSetupBuilder(ctx context.Context, c client.Client, mg resource.Managed, pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
+	s := pc.Spec.Credentials.Source
+	cfg, err := getAWSConfig(ctx, c, mg)
 	if err != nil {
-		return errors.Wrap(err, errExtractCredentials)
+		return errors.Wrap(err, "cannot get AWS config")
 	}
-	creds := map[string]string{}
-	if err := json.Unmarshal(data, &creds); err != nil {
-		return errors.Wrap(err, errUnmarshalCredentials)
-	}
-
-	region, err := getRegion(mg)
-	if err != nil {
-		return errors.Wrap(err, errRegionNotFound)
-	}
-
-	// Set credentials in Terraform provider configuration.
 	ps.Configuration = map[string]any{
-		accessKeyID:     creds[accessKeyID],
-		secretAccessKey: creds[secretAccessKey],
-		keyRegion:       region,
+		keyRegion: cfg.Region,
+	}
+	data, err := resource.CommonCredentialExtractor(ctx, s, c, pc.Spec.Credentials.CommonCredentialSelectors)
+	if err != nil {
+		return errors.Wrap(err, "cannot get credentials")
+	}
+	cfg, err = UseProviderSecret(ctx, data, DefaultSection, cfg.Region)
+	if err != nil {
+		return errors.Wrap(err, errAWSConfig)
+	}
+	creds, err := cfg.Credentials.Retrieve(ctx)
+	if err != nil {
+		return errors.Wrap(err, "failed to retrieve aws credentials from aws config")
+	}
+	ps.Configuration = map[string]any{
+		keyRegion:          cfg.Region,
+		keyAccessKeyID:     creds.AccessKeyID,
+		keySecretAccessKey: creds.SecretAccessKey,
+		keySessionToken:    creds.SessionToken,
 	}
 	return nil
 }
 
 func configureNoForkAWSClient(ctx context.Context, c client.Client, mg resource.Managed, pc *v1beta1.ProviderConfig, ps *terraform.Setup) (xpprovider.AWSConfig, error) { //nolint:gocyclo
-
-	if len(pc.Spec.AssumeRoleChain) > 1 || pc.Spec.Endpoint != nil {
-		return xpprovider.AWSConfig{}, errors.New("cannot configure no-fork client because the length of assume role chain array " +
-			"is more than 1 or endpoint configuration is not nil")
-	}
 
 	cfg, err := getAWSConfig(ctx, c, mg)
 	if err != nil {
@@ -126,28 +122,27 @@ func configureNoForkAWSClient(ctx context.Context, c client.Client, mg resource.
 		Region:           cfg.Region,
 		TerraformVersion: ps.Version,
 	}
-
-	data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, c, pc.Spec.Credentials.CommonCredentialSelectors)
+	s := pc.Spec.Credentials.Source
+	data, err := resource.CommonCredentialExtractor(ctx, s, c, pc.Spec.Credentials.CommonCredentialSelectors)
 	if err != nil {
-		return xpprovider.AWSConfig{}, errors.Wrap(err, errExtractCredentials)
+		return xpprovider.AWSConfig{}, errors.Wrap(err, "cannot get credentials")
 	}
-	creds := map[string]string{}
-	if err := json.Unmarshal(data, &creds); err != nil {
-		return xpprovider.AWSConfig{}, errors.Wrap(err, errUnmarshalCredentials)
-	}
-
-	region, err := getRegion(mg)
+	cfg, err = UseProviderSecret(ctx, data, DefaultSection, cfg.Region)
 	if err != nil {
-		return xpprovider.AWSConfig{}, errors.Wrap(err, errRegionNotFound)
+		return xpprovider.AWSConfig{}, errors.Wrap(err, errAWSConfig)
+	}
+	creds, err := cfg.Credentials.Retrieve(ctx)
+	if err != nil {
+		return xpprovider.AWSConfig{}, errors.Wrap(err, "failed to retrieve aws credentials from aws config")
 	}
 
-	// Set credentials in Terraform provider configuration.
-
-	awsConfig.AccessKey = creds[accessKeyID]
-	awsConfig.SecretKey = creds[secretAccessKey]
-	awsConfig.Region = region
+	awsConfig.Region = cfg.Region
+	awsConfig.AccessKey = creds.AccessKeyID
+	awsConfig.SecretKey = creds.SecretAccessKey
+	awsConfig.Token = creds.SessionToken
 
 	return awsConfig, nil
+
 }
 
 func getAWSConfig(ctx context.Context, c client.Client, mg resource.Managed) (*aws.Config, error) {

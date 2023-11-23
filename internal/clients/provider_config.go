@@ -175,20 +175,22 @@ func CredentialsIDSecret(data []byte, profile string) (aws.Credentials, error) {
 	}
 
 	accessKeyID := iniProfile.Key("aws_access_key_id")
+	//accessKeyID := iniProfile.Key("access_key")
 	secretAccessKey := iniProfile.Key("aws_secret_access_key")
-	sessionToken := iniProfile.Key("aws_session_token")
+	//secretAccessKey := iniProfile.Key("secret_key")
+	//sessionToken := iniProfile.Key("aws_session_token")
 
 	// NOTE(muvaf): Key function implementation never returns nil but still its
 	// type is pointer so we check to make sure its next versions doesn't break
 	// that implicit contract.
-	if accessKeyID == nil || secretAccessKey == nil || sessionToken == nil {
+	if accessKeyID == nil || secretAccessKey == nil {
 		return aws.Credentials{}, errors.New("returned key can be empty but cannot be nil")
 	}
 
 	return aws.Credentials{
 		AccessKeyID:     accessKeyID.Value(),
 		SecretAccessKey: secretAccessKey.Value(),
-		SessionToken:    sessionToken.Value(),
+		//SessionToken:    sessionToken.Value(),
 	}, nil
 }
 
