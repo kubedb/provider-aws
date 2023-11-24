@@ -5,9 +5,8 @@ Copyright 2022 Upbound Inc.
 package v1beta1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // A ProviderConfigSpec defines the desired state of a ProviderConfig.
@@ -18,7 +17,74 @@ type ProviderConfigSpec struct {
 	// AssumeRoleChain defines the options for assuming an IAM role
 	AssumeRoleChain []AssumeRoleOptions `json:"assumeRoleChain,omitempty"`
 
+	// Endpoint is where you can override the default endpoint configuration
+	// of AWS calls made by the provider.
+	// +optional
 	Endpoint *EndpointConfig `json:"endpoint,omitempty"`
+	// Whether to skip credentials validation via the STS API.
+	// This can be useful for testing and for AWS API implementations that do not have STS available.
+	// +optional
+	SkipCredsValidation bool `json:"skip_credentials_validation,omitempty"`
+	// Whether to skip validation of provided region name.
+	// Useful for AWS-like implementations that use their own region names or to bypass the validation for
+	// regions that aren't publicly available yet.
+	// +optional
+	SkipRegionValidation bool `json:"skip_region_validation,omitempty"`
+	// Whether to enable the request to use path-style addressing, i.e., https://s3.amazonaws.com/BUCKET/KEY.
+	// +optional
+	S3UsePathStyle bool `json:"s3_use_path_style,omitempty"`
+	// Whether to skip the AWS Metadata API check
+	// Useful for AWS API implementations that do not have a metadata API endpoint.
+	// +optional
+	SkipMetadataApiCheck bool `json:"skip_metadata_api_check,omitempty"`
+	// Whether to skip requesting the account ID.
+	// Useful for AWS API implementations that do not have the IAM, STS API, or metadata API
+	// +optional
+	SkipReqAccountId bool `json:"skip_requesting_account_id,omitempty"`
+}
+
+// AssumeRoleOptions define the options for assuming an IAM Role
+// Fields are similar to the STS AssumeRoleOptions in the AWS SDK
+type AssumeRoleOptions struct {
+	// AssumeRoleARN to assume with provider credentials
+	RoleARN *string `json:"roleARN,omitempty"`
+
+	// ExternalID is the external ID used when assuming role.
+	// +optional
+	ExternalID *string `json:"externalID,omitempty"`
+
+	// Tags is list of session tags that you want to pass. Each session tag consists of a key
+	// name and an associated value. For more information about session tags, see
+	// Tagging STS Sessions
+	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html).
+	// +optional
+	Tags []Tag `json:"tags,omitempty"`
+
+	// TransitiveTagKeys is a list of keys for session tags that you want to set as transitive. If you set a
+	// tag key as transitive, the corresponding key and value passes to subsequent
+	// sessions in a role chain. For more information, see Chaining Roles with Session Tags
+	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html#id_session-tags_role-chaining).
+	// +optional
+	TransitiveTagKeys []string `json:"transitiveTagKeys,omitempty"`
+}
+
+// AssumeRoleWithWebIdentityOptions define the options for assuming an IAM Role
+// Fields are similar to the STS WebIdentityRoleOptions in the AWS SDK
+type AssumeRoleWithWebIdentityOptions struct {
+	// AssumeRoleARN to assume with provider credentials
+	RoleARN *string `json:"roleARN,omitempty"`
+
+	// RoleSessionName is the session name, if you wish to uniquely identify this session.
+	// +optional
+	RoleSessionName string `json:"roleSessionName,omitempty"`
+}
+
+// Upbound defines the options for authenticating using Upbound as an identity
+// provider.
+type Upbound struct {
+	// WebIdentity defines the options for assuming an IAM role with a Web
+	// Identity.
+	WebIdentity *AssumeRoleWithWebIdentityOptions `json:"webIdentity,omitempty"`
 }
 
 // EndpointConfig is used to configure the AWS client for a custom endpoint.
@@ -122,31 +188,6 @@ type DynamicURLConfig struct {
 	Host string `json:"host"`
 }
 
-// AssumeRoleOptions define the options for assuming an IAM Role
-// Fields are similar to the STS AssumeRoleOptions in the AWS SDK
-type AssumeRoleOptions struct {
-	// AssumeRoleARN to assume with provider credentials
-	RoleARN *string `json:"roleARN,omitempty"`
-
-	// ExternalID is the external ID used when assuming role.
-	// +optional
-	ExternalID *string `json:"externalID,omitempty"`
-
-	// Tags is list of session tags that you want to pass. Each session tag consists of a key
-	// name and an associated value. For more information about session tags, see
-	// Tagging STS Sessions
-	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html).
-	// +optional
-	Tags []Tag `json:"tags,omitempty"`
-
-	// TransitiveTagKeys is a list of keys for session tags that you want to set as transitive. If you set a
-	// tag key as transitive, the corresponding key and value passes to subsequent
-	// sessions in a role chain. For more information, see Chaining Roles with Session Tags
-	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html#id_session-tags_role-chaining).
-	// +optional
-	TransitiveTagKeys []string `json:"transitiveTagKeys,omitempty"`
-}
-
 // Tag is session tag that can be used to assume an IAM Role
 type Tag struct {
 	// Name of the tag.
@@ -161,8 +202,14 @@ type Tag struct {
 // ProviderCredentials required to authenticate.
 type ProviderCredentials struct {
 	// Source of the provider credentials.
-	// +kubebuilder:validation:Enum=None;Secret;InjectedIdentity;Environment;Filesystem
+	// +kubebuilder:validation:Enum=None;Secret;IRSA;WebIdentity;Upbound
 	Source xpv1.CredentialsSource `json:"source"`
+
+	// WebIdentity defines the options for assuming an IAM role with a Web Identity.
+	WebIdentity *AssumeRoleWithWebIdentityOptions `json:"webIdentity,omitempty"`
+
+	// Upbound defines the options for authenticating using Upbound as an identity provider.
+	Upbound *Upbound `json:"upbound,omitempty"`
 
 	xpv1.CommonCredentialSelectors `json:",inline"`
 }
@@ -174,12 +221,13 @@ type ProviderConfigStatus struct {
 
 // +kubebuilder:object:root=true
 
-// A ProviderConfig configures a Aws provider.
+// A ProviderConfig configures the AWS provider.
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1
+// +kubebuilder:printcolumn:name="SOURCE",type="string",JSONPath=".spec.source",priority=1
 // +kubebuilder:resource:scope=Cluster
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,aws}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,providerconfig,aws}
+// +kubebuilder:storageversion
 type ProviderConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -204,7 +252,8 @@ type ProviderConfigList struct {
 // +kubebuilder:printcolumn:name="CONFIG-NAME",type="string",JSONPath=".providerConfigRef.name"
 // +kubebuilder:printcolumn:name="RESOURCE-KIND",type="string",JSONPath=".resourceRef.kind"
 // +kubebuilder:printcolumn:name="RESOURCE-NAME",type="string",JSONPath=".resourceRef.name"
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,aws}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,providerconfig,aws}
+// +kubebuilder:storageversion
 type ProviderConfigUsage struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

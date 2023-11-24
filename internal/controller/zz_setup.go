@@ -9,8 +9,6 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
-	environment "kubedb.dev/provider-aws/internal/controller/appconfig/environment"
-	userpoolclient "kubedb.dev/provider-aws/internal/controller/cognito/userpoolclient"
 	cluster "kubedb.dev/provider-aws/internal/controller/docdb/cluster"
 	clusterinstance "kubedb.dev/provider-aws/internal/controller/docdb/clusterinstance"
 	clusterparametergroup "kubedb.dev/provider-aws/internal/controller/docdb/clusterparametergroup"
@@ -72,17 +70,12 @@ import (
 	proxytarget "kubedb.dev/provider-aws/internal/controller/rds/proxytarget"
 	snapshotrds "kubedb.dev/provider-aws/internal/controller/rds/snapshot"
 	subnetgrouprds "kubedb.dev/provider-aws/internal/controller/rds/subnetgroup"
-	domainsimpledb "kubedb.dev/provider-aws/internal/controller/simpledb/domain"
-	securitygroupegressrule "kubedb.dev/provider-aws/internal/controller/vpc/securitygroupegressrule"
-	securitygroupingressrule "kubedb.dev/provider-aws/internal/controller/vpc/securitygroupingressrule"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		environment.Setup,
-		userpoolclient.Setup,
 		cluster.Setup,
 		clusterinstance.Setup,
 		clusterparametergroup.Setup,
@@ -144,9 +137,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		proxytarget.Setup,
 		snapshotrds.Setup,
 		subnetgrouprds.Setup,
-		domainsimpledb.Setup,
-		securitygroupegressrule.Setup,
-		securitygroupingressrule.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

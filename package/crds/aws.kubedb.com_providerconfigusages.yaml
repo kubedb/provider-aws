@@ -10,7 +10,7 @@ spec:
   names:
     categories:
     - crossplane
-    - provider
+    - providerconfig
     - aws
     kind: ProviderConfigUsage
     listKind: ProviderConfigUsageList
