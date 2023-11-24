@@ -57,36 +57,7 @@ func FormattedIdentifierFromProvider(separator string, keys ...string) config.Ex
 	return e
 }
 
-var CLIReconciledExternalNameConfigs = map[string]config.ExternalName{
-	// Imported by using the id: sgr-02108b27edd666983
-	//"aws_vpc_security_group_egress_rule": vpcSecurityGroupRule(),
-	// Imported by using the id: sgr-02108b27edd666983
-	//"aws_vpc_security_group_ingress_rule": vpcSecurityGroupRule(),
-	// AppConfig Environments can be imported by using the environment ID and application ID separated by a colon (:)
-	// terraform-plugin-framework
-	//"aws_appconfig_environment": config.IdentifierFromProvider,
-	// us-west-2_abc123/3ho4ek12345678909nh3fmhpko
-	//"aws_cognito_user_pool_client": FormattedIdentifierFromProvider("", "name"),
-	// simpledb
-	//
-	// SimpleDB Domains can be imported using the name
-	//"aws_simpledb_domain": config.NameAsIdentifier,
-	// DynamoDB tables can be imported using the name
-	"aws_dynamodb_table": config.NameAsIdentifier,
-}
-
-func vpcSecurityGroupRule() config.ExternalName {
-	// Terraform does not allow security group rule id to be empty.
-	// Using a stub value to pass validation.
-	e := config.IdentifierFromProvider
-	e.GetIDFn = func(_ context.Context, externalName string, _ map[string]any, _ map[string]any) (string, error) {
-		if len(externalName) == 0 {
-			return "sgr-stub", nil
-		}
-		return externalName, nil
-	}
-	return e
-}
+var CLIReconciledExternalNameConfigs = map[string]config.ExternalName{}
 
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
@@ -126,6 +97,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 
 	// dynamodb
 	//
+	"aws_dynamodb_table": config.NameAsIdentifier,
 	// DynamoDB table replicas can be imported using the table-name:main-region
 	"aws_dynamodb_table_replica": config.IdentifierFromProvider,
 
@@ -246,19 +218,6 @@ func ExternalNameConfigurations() config.ResourceOption {
 			r.ExternalName = e
 		}
 	}
-}
-
-// ExternalNameConfigured returns the list of all resources whose external name
-// is configured manually.
-func ExternalNameConfigured() []string {
-	l := make([]string, len(ExternalNameConfigs))
-	i := 0
-	for name := range ExternalNameConfigs {
-		// $ is added to match the exact string since the format is regex.
-		l[i] = name + "$"
-		i++
-	}
-	return l
 }
 
 // NoForkResourceList returns the list of resources that have external

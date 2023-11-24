@@ -1,0 +1,46 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ProxyDefaultTargetGroup
+metadata:
+  name: example
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Proxy, which needs manual intervention."
+spec:
+  forProvider:
+    dbProxyName: example
+    region: us-east-2
+    connectionPoolConfig:
+      - connectionBorrowTimeout: 60
+        initQuery: SET x=1, y=2
+        maxConnectionsPercent: 100
+        maxIdleConnectionsPercent: 50
+        sessionPinningFilters:
+          - EXCLUDE_VARIABLE_SETS
+
+
+---
+# apiVersion: rds.aws.kubedb.com/v1alpha1
+# kind: Proxy
+# metadata:
+#   name: example
+#   annotations:
+#     upjet.kubedb.com/manual-intervention: "This resource has a secret reference."
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     auth:
+#       - authScheme: SECRETS
+#         description: example
+#         iamAuth: DISABLED
+#         secretArn: arn:aws:secretsmanager:us-east-2:your-aws-id:secret:rds-proxy-arm-yNkcwm
+#     debugLogging: false
+#     engineFamily: MYSQL
+#     idleClientTimeout: 1800
+#     requireTls: true
+#     roleArn: arn:aws:iam::your-aws-id:role/rds-proxy-role-arm
+#     tags:
+#       Key: value
+#       Name: example
+#     vpcSubnetIds:
+#       - subnet-0fdcbb2f7f0d82f02
+#       - subnet-09679d42f55b02bf3
+#       - subnet-090ee34d06583ef7f

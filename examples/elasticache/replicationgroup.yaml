@@ -1,0 +1,18 @@
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: ReplicationGroup
+metadata:
+  annotations:
+    uptest.kubedb.com/timeout: "3600"
+  name: example
+spec:
+  forProvider:
+    automaticFailoverEnabled: true
+    description: example description
+    nodeType: cache.t2.micro
+    numberCacheClusters: 2
+    parameterGroupName: default.redis7
+    port: 6379
+    preferredCacheClusterAzs:
+      - us-east-2b
+      - us-east-2c
+    region: us-east-2

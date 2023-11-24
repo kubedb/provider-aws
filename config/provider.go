@@ -108,17 +108,3 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 
 	return pc, nil
 }
-
-// CLIReconciledResourceList returns the list of resources that have external
-// name configured in ExternalNameConfigs table and to be reconciled under
-// the TF CLI based architecture.
-/*func CLIReconciledResourceList() []string {
-	l := make([]string, len(CLIReconciledExternalNameConfigs))
-	i := 0
-	for name := range CLIReconciledExternalNameConfigs {
-		// Expected format is regex and we'd like to have exact matches.
-		l[i] = name + "$"
-		i++
-	}
-	return l
-}*/

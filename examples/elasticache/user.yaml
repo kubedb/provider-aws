@@ -1,0 +1,62 @@
+
+## faced this error for the YAML, given below 
+# apply failed: creating ElastiCache User (sample-user): InvalidParameterCombination: A user with Authentication Mode: password, must have at least one password
+#                          status code: 400, request id: 7ffb8623-dac7-4af3-8430-70719f848483:
+---
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: User
+metadata:
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource needs secrets that must contain valid credentials."
+  name: example-user
+spec:
+  forProvider:
+    userName: "testUserName"
+    accessString: "on ~* +@all"
+    engine: "REDIS"
+    region: us-east-2
+    passwordsSecretRef:
+      - name: user-passwords
+        namespace: crossplane-system
+        key: pwd-1
+    authenticationMode:
+      - type: password
+  writeConnectionSecretToRef:
+    name: user-conn
+    namespace: default
+
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example-password
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  pwd-1: "Upboundtest!123435689"
+
+
+---
+# faced this error for the YAML, given below 
+# observe failed: cannot get connection details: cannot get connection details: cannot
+# expand wildcards: cannot expand wildcards for segments: "passwords[*]": "passwords": unexpected wildcard usage
+
+# apiVersion: elasticache.aws.kubedb.com/v1alpha1
+# kind: User
+# metadata:
+#   annotations:
+#     upjet.kubedb.com/manual-intervention: "This resource needs secrets that must contain valid credentials."
+#   name: sample-user
+# spec:
+#   forProvider:
+#     userName: "testUserName"
+#     accessString: "on ~* +@all"
+#     engine: "REDIS"
+#     region: us-east-2
+#     authenticationMode: 
+#       - type: no-password-required
+#   writeConnectionSecretToRef:
+#     name: user-conn
+#     namespace: default
+---  

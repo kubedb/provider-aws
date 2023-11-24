@@ -1,0 +1,182 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ProxyTarget
+metadata:
+  name: example
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Proxy, which needs manual intervention."
+spec:
+  forProvider:
+    region: us-east-2
+    dbProxyName: example
+    dbInstanceIdentifier: example-dbinstance-1
+    targetGroupName: default
+  providerConfigRef:
+    name: default
+
+---
+# apiVersion: rds.aws.kubedb.com/v1alpha1
+# kind: Proxy
+# metadata:
+#   name: example
+#   annotations:
+#     upjet.kubedb.com/manual-intervention: "This resource has a secret reference."
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     auth:
+#       - authScheme: SECRETS
+#         description: example
+#         iamAuth: DISABLED
+#         secretArn: arn:aws:secretsmanager:us-east-2:your-aws-id:secret:rds-proxy-arm-yNkcwm
+#     debugLogging: false
+#     engineFamily: MYSQL
+#     idleClientTimeout: 1800
+#     requireTls: true
+#     roleArn: arn:aws:iam::your-aws-id:role/rds-proxy-role-arm
+#     tags:
+#       Key: value
+#       Name: example
+#     vpcSubnetIds:
+#       - subnet-0fdcbb2f7f0d82f02
+#       - subnet-09679d42f55b02bf3
+#       - subnet-090ee34d06583ef7f
+
+# ---
+
+# apiVersion: rds.aws.kubedb.com/v1alpha1
+# kind: Instance
+# metadata:
+#   annotations:
+#     meta.kubedb.com/example-id: rds/v1alpha1/instance
+#   labels:
+#     testing.kubedb.com/example-name: example-dbinstance
+#   name: example-dbinstance-1
+# spec:
+#   forProvider:
+#     dbSubnetGroupName: example-subnetgroup
+#     region: us-east-2
+#     allocatedStorage: 20
+#     autoMinorVersionUpgrade: true
+#     backupRetentionPeriod: 14
+#     instanceClass: db.t3.micro
+#     name: example
+#     engine: mariadb
+#     engineVersion: "10.6.14"
+#     username: adminuser
+#     autoGeneratePassword: true
+#     passwordSecretRef:
+#       key: password
+#       name: example-dbinstance
+#       namespace: upbound-system
+#     backupWindow: "09:46-10:16"
+#     maintenanceWindow: "Mon:00:00-Mon:03:00"
+#     publiclyAccessible: false
+#     skipFinalSnapshot: true
+#     storageEncrypted: true
+#     storageType: gp2
+# #    multiAz: true
+#     kmsKeyIdSelector:
+#       matchLabels:
+#         testing.kubedb.com/example-name: sample-key
+#   writeConnectionSecretToRef:
+#     name: example-dbinstance-out
+#     namespace: default
+
+# ---
+
+# apiVersion: kms.aws.kubedb.com/v1alpha1
+# kind: Key
+# metadata:
+#   annotations:
+#     meta.kubedb.com/example-id: rds/v1alpha1/instance
+#   labels:
+#     testing.kubedb.com/example-name: sample-key
+#   name: sample-key-1
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     description: Created with Crossplane
+#     deletionWindowInDays: 7
+
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: example-dbinstance
+#   namespace: upbound-system
+# type: Opaque
+# data:
+#   password: MTIzNDU2Nzg=
+#   #12345678
+
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: VPC
+# metadata:
+#   name: sample-db-vpc
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     cidrBlock: 172.16.0.0/16
+#     tags:
+#       Name: DemoVpc
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   name: sample-db-subnet1
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     availabilityZone: us-east-2b
+#     vpcIdRef:
+#       name: sample-db-vpc
+#     cidrBlock: 172.16.10.0/24
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   name: sample-db-subnet2
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     availabilityZone: us-east-2c
+#     vpcIdRef:
+#       name: sample-db-vpc
+#     cidrBlock: 172.16.20.0/24
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   name: sample-db-subnet3
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     availabilityZone: us-east-2a
+#     vpcIdRef:
+#       name: sample-db-vpc
+#     cidrBlock: 172.16.30.0/24
+
+# ---
+
+# apiVersion: rds.aws.kubedb.com/v1alpha1
+# kind: SubnetGroup
+# metadata:
+#   name: example-subnetgroup
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     subnetIdRefs:
+#       - name: sample-db-subnet1
+#       - name: sample-db-subnet2
+#       - name: sample-db-subnet3
+#     tags:
+#       Name: My DB subnet group

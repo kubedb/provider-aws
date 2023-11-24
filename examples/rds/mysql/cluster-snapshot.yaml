@@ -1,0 +1,130 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ClusterSnapshot
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: rds/v1alpha1/clustersnapshot
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Cluster, which needs manual intervention."
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    dbClusterIdentifier: example
+    dbClusterSnapshotIdentifier: resourcetestsnapshot1234
+    region: us-east-2
+
+# ---
+# Make sure that the commeted resouces are ready. If not reday, then deploy those resoures.
+
+# apiVersion: rds.aws.kubedb.com/v1alpha1
+# kind: Cluster
+# metadata:
+#   name: example
+#   annotations:
+#     meta.kubedb.com/example-id: rds/v1alpha1/cluster
+# spec:
+#   forProvider:
+#     dbSubnetGroupName: example-subnetgroup
+#     region: us-east-2
+#     engine: aurora-postgresql
+#     masterUsername: cpadmin
+#     masterPasswordSecretRef:
+#       name: sample-cluster-password
+#       namespace: upbound-system
+#       key: password
+#     skipFinalSnapshot: true
+#   writeConnectionSecretToRef:
+#     name: sample-rds-cluster-secret
+#     namespace: upbound-system
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: sample-cluster-password
+#   namespace: upbound-system
+# type: Opaque
+# stringData:
+#   password: TestPass0!
+
+# ---
+
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: sample-cluster-password2
+#   namespace: upbound-system
+# type: Opaque
+# data:
+#   password: MTIzNDU2Nzg=
+
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: VPC
+# metadata:
+#   name: sample-db-vpc
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     cidrBlock: 172.16.0.0/16
+#     tags:
+#       Name: DemoVpc
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   name: sample-db-subnet1
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     availabilityZone: us-east-2b
+#     vpcIdRef:
+#       name: sample-db-vpc
+#     cidrBlock: 172.16.10.0/24
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   name: sample-db-subnet2
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     availabilityZone: us-east-2c
+#     vpcIdRef:
+#       name: sample-db-vpc
+#     cidrBlock: 172.16.20.0/24
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   name: sample-db-subnet3
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     availabilityZone: us-east-2a
+#     vpcIdRef:
+#       name: sample-db-vpc
+#     cidrBlock: 172.16.30.0/24
+
+# ---
+
+# apiVersion: rds.aws.kubedb.com/v1alpha1
+# kind: SubnetGroup
+# metadata:
+#   name: example-subnetgroup
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     subnetIdRefs:
+#       - name: sample-db-subnet1
+#       - name: sample-db-subnet2
+#       - name: sample-db-subnet3
+#     tags:
+#       Name: My DB subnet group

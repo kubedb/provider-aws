@@ -1,0 +1,92 @@
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+    uptest.kubedb.com/timeout: "3600"
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    engine: redis
+    nodeType: cache.t2.micro
+    numCacheNodes: 1
+    parameterGroupName: default.redis7
+    #parameterGroupName: cache-params-test
+    port: 6379
+    securityGroupIdSelector:
+      matchLabels:
+        testing.kubedb.com/example-name: example
+    subnetGroupNameSelector:
+      matchLabels:
+        testing.kubedb.com/example-name: example
+
+---
+
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: SecurityGroup
+# metadata:
+#   annotations:
+#     meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+#   labels:
+#     testing.kubedb.com/example-name: example
+#   name: example
+# spec:
+#   forProvider:
+#     region: us-east-2
+#     vpcIdSelector:
+#       matchLabels:
+#         testing.kubedb.com/example-name: example
+
+---
+
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: SubnetGroup
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    subnetIdRefs:
+      - name: example
+
+---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: Subnet
+# metadata:
+#   annotations:
+#     meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+#   labels:
+#     testing.kubedb.com/example-name: example
+#   name: example
+# spec:
+#   forProvider:
+#     availabilityZone: us-east-2b
+#     cidrBlock: 10.0.0.0/16
+#     region: us-east-2
+#     vpcIdSelector:
+#       matchLabels:
+#         testing.kubedb.com/example-name: example
+
+# ---
+
+# apiVersion: ec2.aws.kubedb.com/v1alpha1
+# kind: VPC
+# metadata:
+#   annotations:
+#     meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+#   labels:
+#     testing.kubedb.com/example-name: example
+#   name: example
+# spec:
+#   forProvider:
+#     cidrBlock: 10.0.0.0/16
+#     region: us-east-2
