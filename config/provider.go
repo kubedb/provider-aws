@@ -20,10 +20,12 @@ import (
 	"kubedb.dev/provider-aws/config/dynamodb"
 	"kubedb.dev/provider-aws/config/ec2"
 	"kubedb.dev/provider-aws/config/elasticache"
+	"kubedb.dev/provider-aws/config/iam"
 	"kubedb.dev/provider-aws/config/kafka"
 	"kubedb.dev/provider-aws/config/kinesis"
 	"kubedb.dev/provider-aws/config/memorydb"
 	"kubedb.dev/provider-aws/config/rds"
+	"kubedb.dev/provider-aws/config/secretsmanager"
 )
 
 const (
@@ -101,6 +103,8 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		memorydb.Configure,
 		rds.Configure,
 		kinesis.Configure,
+		iam.Configure,
+		secretsmanager.Configure,
 	} {
 		configure(pc)
 	}

@@ -68,6 +68,9 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"aws_route":                  route(),
 
 	"aws_security_group": config.IdentifierFromProvider,
+	/// iam
+	"aws_iam_role":              config.NameAsIdentifier,
+	"aws_secretsmanager_secret": config.IdentifierFromProvider,
 
 	//vpc
 	//
