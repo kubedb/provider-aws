@@ -2,9 +2,9 @@ apiVersion: kms.aws.kubedb.com/v1alpha1
 kind: Key
 metadata:
   annotations:
-    meta.upbound.io/example-id: kms/v1alpha1/key
+    meta.kubedb.com/example-id: kms/v1alpha1/key
   labels:
-    testing.upbound.io/example-name: a
+    testing.kubedb.com/example-name: a
   name: a
 spec:
   forProvider:

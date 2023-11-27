@@ -2,9 +2,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPCEndpoint
 metadata:
   annotations:
-    meta.upbound.io/example-id: ec2/v1alpha1/vpcendpoint
+    meta.kubedb.com/example-id: ec2/v1alpha1/vpcendpoint
   labels:
-    testing.upbound.io/example-name: s3
+    testing.kubedb.com/example-name: s3
   name: s3
 spec:
   forProvider:
@@ -12,4 +12,4 @@ spec:
     serviceName: com.amazonaws.us-west-2.s3
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: main
+        testing.kubedb.com/example-name: main

@@ -2,9 +2,9 @@ apiVersion: memorydb.aws.kubedb.com/v1alpha1
 kind: ACL
 metadata:
   annotations:
-    meta.upbound.io/example-id: memorydb/v1alpha1/acl
+    meta.kubedb.com/example-id: memorydb/v1alpha1/acl
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:

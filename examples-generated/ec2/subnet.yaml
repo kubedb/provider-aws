@@ -2,9 +2,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.upbound.io/example-id: ec2/v1alpha1/subnet
+    meta.kubedb.com/example-id: ec2/v1alpha1/subnet
   labels:
-    testing.upbound.io/example-name: main
+    testing.kubedb.com/example-name: main
   name: main
 spec:
   forProvider:
@@ -14,4 +14,4 @@ spec:
       Name: Main
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: main
+        testing.kubedb.com/example-name: main

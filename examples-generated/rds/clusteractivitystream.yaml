@@ -2,20 +2,20 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterActivityStream
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+    meta.kubedb.com/example-id: rds/v1alpha1/clusteractivitystream
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:
     kmsKeyIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     mode: async
     region: us-west-1
     resourceArnSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
 
 ---
 
@@ -23,9 +23,9 @@ apiVersion: kms.aws.kubedb.com/v1alpha1
 kind: Key
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+    meta.kubedb.com/example-id: rds/v1alpha1/clusteractivitystream
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:
@@ -38,9 +38,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+    meta.kubedb.com/example-id: rds/v1alpha1/clusteractivitystream
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:
@@ -64,15 +64,15 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusteractivitystream
+    meta.kubedb.com/example-id: rds/v1alpha1/clusteractivitystream
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     engine: aurora-postgresql
     instanceClass: db.r6g.large
     region: us-west-1

@@ -2,9 +2,9 @@ apiVersion: elasticache.aws.kubedb.com/v1alpha1
 kind: SubnetGroup
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticache/v1alpha1/subnetgroup
+    meta.kubedb.com/example-id: elasticache/v1alpha1/subnetgroup
   labels:
-    testing.upbound.io/example-name: bar
+    testing.kubedb.com/example-name: bar
   name: bar
 spec:
   forProvider:
@@ -18,9 +18,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticache/v1alpha1/subnetgroup
+    meta.kubedb.com/example-id: elasticache/v1alpha1/subnetgroup
   labels:
-    testing.upbound.io/example-name: foo
+    testing.kubedb.com/example-name: foo
   name: foo
 spec:
   forProvider:
@@ -31,7 +31,7 @@ spec:
       Name: tf-test
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.kubedb.com/example-name: foo
 
 ---
 
@@ -39,9 +39,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticache/v1alpha1/subnetgroup
+    meta.kubedb.com/example-id: elasticache/v1alpha1/subnetgroup
   labels:
-    testing.upbound.io/example-name: foo
+    testing.kubedb.com/example-name: foo
   name: foo
 spec:
   forProvider:

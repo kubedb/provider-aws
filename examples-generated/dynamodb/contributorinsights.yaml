@@ -2,13 +2,13 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: ContributorInsights
 metadata:
   annotations:
-    meta.upbound.io/example-id: dynamodb/v1alpha1/contributorinsights
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/contributorinsights
   labels:
-    testing.upbound.io/example-name: test
+    testing.kubedb.com/example-name: test
   name: test
 spec:
   forProvider:
     region: us-west-1
     tableNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example

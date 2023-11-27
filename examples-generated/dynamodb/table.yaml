@@ -2,9 +2,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Table
 metadata:
   annotations:
-    meta.upbound.io/example-id: dynamodb/v1alpha1/table
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/table
   labels:
-    testing.upbound.io/example-name: basic-dynamodb-table
+    testing.kubedb.com/example-name: basic-dynamodb-table
   name: basic-dynamodb-table
 spec:
   forProvider:

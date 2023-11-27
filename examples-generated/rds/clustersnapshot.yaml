@@ -2,14 +2,14 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterSnapshot
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clustersnapshot
+    meta.kubedb.com/example-id: rds/v1alpha1/clustersnapshot
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
     dbClusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     dbClusterSnapshotIdentifier: resourcetestsnapshot1234
     region: us-west-1

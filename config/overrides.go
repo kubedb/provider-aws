@@ -6,6 +6,7 @@ import (
 	"github.com/crossplane/upjet/pkg/types/name"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
+	"kubedb.dev/provider-aws/config/common"
 	"strings"
 )
 
@@ -213,7 +214,11 @@ func KnownReferencers() config.ResourceOption { //nolint:gocyclo
 				continue
 			}
 			switch {
-
+			case strings.HasSuffix(k, "role_arn"):
+				r.References[k] = config.Reference{
+					Type:      "kubedb.dev/provider-aws/apis/iam/v1alpha1.Role",
+					Extractor: common.PathARNExtractor,
+				}
 			case strings.HasSuffix(k, "security_group_ids"):
 				r.References[k] = config.Reference{
 					Type:              "kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup",

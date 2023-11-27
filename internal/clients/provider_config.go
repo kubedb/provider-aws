@@ -51,7 +51,7 @@ const (
 	errAWSConfigWebIdentity = "failed to get AWS config using web identity token"
 	errAWSConfigUpbound     = "failed to get AWS config using Upbound identity"
 
-	upboundProviderIdentityTokenFile = "/var/run/secrets/upbound.io/provider/token"
+	upboundProviderIdentityTokenFile = "/var/run/secrets/kubedb.com/provider/token"
 )
 
 // GlobalRegion is the region name used for AWS services that do not have a notion

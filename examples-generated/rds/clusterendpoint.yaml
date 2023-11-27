@@ -2,15 +2,15 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterEndpoint
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+    meta.kubedb.com/example-id: rds/v1alpha1/clusterendpoint
   labels:
-    testing.upbound.io/example-name: eligible
+    testing.kubedb.com/example-name: eligible
   name: eligible
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     customEndpointType: READER
     excludedMembers:
     - ${aws_rds_cluster_instance.test1.id}
@@ -23,9 +23,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+    meta.kubedb.com/example-id: rds/v1alpha1/clusterendpoint
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:
@@ -49,16 +49,16 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+    meta.kubedb.com/example-id: rds/v1alpha1/clusterendpoint
   labels:
-    testing.upbound.io/example-name: test1
+    testing.kubedb.com/example-name: test1
   name: test1
 spec:
   forProvider:
     applyImmediately: true
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     engine: ${aws_rds_cluster.default.engine}
     engineVersion: ${aws_rds_cluster.default.engine_version}
     instanceClass: db.t2.small
@@ -70,16 +70,16 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+    meta.kubedb.com/example-id: rds/v1alpha1/clusterendpoint
   labels:
-    testing.upbound.io/example-name: test2
+    testing.kubedb.com/example-name: test2
   name: test2
 spec:
   forProvider:
     applyImmediately: true
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     engine: ${aws_rds_cluster.default.engine}
     engineVersion: ${aws_rds_cluster.default.engine_version}
     instanceClass: db.t2.small
@@ -91,16 +91,16 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusterendpoint
+    meta.kubedb.com/example-id: rds/v1alpha1/clusterendpoint
   labels:
-    testing.upbound.io/example-name: test3
+    testing.kubedb.com/example-name: test3
   name: test3
 spec:
   forProvider:
     applyImmediately: true
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     engine: ${aws_rds_cluster.default.engine}
     engineVersion: ${aws_rds_cluster.default.engine_version}
     instanceClass: db.t2.small

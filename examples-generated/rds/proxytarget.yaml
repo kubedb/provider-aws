@@ -2,18 +2,18 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ProxyTarget
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/proxytarget
+    meta.kubedb.com/example-id: rds/v1alpha1/proxytarget
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
     dbInstanceIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     dbProxyNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     region: us-west-1
     targetGroupName: ${aws_db_proxy_default_target_group.example.name}
 
@@ -23,9 +23,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Proxy
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/proxytarget
+    meta.kubedb.com/example-id: rds/v1alpha1/proxytarget
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -54,9 +54,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ProxyDefaultTargetGroup
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/proxytarget
+    meta.kubedb.com/example-id: rds/v1alpha1/proxytarget
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -69,5 +69,5 @@ spec:
       - EXCLUDE_VARIABLE_SETS
     dbProxyNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     region: us-west-1

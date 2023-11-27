@@ -264,7 +264,7 @@ spec:
                     description: The database engine to use. For supported values,
                       see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine must match
-                      the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
+                      the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s
                       engine'. For information on the difference between the available
                       Aurora MySQL engines see Comparison in the [Amazon RDS Release
                       Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
@@ -277,7 +277,7 @@ spec:
                       supported values, see the EngineVersion parameter in [API action
                       CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine version must
-                      match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
+                      match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s
                       engine version'.
                     type: string
                   finalSnapshotIdentifier:
@@ -963,7 +963,7 @@ spec:
                     description: The database engine to use. For supported values,
                       see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine must match
-                      the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
+                      the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s
                       engine'. For information on the difference between the available
                       Aurora MySQL engines see Comparison in the [Amazon RDS Release
                       Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
@@ -976,7 +976,7 @@ spec:
                       supported values, see the EngineVersion parameter in [API action
                       CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine version must
-                      match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
+                      match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s
                       engine version'.
                     type: string
                   finalSnapshotIdentifier:
@@ -1493,7 +1493,7 @@ spec:
                     description: The database engine to use. For supported values,
                       see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine must match
-                      the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
+                      the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s
                       engine'. For information on the difference between the available
                       Aurora MySQL engines see Comparison in the [Amazon RDS Release
                       Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
@@ -1506,7 +1506,7 @@ spec:
                       supported values, see the EngineVersion parameter in [API action
                       CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
                       Note that for Amazon Aurora instances the engine version must
-                      match the [DB Cluster](https://marketplace.upbound.io/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.upbound.io/Cluster/v1alpha1)'s
+                      match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s
                       engine version'.
                     type: string
                   engineVersionActual:

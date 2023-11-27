@@ -2,19 +2,19 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: KinesisStreamingDestination
 metadata:
   annotations:
-    meta.upbound.io/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
     region: us-west-1
     streamArnSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     tableNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
 
 ---
 
@@ -22,9 +22,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Table
 metadata:
   annotations:
-    meta.upbound.io/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -40,9 +40,9 @@ apiVersion: kinesis.aws.kubedb.com/v1alpha1
 kind: Stream
 metadata:
   annotations:
-    meta.upbound.io/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:

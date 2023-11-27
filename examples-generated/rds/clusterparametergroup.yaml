@@ -2,9 +2,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterParameterGroup
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/clusterparametergroup
+    meta.kubedb.com/example-id: rds/v1alpha1/clusterparametergroup
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:

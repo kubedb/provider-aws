@@ -2,13 +2,13 @@ apiVersion: memorydb.aws.kubedb.com/v1alpha1
 kind: Snapshot
 metadata:
   annotations:
-    meta.upbound.io/example-id: memorydb/v1alpha1/snapshot
+    meta.kubedb.com/example-id: memorydb/v1alpha1/snapshot
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
     clusterNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     region: us-west-1

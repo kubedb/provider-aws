@@ -2,9 +2,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: SubnetGroup
 metadata:
   annotations:
-    meta.upbound.io/example-id: docdb/v1alpha1/subnetgroup
+    meta.kubedb.com/example-id: docdb/v1alpha1/subnetgroup
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:

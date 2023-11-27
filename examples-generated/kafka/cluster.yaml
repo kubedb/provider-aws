@@ -2,9 +2,9 @@ apiVersion: kafka.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -23,7 +23,7 @@ spec:
     encryptionInfo:
     - encryptionAtRestKmsKeyArnSelector:
         matchLabels:
-          testing.upbound.io/example-name: kms
+          testing.kubedb.com/example-name: kms
     kafkaVersion: 3.2.0
     loggingInfo:
     - brokerLogs:
@@ -54,9 +54,9 @@ apiVersion: kms.aws.kubedb.com/v1alpha1
 kind: Key
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: kms
+    testing.kubedb.com/example-name: kms
   name: kms
 spec:
   forProvider:
@@ -69,16 +69,16 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: SecurityGroup
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: sg
+    testing.kubedb.com/example-name: sg
   name: sg
 spec:
   forProvider:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: vpc
+        testing.kubedb.com/example-name: vpc
 
 ---
 
@@ -86,9 +86,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: subnet_az1
+    testing.kubedb.com/example-name: subnet_az1
   name: subnet-az1
 spec:
   forProvider:
@@ -97,7 +97,7 @@ spec:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: vpc
+        testing.kubedb.com/example-name: vpc
 
 ---
 
@@ -105,9 +105,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: subnet_az2
+    testing.kubedb.com/example-name: subnet_az2
   name: subnet-az2
 spec:
   forProvider:
@@ -116,7 +116,7 @@ spec:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: vpc
+        testing.kubedb.com/example-name: vpc
 
 ---
 
@@ -124,9 +124,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: subnet_az3
+    testing.kubedb.com/example-name: subnet_az3
   name: subnet-az3
 spec:
   forProvider:
@@ -135,7 +135,7 @@ spec:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: vpc
+        testing.kubedb.com/example-name: vpc
 
 ---
 
@@ -143,9 +143,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
   annotations:
-    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: vpc
+    testing.kubedb.com/example-name: vpc
   name: vpc
 spec:
   forProvider:

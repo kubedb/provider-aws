@@ -2,9 +2,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: GlobalCluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+    meta.kubedb.com/example-id: rds/v1alpha1/globalcluster
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -19,16 +19,16 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+    meta.kubedb.com/example-id: rds/v1alpha1/globalcluster
   labels:
-    testing.upbound.io/example-name: primary
+    testing.kubedb.com/example-name: primary
   name: primary
 spec:
   forProvider:
     databaseName: example_db
     dbSubnetGroupNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     engine: aurora
     engineVersion: 5.6.mysql_aurora.1.22.2
     globalClusterIdentifier: ${aws_rds_global_cluster.example.id}
@@ -46,15 +46,15 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+    meta.kubedb.com/example-id: rds/v1alpha1/globalcluster
   labels:
-    testing.upbound.io/example-name: secondary
+    testing.kubedb.com/example-name: secondary
   name: secondary
 spec:
   forProvider:
     dbSubnetGroupNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     engine: aurora
     engineVersion: 5.6.mysql_aurora.1.22.2
     globalClusterIdentifier: ${aws_rds_global_cluster.example.id}
@@ -67,18 +67,18 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+    meta.kubedb.com/example-id: rds/v1alpha1/globalcluster
   labels:
-    testing.upbound.io/example-name: primary
+    testing.kubedb.com/example-name: primary
   name: primary
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: primary
+        testing.kubedb.com/example-name: primary
     dbSubnetGroupNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     engine: aurora
     engineVersion: 5.6.mysql_aurora.1.22.2
     instanceClass: db.r4.large
@@ -91,18 +91,18 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/globalcluster
+    meta.kubedb.com/example-id: rds/v1alpha1/globalcluster
   labels:
-    testing.upbound.io/example-name: secondary
+    testing.kubedb.com/example-name: secondary
   name: secondary
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: secondary
+        testing.kubedb.com/example-name: secondary
     dbSubnetGroupNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     engine: aurora
     engineVersion: 5.6.mysql_aurora.1.22.2
     instanceClass: db.r4.large

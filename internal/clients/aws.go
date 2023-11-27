@@ -247,7 +247,7 @@ func getAWSConfig(ctx context.Context, c client.Client, mg resource.Managed) (*a
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot get AWS config")
 	}
-	if cfg.Region == "" && mg.GetObjectKind().GroupVersionKind().Group == "iam.aws.upbound.io" {
+	if cfg.Region == "" && mg.GetObjectKind().GroupVersionKind().Group == "iam.aws.kubedb.com" {
 		cfg.Region = "us-east-1"
 	}
 	return cfg, nil

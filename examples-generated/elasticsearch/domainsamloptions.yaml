@@ -2,9 +2,9 @@ apiVersion: elasticsearch.aws.kubedb.com/v1alpha1
 kind: DomainSAMLOptions
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticsearch/v1alpha1/domainsamloptions
+    meta.kubedb.com/example-id: elasticsearch/v1alpha1/domainsamloptions
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -21,9 +21,9 @@ apiVersion: elasticsearch.aws.kubedb.com/v1alpha1
 kind: Domain
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticsearch/v1alpha1/domainsamloptions
+    meta.kubedb.com/example-id: elasticsearch/v1alpha1/domainsamloptions
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:

@@ -2,9 +2,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
   annotations:
-    meta.upbound.io/example-id: ec2/v1alpha1/vpc
+    meta.kubedb.com/example-id: ec2/v1alpha1/vpc
   labels:
-    testing.upbound.io/example-name: main
+    testing.kubedb.com/example-name: main
   name: main
 spec:
   forProvider:

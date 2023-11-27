@@ -2,9 +2,9 @@ apiVersion: elasticache.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticache/v1alpha1/cluster
+    meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -13,6 +13,6 @@ spec:
     numCacheNodes: 2
     parameterGroupNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     port: 11211
     region: us-west-1

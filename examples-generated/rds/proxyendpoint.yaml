@@ -2,15 +2,15 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ProxyEndpoint
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/proxyendpoint
+    meta.kubedb.com/example-id: rds/v1alpha1/proxyendpoint
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
     dbProxyNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: test
+        testing.kubedb.com/example-name: test
     region: us-west-1
     targetRole: READ_ONLY
     vpcSubnetIds: ${aws_subnet.test[*].id}

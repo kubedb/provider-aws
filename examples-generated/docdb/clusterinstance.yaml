@@ -2,15 +2,15 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.upbound.io/example-id: docdb/v1alpha1/clusterinstance
+    meta.kubedb.com/example-id: docdb/v1alpha1/clusterinstance
   labels:
-    testing.upbound.io/example-name: cluster_instances
+    testing.kubedb.com/example-name: cluster_instances
   name: cluster-instances
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.kubedb.com/example-name: default
     count: 2
     instanceClass: db.r5.large
     region: us-west-1
@@ -21,9 +21,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.upbound.io/example-id: docdb/v1alpha1/clusterinstance
+    meta.kubedb.com/example-id: docdb/v1alpha1/clusterinstance
   labels:
-    testing.upbound.io/example-name: default
+    testing.kubedb.com/example-name: default
   name: default
 spec:
   forProvider:

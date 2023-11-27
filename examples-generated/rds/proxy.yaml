@@ -2,9 +2,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Proxy
 metadata:
   annotations:
-    meta.upbound.io/example-id: rds/v1alpha1/proxy
+    meta.kubedb.com/example-id: rds/v1alpha1/proxy
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:

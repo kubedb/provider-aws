@@ -2,9 +2,9 @@ apiVersion: elasticache.aws.kubedb.com/v1alpha1
 kind: ReplicationGroup
 metadata:
   annotations:
-    meta.upbound.io/example-id: elasticache/v1alpha1/replicationgroup
+    meta.kubedb.com/example-id: elasticache/v1alpha1/replicationgroup
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:

@@ -2,9 +2,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: SecurityGroupRule
 metadata:
   annotations:
-    meta.upbound.io/example-id: ec2/v1alpha1/securitygrouprule
+    meta.kubedb.com/example-id: ec2/v1alpha1/securitygrouprule
   labels:
-    testing.upbound.io/example-name: example
+    testing.kubedb.com/example-name: example
   name: example
 spec:
   forProvider:
@@ -17,6 +17,6 @@ spec:
     region: us-west-1
     securityGroupIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.kubedb.com/example-name: example
     toPort: 65535
     type: ingress

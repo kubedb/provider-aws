@@ -2,9 +2,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Route
 metadata:
   annotations:
-    meta.upbound.io/example-id: ec2/v1alpha1/route
+    meta.kubedb.com/example-id: ec2/v1alpha1/route
   labels:
-    testing.upbound.io/example-name: r
+    testing.kubedb.com/example-name: r
   name: r
 spec:
   forProvider:
