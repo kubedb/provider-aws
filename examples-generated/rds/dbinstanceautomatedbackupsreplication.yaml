@@ -2,9 +2,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: DBInstanceAutomatedBackupsReplication
 metadata:
   annotations:
-    meta.kubedb.com/example-id: rds/v1alpha1/dbinstanceautomatedbackupsreplication
+    meta.upbound.io/example-id: rds/v1alpha1/dbinstanceautomatedbackupsreplication
   labels:
-    testing.kubedb.com/example-name: default
+    testing.upbound.io/example-name: default
   name: default
 spec:
   forProvider:
@@ -12,4 +12,4 @@ spec:
     retentionPeriod: 14
     sourceDbInstanceArnSelector:
       matchLabels:
-        testing.kubedb.com/example-name: example
+        testing.upbound.io/example-name: example

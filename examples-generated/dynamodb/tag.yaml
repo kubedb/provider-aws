@@ -2,9 +2,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Tag
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/tag
+    meta.upbound.io/example-id: dynamodb/v1alpha1/tag
   labels:
-    testing.kubedb.com/example-name: test
+    testing.upbound.io/example-name: test
   name: test
 spec:
   forProvider:
@@ -21,9 +21,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Table
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/tag
+    meta.upbound.io/example-id: dynamodb/v1alpha1/tag
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:

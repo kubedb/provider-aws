@@ -161,13 +161,6 @@ type InstanceInitParameters struct {
 	// Values: 0, 1, 5, 10, 15, 30, 60.
 	MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
 
-	// The ARN for the IAM role that permits RDS
-	// to send enhanced monitoring metrics to CloudWatch Logs. You can find more
-	// information on the AWS
-	// Documentation
-	// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
-	MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
-
 	// Specifies if the RDS instance is multi-AZ
 	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
 
@@ -750,8 +743,18 @@ type InstanceParameters struct {
 	// information on the AWS
 	// Documentation
 	// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
+	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate monitoringRoleArn.
+	// +kubebuilder:validation:Optional
+	MonitoringRoleArnRef *v1.Reference `json:"monitoringRoleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate monitoringRoleArn.
+	// +kubebuilder:validation:Optional
+	MonitoringRoleArnSelector *v1.Selector `json:"monitoringRoleArnSelector,omitempty" tf:"-"`
 
 	// Specifies if the RDS instance is multi-AZ
 	// +kubebuilder:validation:Optional

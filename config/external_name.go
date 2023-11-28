@@ -209,6 +209,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// Even though the documentation says the ID is name, it uses ARN..
 	"aws_kinesis_stream": config.TemplatedStringAsIdentifier("name", " arn:aws:kinesis:{{ .setup.configuration.region }}:{{ .setup.client_metadata.account_id }}:stream/{{ .external_name }}"),
+	// sns
+	//
+	// SNS Topics can be imported using the topic arn
+	"aws_sns_topic": config.TemplatedStringAsIdentifier("name", "arn:aws:sns:{{ .setup.configuration.region }}:{{ .setup.client_metadata.account_id }}:{{ .external_name }}"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

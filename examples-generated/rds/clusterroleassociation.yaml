@@ -2,15 +2,17 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ClusterRoleAssociation
 metadata:
   annotations:
-    meta.kubedb.com/example-id: rds/v1alpha1/clusterroleassociation
+    meta.upbound.io/example-id: rds/v1alpha1/clusterroleassociation
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
     dbClusterIdentifierSelector:
       matchLabels:
-        testing.kubedb.com/example-name: example
+        testing.upbound.io/example-name: example
     featureName: S3_INTEGRATION
     region: us-west-1
-    roleArn: ${aws_iam_role.example.arn}
+    roleArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

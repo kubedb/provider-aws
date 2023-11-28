@@ -2,17 +2,17 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPCPeeringConnection
 metadata:
   annotations:
-    meta.kubedb.com/example-id: ec2/v1alpha1/vpcpeeringconnection
+    meta.upbound.io/example-id: ec2/v1alpha1/vpcpeeringconnection
   labels:
-    testing.kubedb.com/example-name: foo
+    testing.upbound.io/example-name: foo
   name: foo
 spec:
   forProvider:
     peerOwnerId: ${var.peer_owner_id}
     peerVpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: bar
+        testing.upbound.io/example-name: bar
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: foo
+        testing.upbound.io/example-name: foo

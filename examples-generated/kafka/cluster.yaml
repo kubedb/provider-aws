@@ -2,9 +2,9 @@ apiVersion: kafka.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
@@ -23,7 +23,7 @@ spec:
     encryptionInfo:
     - encryptionAtRestKmsKeyArnSelector:
         matchLabels:
-          testing.kubedb.com/example-name: kms
+          testing.upbound.io/example-name: kms
     kafkaVersion: 3.2.0
     loggingInfo:
     - brokerLogs:
@@ -50,13 +50,27 @@ spec:
 
 ---
 
+apiVersion: iam.aws.kubedb.com/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: firehose_role
+  name: firehose-role
+spec:
+  forProvider:
+    assumeRolePolicy: ${data.aws_iam_policy_document.assume_role.json}
+
+---
+
 apiVersion: kms.aws.kubedb.com/v1alpha1
 kind: Key
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: kms
+    testing.upbound.io/example-name: kms
   name: kms
 spec:
   forProvider:
@@ -69,16 +83,16 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: SecurityGroup
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: sg
+    testing.upbound.io/example-name: sg
   name: sg
 spec:
   forProvider:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: vpc
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -86,9 +100,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: subnet_az1
+    testing.upbound.io/example-name: subnet_az1
   name: subnet-az1
 spec:
   forProvider:
@@ -97,7 +111,7 @@ spec:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: vpc
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -105,9 +119,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: subnet_az2
+    testing.upbound.io/example-name: subnet_az2
   name: subnet-az2
 spec:
   forProvider:
@@ -116,7 +130,7 @@ spec:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: vpc
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -124,9 +138,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: subnet_az3
+    testing.upbound.io/example-name: subnet_az3
   name: subnet-az3
 spec:
   forProvider:
@@ -135,7 +149,7 @@ spec:
     region: us-west-1
     vpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: vpc
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -143,9 +157,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
   annotations:
-    meta.kubedb.com/example-id: kafka/v1alpha1/cluster
+    meta.upbound.io/example-id: kafka/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: vpc
+    testing.upbound.io/example-name: vpc
   name: vpc
 spec:
   forProvider:

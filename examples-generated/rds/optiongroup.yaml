@@ -2,9 +2,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: OptionGroup
 metadata:
   annotations:
-    meta.kubedb.com/example-id: rds/v1alpha1/optiongroup
+    meta.upbound.io/example-id: rds/v1alpha1/optiongroup
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:

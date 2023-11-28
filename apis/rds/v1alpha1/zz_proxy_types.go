@@ -31,9 +31,6 @@ type AuthInitParameters struct {
 	// Whether to require or disallow AWS Identity and Access Management (IAM) authentication for connections to the proxy. One of DISABLED, REQUIRED.
 	IAMAuth *string `json:"iamAuth,omitempty" tf:"iam_auth,omitempty"`
 
-	// The Amazon Resource Name (ARN) representing the secret that the proxy uses to authenticate to the RDS DB instance or Aurora DB cluster. These secrets are stored within Amazon Secrets Manager.
-	SecretArn *string `json:"secretArn,omitempty" tf:"secret_arn,omitempty"`
-
 	// The name of the database user to which the proxy connects.
 	Username *string `json:"username,omitempty" tf:"username,omitempty"`
 }
@@ -78,8 +75,18 @@ type AuthParameters struct {
 	IAMAuth *string `json:"iamAuth,omitempty" tf:"iam_auth,omitempty"`
 
 	// The Amazon Resource Name (ARN) representing the secret that the proxy uses to authenticate to the RDS DB instance or Aurora DB cluster. These secrets are stored within Amazon Secrets Manager.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/secretsmanager/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	SecretArn *string `json:"secretArn,omitempty" tf:"secret_arn,omitempty"`
+
+	// Reference to a Secret in secretsmanager to populate secretArn.
+	// +kubebuilder:validation:Optional
+	SecretArnRef *v1.Reference `json:"secretArnRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in secretsmanager to populate secretArn.
+	// +kubebuilder:validation:Optional
+	SecretArnSelector *v1.Selector `json:"secretArnSelector,omitempty" tf:"-"`
 
 	// The name of the database user to which the proxy connects.
 	// +kubebuilder:validation:Optional
@@ -102,9 +109,6 @@ type ProxyInitParameters struct {
 
 	// A Boolean parameter that specifies whether Transport Layer Security (TLS) encryption is required for connections to the proxy. By enabling this setting, you can enforce encrypted TLS connections to the proxy.
 	RequireTLS *bool `json:"requireTls,omitempty" tf:"require_tls,omitempty"`
-
-	// The Amazon Resource Name (ARN) of the IAM role that the proxy uses to access secrets in AWS Secrets Manager.
-	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
 
 	// A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -186,8 +190,18 @@ type ProxyParameters struct {
 	RequireTLS *bool `json:"requireTls,omitempty" tf:"require_tls,omitempty"`
 
 	// The Amazon Resource Name (ARN) of the IAM role that the proxy uses to access secrets in AWS Secrets Manager.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
+	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnRef *v1.Reference `json:"roleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnSelector *v1.Selector `json:"roleArnSelector,omitempty" tf:"-"`
 
 	// A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 	// +kubebuilder:validation:Optional
@@ -255,7 +269,6 @@ type Proxy struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.auth) || (has(self.initProvider) && has(self.initProvider.auth))",message="spec.forProvider.auth is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engineFamily) || (has(self.initProvider) && has(self.initProvider.engineFamily))",message="spec.forProvider.engineFamily is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.roleArn) || (has(self.initProvider) && has(self.initProvider.roleArn))",message="spec.forProvider.roleArn is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vpcSubnetIds) || (has(self.initProvider) && has(self.initProvider.vpcSubnetIds))",message="spec.forProvider.vpcSubnetIds is a required parameter"
 	Spec   ProxySpec   `json:"spec"`
 	Status ProxyStatus `json:"status,omitempty"`

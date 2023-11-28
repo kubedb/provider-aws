@@ -21,9 +21,6 @@ type InstanceRoleAssociationInitParameters struct {
 
 	// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
 	FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
-
-	// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
-	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
 }
 
 type InstanceRoleAssociationObservation struct {
@@ -66,8 +63,18 @@ type InstanceRoleAssociationParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
+	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
 	// +kubebuilder:validation:Optional
 	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
+
+	// Reference to a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnRef *v1.Reference `json:"roleArnRef,omitempty" tf:"-"`
+
+	// Selector for a Role in iam to populate roleArn.
+	// +kubebuilder:validation:Optional
+	RoleArnSelector *v1.Selector `json:"roleArnSelector,omitempty" tf:"-"`
 }
 
 // InstanceRoleAssociationSpec defines the desired state of InstanceRoleAssociation
@@ -107,7 +114,6 @@ type InstanceRoleAssociation struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.featureName) || (has(self.initProvider) && has(self.initProvider.featureName))",message="spec.forProvider.featureName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.roleArn) || (has(self.initProvider) && has(self.initProvider.roleArn))",message="spec.forProvider.roleArn is a required parameter"
 	Spec   InstanceRoleAssociationSpec   `json:"spec"`
 	Status InstanceRoleAssociationStatus `json:"status,omitempty"`
 }

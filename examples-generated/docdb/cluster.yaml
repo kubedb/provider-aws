@@ -2,9 +2,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/cluster
+    meta.upbound.io/example-id: docdb/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: docdb
+    testing.upbound.io/example-name: docdb
   name: docdb
 spec:
   forProvider:

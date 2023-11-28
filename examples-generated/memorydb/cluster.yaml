@@ -2,9 +2,9 @@ apiVersion: memorydb.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.kubedb.com/example-id: memorydb/v1alpha1/cluster
+    meta.upbound.io/example-id: memorydb/v1alpha1/cluster
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
@@ -17,4 +17,4 @@ spec:
     snapshotRetentionLimit: 7
     subnetGroupNameSelector:
       matchLabels:
-        testing.kubedb.com/example-name: example
+        testing.upbound.io/example-name: example

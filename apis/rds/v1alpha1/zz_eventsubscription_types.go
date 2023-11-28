@@ -25,9 +25,6 @@ type EventSubscriptionInitParameters struct {
 	// A list of event categories for a SourceType that you want to subscribe to. See http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html or run aws rds describe-event-categories.
 	EventCategories []*string `json:"eventCategories,omitempty" tf:"event_categories,omitempty"`
 
-	// The SNS topic to send events to.
-	SnsTopic *string `json:"snsTopic,omitempty" tf:"sns_topic,omitempty"`
-
 	// A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified.
 	SourceIds []*string `json:"sourceIds,omitempty" tf:"source_ids,omitempty"`
 
@@ -90,8 +87,18 @@ type EventSubscriptionParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// The SNS topic to send events to.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/sns/v1alpha1.Topic
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	SnsTopic *string `json:"snsTopic,omitempty" tf:"sns_topic,omitempty"`
+
+	// Reference to a Topic in sns to populate snsTopic.
+	// +kubebuilder:validation:Optional
+	SnsTopicRef *v1.Reference `json:"snsTopicRef,omitempty" tf:"-"`
+
+	// Selector for a Topic in sns to populate snsTopic.
+	// +kubebuilder:validation:Optional
+	SnsTopicSelector *v1.Selector `json:"snsTopicSelector,omitempty" tf:"-"`
 
 	// A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified.
 	// +kubebuilder:validation:Optional
@@ -146,7 +153,6 @@ type EventSubscription struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.snsTopic) || (has(self.initProvider) && has(self.initProvider.snsTopic))",message="spec.forProvider.snsTopic is a required parameter"
 	Spec   EventSubscriptionSpec   `json:"spec"`
 	Status EventSubscriptionStatus `json:"status,omitempty"`
 }

@@ -26,6 +26,7 @@ import (
 	"kubedb.dev/provider-aws/config/memorydb"
 	"kubedb.dev/provider-aws/config/rds"
 	"kubedb.dev/provider-aws/config/secretsmanager"
+	"kubedb.dev/provider-aws/config/sns"
 )
 
 const (
@@ -105,6 +106,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		kinesis.Configure,
 		iam.Configure,
 		secretsmanager.Configure,
+		sns.Configure,
 	} {
 		configure(pc)
 	}

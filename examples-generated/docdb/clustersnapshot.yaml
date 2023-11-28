@@ -2,13 +2,13 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: ClusterSnapshot
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/clustersnapshot
+    meta.upbound.io/example-id: docdb/v1alpha1/clustersnapshot
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
     dbClusterIdentifierSelector:
       matchLabels:
-        testing.kubedb.com/example-name: example
+        testing.upbound.io/example-name: example
     region: us-west-1

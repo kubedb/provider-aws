@@ -25,9 +25,6 @@ type EventSubscriptionInitParameters struct {
 	// A list of event categories for a SourceType that you want to subscribe to. See https://docs.aws.amazon.com/documentdb/latest/developerguide/API_Event.html or run aws docdb describe-event-categories.
 	EventCategories []*string `json:"eventCategories,omitempty" tf:"event_categories,omitempty"`
 
-	// The Amazon Resource Name of the DocumentDB event notification subscription
-	SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
-
 	// A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified.
 	SourceIds []*string `json:"sourceIds,omitempty" tf:"source_ids,omitempty"`
 
@@ -90,8 +87,18 @@ type EventSubscriptionParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// The Amazon Resource Name of the DocumentDB event notification subscription
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/sns/v1alpha1.Topic
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
+
+	// Reference to a Topic in sns to populate snsTopicArn.
+	// +kubebuilder:validation:Optional
+	SnsTopicArnRef *v1.Reference `json:"snsTopicArnRef,omitempty" tf:"-"`
+
+	// Selector for a Topic in sns to populate snsTopicArn.
+	// +kubebuilder:validation:Optional
+	SnsTopicArnSelector *v1.Selector `json:"snsTopicArnSelector,omitempty" tf:"-"`
 
 	// A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified.
 	// +kubebuilder:validation:Optional
@@ -146,7 +153,6 @@ type EventSubscription struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.snsTopicArn) || (has(self.initProvider) && has(self.initProvider.snsTopicArn))",message="spec.forProvider.snsTopicArn is a required parameter"
 	Spec   EventSubscriptionSpec   `json:"spec"`
 	Status EventSubscriptionStatus `json:"status,omitempty"`
 }

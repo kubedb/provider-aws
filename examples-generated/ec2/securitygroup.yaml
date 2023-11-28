@@ -2,9 +2,9 @@ apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: SecurityGroup
 metadata:
   annotations:
-    meta.kubedb.com/example-id: ec2/v1alpha1/securitygroup
+    meta.upbound.io/example-id: ec2/v1alpha1/securitygroup
   labels:
-    testing.kubedb.com/example-name: allow_tls
+    testing.upbound.io/example-name: allow_tls
   name: allow-tls
 spec:
   forProvider:
@@ -32,4 +32,4 @@ spec:
       Name: allow_tls
     vpcIdSelector:
       matchLabels:
-        testing.kubedb.com/example-name: main
+        testing.upbound.io/example-name: main

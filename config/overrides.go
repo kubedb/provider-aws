@@ -21,6 +21,7 @@ var (
 		"aws_security_group":         "ec2",
 		"aws_iam_role":               "iam",
 		"aws_secretsmanager_secret":  "secretsmanager",
+		"aws_sns_topic":              "sns",
 
 		"aws_docdb_cluster":                 "docdb",
 		"aws_docdb_global_cluster":          "docdb",
@@ -93,6 +94,7 @@ var (
 		"aws_security_group":         "SecurityGroup",
 		"aws_iam_role":               "Role",
 		"aws_secretsmanager_secret":  "Secret",
+		"aws_sns_topic":              "Topic",
 
 		"aws_docdb_cluster":                 "Cluster",
 		"aws_docdb_global_cluster":          "GlobalCluster",

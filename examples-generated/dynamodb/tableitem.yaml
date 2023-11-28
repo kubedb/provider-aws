@@ -2,9 +2,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: TableItem
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/tableitem
+    meta.upbound.io/example-id: dynamodb/v1alpha1/tableitem
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
@@ -20,7 +20,7 @@ spec:
     region: us-west-1
     tableNameSelector:
       matchLabels:
-        testing.kubedb.com/example-name: example
+        testing.upbound.io/example-name: example
 
 ---
 
@@ -28,9 +28,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Table
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/tableitem
+    meta.upbound.io/example-id: dynamodb/v1alpha1/tableitem
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:

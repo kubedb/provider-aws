@@ -2,9 +2,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: ClusterParameterGroup
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/clusterparametergroup
+    meta.upbound.io/example-id: docdb/v1alpha1/clusterparametergroup
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:

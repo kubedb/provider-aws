@@ -2,9 +2,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: GlobalTable
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/globaltable
+    meta.upbound.io/example-id: dynamodb/v1alpha1/globaltable
   labels:
-    testing.kubedb.com/example-name: myTable
+    testing.upbound.io/example-name: myTable
   name: mytable
 spec:
   forProvider:
@@ -20,9 +20,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Table
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/globaltable
+    meta.upbound.io/example-id: dynamodb/v1alpha1/globaltable
   labels:
-    testing.kubedb.com/example-name: us-east-1
+    testing.upbound.io/example-name: us-east-1
   name: us-east-1
 spec:
   forProvider:
@@ -43,9 +43,9 @@ apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Table
 metadata:
   annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/globaltable
+    meta.upbound.io/example-id: dynamodb/v1alpha1/globaltable
   labels:
-    testing.kubedb.com/example-name: us-west-2
+    testing.upbound.io/example-name: us-west-2
   name: us-west-2
 spec:
   forProvider:

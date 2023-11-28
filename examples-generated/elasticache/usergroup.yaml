@@ -2,9 +2,9 @@ apiVersion: elasticache.aws.kubedb.com/v1alpha1
 kind: UserGroup
 metadata:
   annotations:
-    meta.kubedb.com/example-id: elasticache/v1alpha1/usergroup
+    meta.upbound.io/example-id: elasticache/v1alpha1/usergroup
   labels:
-    testing.kubedb.com/example-name: test
+    testing.upbound.io/example-name: test
   name: test
 spec:
   forProvider:
@@ -19,9 +19,9 @@ apiVersion: elasticache.aws.kubedb.com/v1alpha1
 kind: User
 metadata:
   annotations:
-    meta.kubedb.com/example-id: elasticache/v1alpha1/usergroup
+    meta.upbound.io/example-id: elasticache/v1alpha1/usergroup
   labels:
-    testing.kubedb.com/example-name: test
+    testing.upbound.io/example-name: test
   name: test
 spec:
   forProvider:

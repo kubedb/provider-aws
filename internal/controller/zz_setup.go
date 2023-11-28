@@ -39,6 +39,7 @@ import (
 	domain "kubedb.dev/provider-aws/internal/controller/elasticsearch/domain"
 	domainpolicy "kubedb.dev/provider-aws/internal/controller/elasticsearch/domainpolicy"
 	domainsamloptions "kubedb.dev/provider-aws/internal/controller/elasticsearch/domainsamloptions"
+	role "kubedb.dev/provider-aws/internal/controller/iam/role"
 	clusterkafka "kubedb.dev/provider-aws/internal/controller/kafka/cluster"
 	configuration "kubedb.dev/provider-aws/internal/controller/kafka/configuration"
 	stream "kubedb.dev/provider-aws/internal/controller/kinesis/stream"
@@ -70,6 +71,8 @@ import (
 	proxytarget "kubedb.dev/provider-aws/internal/controller/rds/proxytarget"
 	snapshotrds "kubedb.dev/provider-aws/internal/controller/rds/snapshot"
 	subnetgrouprds "kubedb.dev/provider-aws/internal/controller/rds/subnetgroup"
+	secret "kubedb.dev/provider-aws/internal/controller/secretsmanager/secret"
+	topic "kubedb.dev/provider-aws/internal/controller/sns/topic"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
@@ -106,6 +109,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		domain.Setup,
 		domainpolicy.Setup,
 		domainsamloptions.Setup,
+		role.Setup,
 		clusterkafka.Setup,
 		configuration.Setup,
 		stream.Setup,
@@ -137,6 +141,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		proxytarget.Setup,
 		snapshotrds.Setup,
 		subnetgrouprds.Setup,
+		secret.Setup,
+		topic.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

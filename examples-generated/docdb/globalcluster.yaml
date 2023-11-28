@@ -2,9 +2,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: GlobalCluster
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/globalcluster
+    meta.upbound.io/example-id: docdb/v1alpha1/globalcluster
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
@@ -19,9 +19,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/globalcluster
+    meta.upbound.io/example-id: docdb/v1alpha1/globalcluster
   labels:
-    testing.kubedb.com/example-name: primary
+    testing.upbound.io/example-name: primary
   name: primary
 spec:
   forProvider:
@@ -43,9 +43,9 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/globalcluster
+    meta.upbound.io/example-id: docdb/v1alpha1/globalcluster
   labels:
-    testing.kubedb.com/example-name: secondary
+    testing.upbound.io/example-name: secondary
   name: secondary
 spec:
   forProvider:
@@ -62,15 +62,15 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/globalcluster
+    meta.upbound.io/example-id: docdb/v1alpha1/globalcluster
   labels:
-    testing.kubedb.com/example-name: primary
+    testing.upbound.io/example-name: primary
   name: primary
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.kubedb.com/example-name: primary
+        testing.upbound.io/example-name: primary
     engine: docdb
     instanceClass: db.r5.large
     provider: ${aws.primary}
@@ -82,15 +82,15 @@ apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: ClusterInstance
 metadata:
   annotations:
-    meta.kubedb.com/example-id: docdb/v1alpha1/globalcluster
+    meta.upbound.io/example-id: docdb/v1alpha1/globalcluster
   labels:
-    testing.kubedb.com/example-name: secondary
+    testing.upbound.io/example-name: secondary
   name: secondary
 spec:
   forProvider:
     clusterIdentifierSelector:
       matchLabels:
-        testing.kubedb.com/example-name: secondary
+        testing.upbound.io/example-name: secondary
     engine: docdb
     instanceClass: db.r5.large
     provider: ${aws.secondary}

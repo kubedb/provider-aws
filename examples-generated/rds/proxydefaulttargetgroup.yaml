@@ -2,9 +2,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: ProxyDefaultTargetGroup
 metadata:
   annotations:
-    meta.kubedb.com/example-id: rds/v1alpha1/proxydefaulttargetgroup
+    meta.upbound.io/example-id: rds/v1alpha1/proxydefaulttargetgroup
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
@@ -17,7 +17,7 @@ spec:
       - EXCLUDE_VARIABLE_SETS
     dbProxyNameSelector:
       matchLabels:
-        testing.kubedb.com/example-name: example
+        testing.upbound.io/example-name: example
     region: us-west-1
 
 ---
@@ -26,9 +26,9 @@ apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: Proxy
 metadata:
   annotations:
-    meta.kubedb.com/example-id: rds/v1alpha1/proxydefaulttargetgroup
+    meta.upbound.io/example-id: rds/v1alpha1/proxydefaulttargetgroup
   labels:
-    testing.kubedb.com/example-name: example
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
@@ -36,13 +36,17 @@ spec:
     - authScheme: SECRETS
       description: example
       iamAuth: DISABLED
-      secretArn: ${aws_secretsmanager_secret.example.arn}
+      secretArnSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
     debugLogging: false
     engineFamily: MYSQL
     idleClientTimeout: 1800
     region: us-west-1
     requireTls: true
-    roleArn: ${aws_iam_role.example.arn}
+    roleArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     tags:
       Key: value
       Name: example
