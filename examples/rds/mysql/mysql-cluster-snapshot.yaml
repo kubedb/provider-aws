@@ -1,0 +1,16 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ClusterSnapshot
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: rds/v1alpha1/clustersnapshot
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Cluster, which needs manual intervention."
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    dbClusterIdentifier: example
+    dbClusterSnapshotIdentifier: resourcetestsnapshot1234
+    region: us-east-2
+
+---

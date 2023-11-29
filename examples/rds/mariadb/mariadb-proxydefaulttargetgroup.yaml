@@ -1,0 +1,19 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ProxyDefaultTargetGroup
+metadata:
+  name: example
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Proxy, which needs manual intervention."
+spec:
+  forProvider:
+    dbProxyName: example
+    region: us-east-2
+    connectionPoolConfig:
+      - connectionBorrowTimeout: 60
+        initQuery: SET x=1, y=2
+        maxConnectionsPercent: 100
+        maxIdleConnectionsPercent: 50
+        sessionPinningFilters:
+          - EXCLUDE_VARIABLE_SETS
+
+---

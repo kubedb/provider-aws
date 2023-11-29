@@ -1,23 +1,4 @@
-apiVersion: dynamodb.aws.kubedb.com/v1alpha1
-kind: Table
-metadata:
-  annotations:
-    meta.kubedb.com/example-id: dynamodb/v1alpha1/table
-  labels:
-    testing.kubedb.com/example-name: mytable
-  name: mytable
-spec:
-  forProvider:
-    attribute:
-    - name: exampleHashKey
-      type: S
-    hashKey: exampleHashKey
-    region: us-east-2
-    streamEnabled: true
-    streamViewType: NEW_AND_OLD_IMAGES
-    billingMode: PAY_PER_REQUEST
 
----
 # We can deploy globaltable or tablereplica at a time. Both won't work together.
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: GlobalTable

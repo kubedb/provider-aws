@@ -1,0 +1,14 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: Snapshot
+metadata:
+  name: example
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Instance, which needs manual intervention."
+spec:
+  forProvider:
+    region: us-east-2
+    dbInstanceIdentifierRef:
+      name: example
+
+---
+

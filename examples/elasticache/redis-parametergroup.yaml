@@ -1,0 +1,17 @@
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: ParameterGroup
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: elasticache/v1alpha1/parametergroup
+  labels:
+    testing.kubedb.com/example-name: default
+  name: example
+spec:
+  forProvider:
+    name: cache-params-test
+    family: redis7
+    parameter:
+      - name: activedefrag
+        value: "yes"
+    region: us-east-2
+---

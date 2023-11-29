@@ -1,0 +1,14 @@
+apiVersion: docdb.aws.kubedb.com/v1alpha1
+kind: ClusterSnapshot
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: docdb/v1alpha1/clustersnapshot
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    dbClusterIdentifierRef:
+      name: example
+    region: us-east-2
+---

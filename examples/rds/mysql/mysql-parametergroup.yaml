@@ -1,0 +1,17 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ParameterGroup
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: rds/v1alpha1/parametergroup
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    family: mysql8.0
+    description: example
+    parameter:
+      - name: application_name
+        value: "example"
+        applyMethod: immediate
