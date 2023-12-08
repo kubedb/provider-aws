@@ -83,7 +83,6 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
 		ujconfig.WithTerraformProvider(p),
 		ujconfig.WithDefaultResourceOptions(
-			KindOverrides(),
 			RegionAddition(),
 			KnownReferencers(),
 			ExternalNameConfigurations(),
