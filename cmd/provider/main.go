@@ -6,6 +6,7 @@ package main
 
 import (
 	"context"
+	"k8s.io/klog/v2"
 	"os"
 	"path/filepath"
 	"time"
@@ -112,6 +113,10 @@ func main() {
 		log.Info("Alpha feature enabled", "flag", features.EnableAlphaManagementPolicies)
 	}
 
-	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup AWS controllers")
+	if err := controller.NewCustomResourceReconciler(mgr, o).SetupWithManager(mgr); err != nil {
+		klog.Error(err, "unable to create controller", "controller", "CustomResourceReconciler")
+		os.Exit(1)
+	}
+	// kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup AWS controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
