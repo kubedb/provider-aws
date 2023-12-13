@@ -11,4 +11,3 @@ spec:
     dbClusterIdentifierRef:
       name: example
     region: us-east-2
----

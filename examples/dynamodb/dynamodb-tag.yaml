@@ -1,4 +1,3 @@
-
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Tag
 metadata:
@@ -13,5 +12,3 @@ spec:
     region: us-east-2
     resourceArn: arn:aws:dynamodb:us-east-2:452618475015:table/mytable
     value: testvalue
-
----

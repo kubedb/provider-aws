@@ -31,7 +31,6 @@ spec:
 #     region: us-east-1
 #     replica:
 #       - regionName: us-east-2
-
 # ---
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: TableReplica
@@ -46,7 +45,6 @@ spec:
     globalTableArnRef:
       name: mytable
     region: us-west-2
-
 ---
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: TableItem
@@ -70,9 +68,7 @@ spec:
     region: us-east-2
     tableNameRef:
       name: mytable
-
 ---
-
 apiVersion: kinesis.aws.kubedb.com/v1alpha1
 kind: Stream
 metadata:
@@ -85,9 +81,7 @@ spec:
   forProvider:
     region: us-east-2
     shardCount: 1
-
 ---
-
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: KinesisStreamingDestination
 metadata:
@@ -103,9 +97,7 @@ spec:
       name: example
     tableNameRef:
       name: mytable
-
 ---
-
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: ContributorInsights
 metadata:
@@ -119,9 +111,7 @@ spec:
     region: us-east-2
     tableNameRef:
       name: mytable
-
 ---
-
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: Tag
 metadata:
@@ -136,5 +126,3 @@ spec:
     region: us-east-2
     resourceArn: arn:aws:dynamodb:us-east-2:452618475015:table/mytable
     value: testvalue
-
----

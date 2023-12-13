@@ -15,5 +15,3 @@ spec:
       - name: application_name
         value: "example"
         applyMethod: immediate
-    
----

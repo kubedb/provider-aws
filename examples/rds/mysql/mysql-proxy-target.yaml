@@ -12,5 +12,3 @@ spec:
     targetGroupName: default
   providerConfigRef:
     name: default
-
----

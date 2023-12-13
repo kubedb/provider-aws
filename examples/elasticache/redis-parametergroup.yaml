@@ -14,4 +14,3 @@ spec:
       - name: activedefrag
         value: "yes"
     region: us-east-2
----

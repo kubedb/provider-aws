@@ -13,7 +13,6 @@ spec:
     instanceClass: db.t3.medium
     region: us-east-2
 ---
-
 apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: Cluster
 metadata:
@@ -35,9 +34,7 @@ spec:
     preferredBackupWindow: 07:00-09:00
     skipFinalSnapshot: true
     dbSubnetGroupName: example
-
 ---
-
 apiVersion: v1
 kind: Secret
 metadata:
@@ -50,9 +47,7 @@ metadata:
 type: Opaque
 stringData:
   password: "Upboundtest!324225DD"
-
 ---
-
 apiVersion: docdb.aws.kubedb.com/v1alpha1
 kind: SubnetGroup
 metadata:
@@ -70,7 +65,6 @@ spec:
     tags:
       Name: My docdb subnet group
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
@@ -81,9 +75,7 @@ spec:
     cidrBlock: 172.16.0.0/16
     tags:
       Name: DemoVpc
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -95,9 +87,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.10.0/24
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -109,9 +99,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.20.0/24
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -123,5 +111,3 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.30.0/24
-
----

@@ -8,6 +8,3 @@ spec:
     peerVpcId: ${aws_vpc.bar.id}
     region: us-west-1
     vpcId: ${aws_vpc.foo.id}
-
----
-

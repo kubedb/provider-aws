@@ -1,4 +1,3 @@
-
 # We can deploy globaltable or tablereplica at a time. Both won't work together.
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: GlobalTable
@@ -13,5 +12,3 @@ spec:
     region: us-east-1
     replica:
       - regionName: us-east-2
-
----

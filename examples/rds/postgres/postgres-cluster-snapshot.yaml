@@ -12,5 +12,3 @@ spec:
     dbClusterIdentifier: example
     dbClusterSnapshotIdentifier: resourcetestsnapshot1234
     region: us-east-2
-
----

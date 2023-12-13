@@ -35,7 +35,6 @@ spec:
     name: example-dbinstance-out
     namespace: default
 ---
-
 apiVersion: kms.aws.kubedb.com/v1alpha1
 kind: Key
 metadata:
@@ -49,7 +48,6 @@ spec:
     region: us-east-2
     description: Created with Crossplane
     deletionWindowInDays: 7
-
 ---
 apiVersion: v1
 kind: Secret
@@ -60,10 +58,7 @@ type: Opaque
 data:
   password: MTIzNDU2Nzg=
   #12345678
-
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
@@ -74,9 +69,7 @@ spec:
     cidrBlock: 172.16.0.0/16
     tags:
       Name: DemoVpc
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -88,9 +81,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.10.0/24
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -102,9 +93,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.20.0/24
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -116,9 +105,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.30.0/24
-
 ---
-
 apiVersion: rds.aws.kubedb.com/v1alpha1
 kind: SubnetGroup
 metadata:

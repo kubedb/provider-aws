@@ -25,5 +25,3 @@ spec:
     region: us-east-2
     dbInstanceIdentifierRef:
       name: example
-
----

@@ -15,5 +15,3 @@ spec:
       - subnet-0cf69ebb0982d9ac6
   providerConfigRef:
     name: default
-
----

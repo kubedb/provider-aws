@@ -20,9 +20,7 @@ spec:
       - name: example
     subnetGroupNameRef:
       name: example
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: SecurityGroup
 metadata:
@@ -37,7 +35,6 @@ spec:
     vpcIdRef:
       name: example
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: VPC
 metadata:
@@ -48,9 +45,7 @@ spec:
     cidrBlock: 172.16.0.0/16
     tags:
       Name: DemoVpc
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -62,9 +57,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.10.0/24
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -76,9 +69,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.20.0/24
-
 ---
-
 apiVersion: ec2.aws.kubedb.com/v1alpha1
 kind: Subnet
 metadata:
@@ -90,9 +81,7 @@ spec:
     vpcIdRef:
       name: example
     cidrBlock: 172.16.30.0/24
-
 ---
-
 apiVersion: elasticache.aws.kubedb.com/v1alpha1
 kind: SubnetGroup
 metadata:
@@ -108,4 +97,3 @@ spec:
       - name: example-subnet1
       - name: example-subnet2
       - name: example-subnet3
----

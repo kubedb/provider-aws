@@ -10,9 +10,7 @@ spec:
   forProvider:
     region: us-east-2
     shardCount: 1
-
 ---
-
 apiVersion: dynamodb.aws.kubedb.com/v1alpha1
 kind: KinesisStreamingDestination
 metadata:
@@ -28,5 +26,3 @@ spec:
       name: example
     tableNameRef:
       name: mytable
-
----

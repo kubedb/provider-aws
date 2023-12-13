@@ -27,7 +27,6 @@ spec:
       - subnet-0fba75208c6407ff3
       - subnet-04ae2f304f84994d6
 ---
-
 apiVersion: iam.aws.kubedb.com/v1alpha1
 kind: Role
 metadata:
@@ -70,7 +69,6 @@ spec:
             ]
           }
 ---
-
 apiVersion: secretsmanager.aws.kubedb.com/v1alpha1
 kind: Secret
 metadata:
@@ -83,5 +81,3 @@ spec:
   forProvider:
     name: example2
     region: us-east-2
----
-  

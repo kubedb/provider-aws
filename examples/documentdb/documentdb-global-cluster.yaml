@@ -10,4 +10,3 @@ spec:
     engine: docdb
     engineVersion: 5.0.0
     globalClusterIdentifier: global-test
----

@@ -20,5 +20,3 @@ spec:
     region: us-east-2
     tableNameRef:
       name: mytable
-
----

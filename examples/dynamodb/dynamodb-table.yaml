@@ -16,5 +16,3 @@ spec:
     streamEnabled: true
     streamViewType: NEW_AND_OLD_IMAGES
     billingMode: PAY_PER_REQUEST
-
----
