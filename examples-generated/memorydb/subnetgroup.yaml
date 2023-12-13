@@ -9,8 +9,39 @@ metadata:
 spec:
   forProvider:
     region: us-west-1
-    subnetIds:
-    - ${aws_subnet.example.id}
+    subnetIdRefs:
+    - name: example
 
 ---
 
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: memorydb/v1alpha1/subnetgroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: us-west-2a
+    cidrBlock: 10.0.0.0/24
+    region: us-west-1
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: memorydb/v1alpha1/subnetgroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    region: us-west-1

@@ -8,10 +8,56 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	v1beta1 "github.com/upbound/provider-aws/apis/ec2/v1beta1"
+	v1alpha11 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha1 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
+	v1alpha12 "kubedb.dev/provider-aws/apis/sns/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
+
+// ResolveReferences of this Cluster.
+func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
+		Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.KeyList{},
+			Managed: &v1alpha1.Key{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
+	}
+	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.VPCSecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
+		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
+		To: reference.To{
+			List:    &v1alpha11.SecurityGroupList{},
+			Managed: &v1alpha11.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.VPCSecurityGroupIds")
+	}
+	mg.Spec.ForProvider.VPCSecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.VPCSecurityGroupIDRefs = mrsp.ResolvedReferences
+
+	return nil
+}
 
 // ResolveReferences of this ClusterInstance.
 func (mg *ClusterInstance) ResolveReferences(ctx context.Context, c client.Reader) error {
@@ -39,6 +85,84 @@ func (mg *ClusterInstance) ResolveReferences(ctx context.Context, c client.Reade
 	return nil
 }
 
+// ResolveReferences of this ClusterSnapshot.
+func (mg *ClusterSnapshot) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DBClusterIdentifier),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.DBClusterIdentifierRef,
+		Selector:     mg.Spec.ForProvider.DBClusterIdentifierSelector,
+		To: reference.To{
+			List:    &ClusterList{},
+			Managed: &Cluster{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DBClusterIdentifier")
+	}
+	mg.Spec.ForProvider.DBClusterIdentifier = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DBClusterIdentifierRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this EventSubscription.
+func (mg *EventSubscription) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SnsTopicArn),
+		Extract:      resource.ExtractParamPath("arn", true),
+		Reference:    mg.Spec.ForProvider.SnsTopicArnRef,
+		Selector:     mg.Spec.ForProvider.SnsTopicArnSelector,
+		To: reference.To{
+			List:    &v1alpha12.TopicList{},
+			Managed: &v1alpha12.Topic{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SnsTopicArn")
+	}
+	mg.Spec.ForProvider.SnsTopicArn = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SnsTopicArnRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this GlobalCluster.
+func (mg *GlobalCluster) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SourceDBClusterIdentifier),
+		Extract:      resource.ExtractParamPath("arn", true),
+		Reference:    mg.Spec.ForProvider.SourceDBClusterIdentifierRef,
+		Selector:     mg.Spec.ForProvider.SourceDBClusterIdentifierSelector,
+		To: reference.To{
+			List:    &ClusterList{},
+			Managed: &Cluster{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SourceDBClusterIdentifier")
+	}
+	mg.Spec.ForProvider.SourceDBClusterIdentifier = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SourceDBClusterIdentifierRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this SubnetGroup.
 func (mg *SubnetGroup) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -52,8 +176,8 @@ func (mg *SubnetGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 		References:    mg.Spec.ForProvider.SubnetIdsRefs,
 		Selector:      mg.Spec.ForProvider.SubnetIdsSelector,
 		To: reference.To{
-			List:    &v1beta1.SubnetList{},
-			Managed: &v1beta1.Subnet{},
+			List:    &v1alpha11.SubnetList{},
+			Managed: &v1alpha11.Subnet{},
 		},
 	})
 	if err != nil {

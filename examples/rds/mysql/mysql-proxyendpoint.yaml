@@ -1,0 +1,19 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: ProxyEndpoint
+metadata:
+  name: example
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource has a reference to Proxy, which needs manual intervention."
+spec:
+  forProvider:
+    region: us-east-2
+    dbProxyName: example
+    targetRole: READ_ONLY
+    vpcSubnetIds:
+      - subnet-085e9e289fcdffa8d
+      - subnet-0e16c787993d3b584
+      - subnet-0cf69ebb0982d9ac6
+  providerConfigRef:
+    name: default
+
+---

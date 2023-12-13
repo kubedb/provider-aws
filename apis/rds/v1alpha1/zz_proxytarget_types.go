@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,15 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type ProxyTargetInitParameters struct {
+
+	// DB cluster identifier.
+	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
+
+	// The name of the target group.
+	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
+}
 
 type ProxyTargetObservation struct {
 
@@ -56,12 +69,30 @@ type ProxyTargetParameters struct {
 	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
 	// DB instance identifier.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
+	// Reference to a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in rds to populate dbInstanceIdentifier.
+	// +kubebuilder:validation:Optional
+	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
+
 	// The name of the DB proxy.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Proxy
 	// +kubebuilder:validation:Optional
 	DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
+
+	// Reference to a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameRef *v1.Reference `json:"dbProxyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Proxy in rds to populate dbProxyName.
+	// +kubebuilder:validation:Optional
+	DBProxyNameSelector *v1.Selector `json:"dbProxyNameSelector,omitempty" tf:"-"`
 
 	// Region is the region you'd like your resource to be created in.
 	// +upjet:crd:field:TFTag=-
@@ -77,6 +108,17 @@ type ProxyTargetParameters struct {
 type ProxyTargetSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ProxyTargetParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ProxyTargetInitParameters `json:"initProvider,omitempty"`
 }
 
 // ProxyTargetStatus defines the observed state of ProxyTarget.
@@ -97,9 +139,8 @@ type ProxyTargetStatus struct {
 type ProxyTarget struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.dbProxyName)",message="dbProxyName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.targetGroupName)",message="targetGroupName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.targetGroupName) || (has(self.initProvider) && has(self.initProvider.targetGroupName))",message="spec.forProvider.targetGroupName is a required parameter"
 	Spec   ProxyTargetSpec   `json:"spec"`
 	Status ProxyTargetStatus `json:"status,omitempty"`
 }

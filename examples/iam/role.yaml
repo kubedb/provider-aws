@@ -1,0 +1,50 @@
+apiVersion: iam.aws.kubedb.com/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/role
+  labels:
+    testing.upbound.io/example-name: role
+  name: role
+spec:
+  forProvider:
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "rds.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    inlinePolicy:
+      - name: my_inline_policy
+        policy: |
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                  "Sid": "VisualEditor0",
+                  "Effect": "Allow",
+                  "Action": [
+                      "secretsmanager:GetRandomPassword",
+                      "secretsmanager:CreateSecret",
+                      "secretsmanager:ListSecrets"
+                  ],
+                  "Resource": "*"
+              },
+              {
+                  "Sid": "VisualEditor1",
+                  "Effect": "Allow",
+                  "Action": "secretsmanager:*",
+                  "Resource": [
+                        "your_secret_ARN"
+                  ]
+              }
+            ]
+          }
+---

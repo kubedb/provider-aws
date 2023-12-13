@@ -1,0 +1,15 @@
+
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: ContributorInsights
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/contributorinsights
+  labels:
+    testing.kubedb.com/example-name: contributor
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    tableNameRef:
+      name: mytable
+---

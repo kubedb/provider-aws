@@ -8,8 +8,12 @@ metadata:
   name: example
 spec:
   forProvider:
-    dbInstanceIdentifier: ${aws_db_instance.example.identifier}
-    dbProxyName: ${aws_db_proxy.example.name}
+    dbInstanceIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbProxyNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     region: us-west-1
     targetGroupName: ${aws_db_proxy_default_target_group.example.name}
 
@@ -29,18 +33,22 @@ spec:
     - authScheme: SECRETS
       description: example
       iamAuth: DISABLED
-      secretArn: ${aws_secretsmanager_secret.example.arn}
+      secretArnSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
     debugLogging: false
     engineFamily: MYSQL
     idleClientTimeout: 1800
     region: us-west-1
     requireTls: true
-    roleArn: ${aws_iam_role.example.arn}
+    roleArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     tags:
       Key: value
       Name: example
-    vpcSecurityGroupIds:
-    - ${aws_security_group.example.id}
+    vpcSecurityGroupIdRefs:
+    - name: example
     vpcSubnetIds:
     - ${aws_subnet.example.id}
 
@@ -63,8 +71,7 @@ spec:
       maxIdleConnectionsPercent: 50
       sessionPinningFilters:
       - EXCLUDE_VARIABLE_SETS
-    dbProxyName: example
+    dbProxyNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     region: us-west-1
-
----
-

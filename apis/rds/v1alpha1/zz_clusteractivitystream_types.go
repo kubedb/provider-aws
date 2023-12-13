@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,15 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type ClusterActivityStreamInitParameters struct {
+
+	// Specifies whether the database activity stream includes engine-native audit fields. This option only applies to an Oracle DB instance. By default, no engine-native audit fields are included. Defaults false.
+	EngineNativeAuditFieldsIncluded *bool `json:"engineNativeAuditFieldsIncluded,omitempty" tf:"engine_native_audit_fields_included,omitempty"`
+
+	// Specifies the mode of the database activity stream. Database events such as a change or access generate an activity stream event. The database session can handle these events either synchronously or asynchronously. One of: sync, async.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
 
 type ClusterActivityStreamObservation struct {
 
@@ -41,8 +54,17 @@ type ClusterActivityStreamParameters struct {
 	EngineNativeAuditFieldsIncluded *bool `json:"engineNativeAuditFieldsIncluded,omitempty" tf:"engine_native_audit_fields_included,omitempty"`
 
 	// The AWS KMS key identifier for encrypting messages in the database activity stream. The AWS KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// Specifies the mode of the database activity stream. Database events such as a change or access generate an activity stream event. The database session can handle these events either synchronously or asynchronously. One of: sync, async.
 	// +kubebuilder:validation:Optional
@@ -54,14 +76,35 @@ type ClusterActivityStreamParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// The Amazon Resource Name (ARN) of the DB cluster.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	ResourceArn *string `json:"resourceArn,omitempty" tf:"resource_arn,omitempty"`
+
+	// Reference to a Cluster in rds to populate resourceArn.
+	// +kubebuilder:validation:Optional
+	ResourceArnRef *v1.Reference `json:"resourceArnRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in rds to populate resourceArn.
+	// +kubebuilder:validation:Optional
+	ResourceArnSelector *v1.Selector `json:"resourceArnSelector,omitempty" tf:"-"`
 }
 
 // ClusterActivityStreamSpec defines the desired state of ClusterActivityStream
 type ClusterActivityStreamSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ClusterActivityStreamParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ClusterActivityStreamInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterActivityStreamStatus defines the observed state of ClusterActivityStream.
@@ -82,10 +125,8 @@ type ClusterActivityStreamStatus struct {
 type ClusterActivityStream struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.kmsKeyId)",message="kmsKeyId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.mode)",message="mode is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.resourceArn)",message="resourceArn is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.mode) || (has(self.initProvider) && has(self.initProvider.mode))",message="spec.forProvider.mode is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
 	Spec   ClusterActivityStreamSpec   `json:"spec"`
 	Status ClusterActivityStreamStatus `json:"status,omitempty"`
 }

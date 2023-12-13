@@ -7,8 +7,9 @@ package config
 import (
 	"context"
 	"fmt"
+	"github.com/crossplane/upjet/pkg/config"
 	"github.com/pkg/errors"
-	"github.com/upbound/upjet/pkg/config"
+	"kubedb.dev/provider-aws/config/common"
 	"strings"
 )
 
@@ -56,6 +57,8 @@ func FormattedIdentifierFromProvider(separator string, keys ...string) config.Ex
 	return e
 }
 
+var CLIReconciledExternalNameConfigs = map[string]config.ExternalName{}
+
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
@@ -63,6 +66,20 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"aws_vpc_peering_connection": config.IdentifierFromProvider,
 	"aws_security_group_rule":    config.IdentifierFromProvider,
 	"aws_route":                  route(),
+
+	"aws_security_group": config.IdentifierFromProvider,
+	/// iam
+	"aws_iam_role":              config.NameAsIdentifier,
+	"aws_secretsmanager_secret": config.IdentifierFromProvider,
+
+	//vpc
+	//
+	// Imported using the id: vpc-23123
+	"aws_vpc": config.IdentifierFromProvider,
+	// Imported using the vpc endpoint id: vpce-3ecf2a57
+	"aws_vpc_endpoint": config.IdentifierFromProvider,
+	// Imported using the subnet id: subnet-9d4a7b6c
+	"aws_subnet": config.IdentifierFromProvider,
 
 	// docdb
 	//
@@ -83,10 +100,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 
 	// dynamodb
 	//
+	"aws_dynamodb_table": config.NameAsIdentifier,
 	// DynamoDB table replicas can be imported using the table-name:main-region
 	"aws_dynamodb_table_replica": config.IdentifierFromProvider,
-	// DynamoDB tables can be imported using the name
-	"aws_dynamodb_table": config.NameAsIdentifier,
+
 	// DynamoDB Global Tables can be imported using the global table name
 	"aws_dynamodb_global_table": config.NameAsIdentifier,
 	// aws_dynamodb_tag can be imported by using the DynamoDB resource identifier and key, separated by a comma (,)
@@ -158,7 +175,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// RDS DB Proxy Targets can be imported using the db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)
 	"aws_db_proxy_target": config.IdentifierFromProvider,
 	// NOTE(turkenf): The resource aws_db_security_group is deprecated,
-	// Please see: https://github.com/upbound/provider-aws/issues/696
+	// Please see: https://kubedb.dev/provider-aws/issues/696
 	// aws_db_snapshot can be imported by using the snapshot identifier
 	"aws_db_snapshot": config.ParameterAsIdentifier("db_snapshot_identifier"),
 	// RDS Aurora Cluster Database Activity Streams can be imported using the resource_arn
@@ -192,26 +209,46 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// Even though the documentation says the ID is name, it uses ARN..
 	"aws_kinesis_stream": config.TemplatedStringAsIdentifier("name", " arn:aws:kinesis:{{ .setup.configuration.region }}:{{ .setup.client_metadata.account_id }}:stream/{{ .external_name }}"),
+	// sns
+	//
+	// SNS Topics can be imported using the topic arn
+	"aws_sns_topic": config.TemplatedStringAsIdentifier("name", "arn:aws:sns:{{ .setup.configuration.region }}:{{ .setup.client_metadata.account_id }}:{{ .external_name }}"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
-// table ExternalNameConfigs and sets the version of those resources to v1beta1
+// table ExternalNameConfigs and sets the version of those resources to v1alpha1
 // assuming they will be tested.
 func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
 		if e, ok := ExternalNameConfigs[r.Name]; ok {
+			r.Version = common.VersionV1Alpha1
 			r.ExternalName = e
 		}
 	}
 }
 
-// ExternalNameConfigured returns the list of all resources whose external name
-// is configured manually.
-func ExternalNameConfigured() []string {
+// NoForkResourceList returns the list of resources that have external
+// name configured in ExternalNameConfigs table and to be reconciled under
+// the no-fork architecture.
+func NoForkResourceList() []string {
 	l := make([]string, len(ExternalNameConfigs))
 	i := 0
 	for name := range ExternalNameConfigs {
-		// $ is added to match the exact string since the format is regex.
+		// Expected format is regex and we'd like to have exact matches.
+		l[i] = name + "$"
+		i++
+	}
+	return l
+}
+
+// CLIReconciledResourceList returns the list of resources that have external
+// name configured in ExternalNameConfigs table and to be reconciled under
+// the TF CLI based architecture.
+func CLIReconciledResourceList() []string {
+	l := make([]string, len(CLIReconciledExternalNameConfigs))
+	i := 0
+	for name := range CLIReconciledExternalNameConfigs {
+		// Expected format is regex and we'd like to have exact matches.
 		l[i] = name + "$"
 		i++
 	}

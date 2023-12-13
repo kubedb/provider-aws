@@ -1,0 +1,107 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: Cluster
+metadata:
+  name: example
+  annotations:
+    meta.kubedb.com/example-id: rds/v1alpha1/cluster
+spec:
+  forProvider:
+    dbSubnetGroupName: example
+    region: us-east-2
+    engine: postgres
+    engineVersion: "15.3"
+    masterUsername: "cpadmin"
+    masterPasswordSecretRef:
+      name: example-password
+      namespace: crossplane-system
+      key: password
+    skipFinalSnapshot: true
+    dbClusterInstanceClass: db.m5d.large
+    storageType: io1
+    allocatedStorage: 100
+    iops: 1000
+  writeConnectionSecretToRef:
+    name: sample-rds-cluster-secret
+    namespace: crossplane-system
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example-password
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  password: TestPass0!
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: VPC
+metadata:
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    cidrBlock: 172.16.0.0/16
+    tags:
+      Name: DemoVpc
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet1
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2b
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.10.0/24
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet2
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2c
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.20.0/24
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet3
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2a
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.30.0/24
+
+---
+
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: SubnetGroup
+metadata:
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    subnetIdRefs:
+      - name: example-subnet1
+      - name: example-subnet2
+      - name: example-subnet3
+    tags:
+      Name: My DB subnet group

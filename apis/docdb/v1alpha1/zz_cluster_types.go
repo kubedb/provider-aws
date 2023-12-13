@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,76 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type ClusterInitParameters struct {
+
+	// Specifies whether any cluster modifications
+	// are applied immediately, or during the next maintenance window. Default is
+	// false.
+	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
+
+	// A list of EC2 Availability Zones that
+	// instances in the DB cluster can be created in.
+	AvailabilityZones []*string `json:"availabilityZones,omitempty" tf:"availability_zones,omitempty"`
+
+	// The days to retain backups for. Default 1
+	BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
+
+	// A cluster parameter group to associate with the cluster.
+	DBClusterParameterGroupName *string `json:"dbClusterParameterGroupName,omitempty" tf:"db_cluster_parameter_group_name,omitempty"`
+
+	// A DB subnet group to associate with this DB instance.
+	DBSubnetGroupName *string `json:"dbSubnetGroupName,omitempty" tf:"db_subnet_group_name,omitempty"`
+
+	// A value that indicates whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection is disabled.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// List of log types to export to cloudwatch. If omitted, no logs will be exported.
+	// The following log types are supported: audit, profiler.
+	EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
+
+	// The name of the database engine to be used for this DB cluster. Defaults to docdb. Valid Values: docdb
+	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+
+	// The database engine version. Updating this argument results in an outage.
+	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
+	// The name of your final DB snapshot
+	// when this DB cluster is deleted. If omitted, no final snapshot will be
+	// made.
+	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+
+	// The global cluster identifier specified on aws_docdb_global_cluster.
+	GlobalClusterIdentifier *string `json:"globalClusterIdentifier,omitempty" tf:"global_cluster_identifier,omitempty"`
+
+	// Username for the master DB user.
+	MasterUsername *string `json:"masterUsername,omitempty" tf:"master_username,omitempty"`
+
+	// The port on which the DB accepts connections
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// The daily time range during which automated backups are created if automated backups are enabled using the BackupRetentionPeriod parameter.Time in UTC
+	// Default: A 30-minute window selected at random from an 8-hour block of time per regionE.g., 04:00-09:00
+	PreferredBackupWindow *string `json:"preferredBackupWindow,omitempty" tf:"preferred_backup_window,omitempty"`
+
+	// The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30
+	PreferredMaintenanceWindow *string `json:"preferredMaintenanceWindow,omitempty" tf:"preferred_maintenance_window,omitempty"`
+
+	// Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false.
+	SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
+
+	// Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot. Automated snapshots should not be used for this attribute, unless from a different cluster. Automated snapshots are deleted as part of cluster destruction when the resource is replaced.
+	SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
+
+	// Specifies whether the DB cluster is encrypted. The default is false.
+	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+
+	// A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+}
 
 type ClusterObservation struct {
 
@@ -164,8 +238,17 @@ type ClusterParameters struct {
 	GlobalClusterIdentifier *string `json:"globalClusterIdentifier,omitempty" tf:"global_cluster_identifier,omitempty"`
 
 	// The ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// Password for the master DB user. Note that this may
 	// show up in logs, and it will be stored in the state file. Please refer to the DocumentDB Naming Constraints.
@@ -214,8 +297,19 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
+	// References to SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+	// +kubebuilder:validation:Optional
+	VPCSecurityGroupIDRefs []v1.Reference `json:"vpcSecurityGroupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+	// +kubebuilder:validation:Optional
+	VPCSecurityGroupIDSelector *v1.Selector `json:"vpcSecurityGroupIdSelector,omitempty" tf:"-"`
+
 	// List of VPC security groups to associate
 	// with the Cluster
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=VPCSecurityGroupIDRefs
+	// +crossplane:generate:reference:selectorFieldName=VPCSecurityGroupIDSelector
 	// +kubebuilder:validation:Optional
 	VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
 }
@@ -224,6 +318,17 @@ type ClusterParameters struct {
 type ClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ClusterParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterStatus defines the observed state of Cluster.
@@ -244,7 +349,7 @@ type ClusterStatus struct {
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
 	Spec   ClusterSpec   `json:"spec"`
 	Status ClusterStatus `json:"status,omitempty"`
 }

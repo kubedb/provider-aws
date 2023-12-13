@@ -9,11 +9,9 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta12 "github.com/upbound/provider-aws/apis/cloudwatchlogs/v1beta1"
-	v1beta1 "github.com/upbound/provider-aws/apis/ec2/v1beta1"
-	v1beta11 "github.com/upbound/provider-aws/apis/kms/v1beta1"
-	v1beta13 "github.com/upbound/provider-aws/apis/s3/v1beta1"
-	common "github.com/upbound/provider-aws/config/common"
+	v1alpha1 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
+	v1alpha11 "kubedb.dev/provider-aws/apis/kms/v1alpha1"
+	common "kubedb.dev/provider-aws/config/common"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -32,8 +30,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 			References:    mg.Spec.ForProvider.BrokerNodeGroupInfo[i3].ClientSubnetsRefs,
 			Selector:      mg.Spec.ForProvider.BrokerNodeGroupInfo[i3].ClientSubnetsSelector,
 			To: reference.To{
-				List:    &v1beta1.SubnetList{},
-				Managed: &v1beta1.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {
@@ -50,8 +48,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 			References:    mg.Spec.ForProvider.BrokerNodeGroupInfo[i3].SecurityGroupsRefs,
 			Selector:      mg.Spec.ForProvider.BrokerNodeGroupInfo[i3].SecurityGroupsSelector,
 			To: reference.To{
-				List:    &v1beta1.SecurityGroupList{},
-				Managed: &v1beta1.SecurityGroup{},
+				List:    &v1alpha1.SecurityGroupList{},
+				Managed: &v1alpha1.SecurityGroup{},
 			},
 		})
 		if err != nil {
@@ -68,8 +66,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 			Reference:    mg.Spec.ForProvider.EncryptionInfo[i3].EncryptionAtRestKMSKeyArnRef,
 			Selector:     mg.Spec.ForProvider.EncryptionInfo[i3].EncryptionAtRestKMSKeyArnSelector,
 			To: reference.To{
-				List:    &v1beta11.KeyList{},
-				Managed: &v1beta11.Key{},
+				List:    &v1alpha11.KeyList{},
+				Managed: &v1alpha11.Key{},
 			},
 		})
 		if err != nil {
@@ -78,50 +76,6 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		mg.Spec.ForProvider.EncryptionInfo[i3].EncryptionAtRestKMSKeyArn = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.EncryptionInfo[i3].EncryptionAtRestKMSKeyArnRef = rsp.ResolvedReference
 
-	}
-	for i3 := 0; i3 < len(mg.Spec.ForProvider.LoggingInfo); i3++ {
-		for i4 := 0; i4 < len(mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs); i4++ {
-			for i5 := 0; i5 < len(mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs); i5++ {
-				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs[i5].LogGroup),
-					Extract:      reference.ExternalName(),
-					Reference:    mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs[i5].LogGroupRef,
-					Selector:     mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs[i5].LogGroupSelector,
-					To: reference.To{
-						List:    &v1beta12.GroupList{},
-						Managed: &v1beta12.Group{},
-					},
-				})
-				if err != nil {
-					return errors.Wrap(err, "mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs[i5].LogGroup")
-				}
-				mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs[i5].LogGroup = reference.ToPtrValue(rsp.ResolvedValue)
-				mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].CloudwatchLogs[i5].LogGroupRef = rsp.ResolvedReference
-
-			}
-		}
-	}
-	for i3 := 0; i3 < len(mg.Spec.ForProvider.LoggingInfo); i3++ {
-		for i4 := 0; i4 < len(mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs); i4++ {
-			for i5 := 0; i5 < len(mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3); i5++ {
-				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3[i5].Bucket),
-					Extract:      reference.ExternalName(),
-					Reference:    mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3[i5].BucketRef,
-					Selector:     mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3[i5].BucketSelector,
-					To: reference.To{
-						List:    &v1beta13.BucketList{},
-						Managed: &v1beta13.Bucket{},
-					},
-				})
-				if err != nil {
-					return errors.Wrap(err, "mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3[i5].Bucket")
-				}
-				mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3[i5].Bucket = reference.ToPtrValue(rsp.ResolvedValue)
-				mg.Spec.ForProvider.LoggingInfo[i3].BrokerLogs[i4].S3[i5].BucketRef = rsp.ResolvedReference
-
-			}
-		}
 	}
 
 	return nil

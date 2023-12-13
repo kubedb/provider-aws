@@ -5,11 +5,12 @@ Copyright 2021 Upbound Inc.
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
 
-	"github.com/upbound/upjet/pkg/pipeline"
+	"github.com/crossplane/upjet/pkg/pipeline"
 
 	"kubedb.dev/provider-aws/config"
 )
@@ -23,5 +24,6 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", rootDir))
 	}
-	pipeline.Run(config.GetProvider(), absRootDir)
+	p, err := config.GetProvider(context.Background(), true)
+	pipeline.Run(p, absRootDir)
 }

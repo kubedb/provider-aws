@@ -8,7 +8,9 @@ metadata:
   name: test
 spec:
   forProvider:
-    dbInstanceIdentifier: ${aws_db_instance.bar.identifier}
+    dbInstanceIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: bar
     region: us-west-1
 
 ---
@@ -37,6 +39,3 @@ spec:
       namespace: upbound-system
     region: us-west-1
     username: foo
-
----
-
