@@ -10,7 +10,6 @@ spec:
   forProvider:
     region: us-west-1
     retentionPeriod: 14
-    sourceDbInstanceArn: arn:aws:rds:us-west-2:123456789012:db:mydatabase
-
----
-
+    sourceDbInstanceArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

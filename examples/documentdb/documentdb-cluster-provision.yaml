@@ -1,0 +1,127 @@
+apiVersion: docdb.aws.kubedb.com/v1alpha1
+kind: ClusterInstance
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: docdb/v1alpha1/clusterinstance
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdentifierRef:
+      name: example
+    instanceClass: db.t3.medium
+    region: us-east-2
+---
+
+apiVersion: docdb.aws.kubedb.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: docdb/v1alpha1/cluster
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    engine: "docdb"
+    backupRetentionPeriod: 0
+    masterPasswordSecretRef:
+      key: password
+      name: example-creds
+      namespace: crossplane-system
+    masterUsername: foo
+    preferredBackupWindow: 07:00-09:00
+    skipFinalSnapshot: true
+    dbSubnetGroupName: example
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: docdb/v1alpha1/cluster
+  labels:
+    testing.kubedb.com/example-name: docdb-creds
+  name: example-creds
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  password: "Upboundtest!324225DD"
+
+---
+
+apiVersion: docdb.aws.kubedb.com/v1alpha1
+kind: SubnetGroup
+metadata:
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: My docdb subnet group
+    region: us-east-2
+    subnetIdsRefs:
+      - name: example-subnet1
+      - name: example-subnet2
+      - name: example-subnet3
+    tags:
+      Name: My docdb subnet group
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: VPC
+metadata:
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    cidrBlock: 172.16.0.0/16
+    tags:
+      Name: DemoVpc
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet1
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2b
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.10.0/24
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet2
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2c
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.20.0/24
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet3
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2a
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.30.0/24
+
+---

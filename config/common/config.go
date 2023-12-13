@@ -8,12 +8,12 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/fieldpath"
 	"github.com/crossplane/crossplane-runtime/pkg/reference"
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/upbound/upjet/pkg/resource"
+	"github.com/crossplane/upjet/pkg/resource"
 )
 
 const (
 	// SelfPackagePath is the golang path for this package.
-	SelfPackagePath = "github.com/upbound/provider-aws/config/common"
+	SelfPackagePath = "kubedb.dev/provider-aws/config/common"
 
 	// PathARNExtractor is the golang path to ARNExtractor function
 	// in this package.
@@ -23,9 +23,9 @@ const (
 	// function in this package.
 	PathTerraformIDExtractor = SelfPackagePath + ".TerraformID()"
 
-	// VersionV1Beta1 is used for resources that meet the v1beta1 criteria
+	// VersionV1Alpha1 is used for resources that meet the v1alpha1 criteria
 	// here: https://github.com/upbound/arch/pull/33
-	VersionV1Beta1 = "v1beta1"
+	VersionV1Alpha1 = "v1alpha1"
 )
 
 // ARNExtractor extracts ARN of the resources from "status.atProvider.arn" which

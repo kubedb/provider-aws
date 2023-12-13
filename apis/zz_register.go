@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -15,11 +19,14 @@ import (
 	v1alpha1ec2 "kubedb.dev/provider-aws/apis/ec2/v1alpha1"
 	v1alpha1elasticache "kubedb.dev/provider-aws/apis/elasticache/v1alpha1"
 	v1alpha1elasticsearch "kubedb.dev/provider-aws/apis/elasticsearch/v1alpha1"
+	v1alpha1iam "kubedb.dev/provider-aws/apis/iam/v1alpha1"
 	v1alpha1kafka "kubedb.dev/provider-aws/apis/kafka/v1alpha1"
 	v1alpha1kinesis "kubedb.dev/provider-aws/apis/kinesis/v1alpha1"
 	v1alpha1kms "kubedb.dev/provider-aws/apis/kms/v1alpha1"
 	v1alpha1memorydb "kubedb.dev/provider-aws/apis/memorydb/v1alpha1"
 	v1alpha1rds "kubedb.dev/provider-aws/apis/rds/v1alpha1"
+	v1alpha1secretsmanager "kubedb.dev/provider-aws/apis/secretsmanager/v1alpha1"
+	v1alpha1sns "kubedb.dev/provider-aws/apis/sns/v1alpha1"
 	v1alpha1apis "kubedb.dev/provider-aws/apis/v1alpha1"
 	v1beta1 "kubedb.dev/provider-aws/apis/v1beta1"
 )
@@ -32,11 +39,14 @@ func init() {
 		v1alpha1ec2.SchemeBuilder.AddToScheme,
 		v1alpha1elasticache.SchemeBuilder.AddToScheme,
 		v1alpha1elasticsearch.SchemeBuilder.AddToScheme,
+		v1alpha1iam.SchemeBuilder.AddToScheme,
 		v1alpha1kafka.SchemeBuilder.AddToScheme,
 		v1alpha1kinesis.SchemeBuilder.AddToScheme,
 		v1alpha1kms.SchemeBuilder.AddToScheme,
 		v1alpha1memorydb.SchemeBuilder.AddToScheme,
 		v1alpha1rds.SchemeBuilder.AddToScheme,
+		v1alpha1secretsmanager.SchemeBuilder.AddToScheme,
+		v1alpha1sns.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 	)

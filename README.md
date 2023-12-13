@@ -1,14 +1,14 @@
 # Provider AWS
 
 `provider-aws` is a [Crossplane](https://crossplane.io/) provider that
-is built using [Upjet](https://github.com/upbound/upjet) code
+is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 AWS API.
 
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/kubedb/provider-aws):
+to the [latest release](https://marketplace.kubedb.com/providers/kubedb/provider-aws):
 ```
 up ctp provider install kubedb/provider-aws:v0.1.0
 ```

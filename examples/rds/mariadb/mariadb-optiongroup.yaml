@@ -1,0 +1,12 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: OptionGroup
+metadata:
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    engineName: mariadb
+    majorEngineVersion: "10.6"
+    option:
+      - optionName: TDE
+    optionGroupDescription: Kubedb Option Group

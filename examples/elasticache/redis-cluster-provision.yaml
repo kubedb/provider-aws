@@ -1,0 +1,111 @@
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+    uptest.kubedb.com/timeout: "3600"
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    engine: redis
+    nodeType: cache.t2.micro
+    numCacheNodes: 1
+    parameterGroupName: default.redis7
+    #parameterGroupName: cache-params-test
+    port: 6379
+    securityGroupIdRefs:
+      - name: example
+    subnetGroupNameRef:
+      name: example
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: elasticache/v1alpha1/cluster
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    vpcIdRef:
+      name: example
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: VPC
+metadata:
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    cidrBlock: 172.16.0.0/16
+    tags:
+      Name: DemoVpc
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet1
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2b
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.10.0/24
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet2
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2c
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.20.0/24
+
+---
+
+apiVersion: ec2.aws.kubedb.com/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet3
+spec:
+  forProvider:
+    region: us-east-2
+    availabilityZone: us-east-2a
+    vpcIdRef:
+      name: example
+    cidrBlock: 172.16.30.0/24
+
+---
+
+apiVersion: elasticache.aws.kubedb.com/v1alpha1
+kind: SubnetGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: elasticache/v1aplha1/cluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    subnetIdRefs:
+      - name: example-subnet1
+      - name: example-subnet2
+      - name: example-subnet3
+---

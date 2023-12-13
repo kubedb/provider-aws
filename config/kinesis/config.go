@@ -1,7 +1,7 @@
 package kinesis
 
 import (
-	"github.com/upbound/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/config"
 )
 
 // Configure adds configurations for kinesis group.

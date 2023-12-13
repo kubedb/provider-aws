@@ -1,0 +1,140 @@
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: Table
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/table
+  labels:
+    testing.kubedb.com/example-name: mytable
+  name: mytable
+spec:
+  forProvider:
+    attribute:
+    - name: exampleHashKey
+      type: S
+    hashKey: exampleHashKey
+    region: us-east-2
+    streamEnabled: true
+    streamViewType: NEW_AND_OLD_IMAGES
+    billingMode: PAY_PER_REQUEST
+---
+# We can deploy globaltable or tablereplica at a time. Both won't work together.
+# apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+# kind: GlobalTable
+# metadata:
+#   annotations:
+#     meta.kubedb.com/example-id: dynamodb/v1alpha1/globaltable
+#   labels:
+#     testing.kubedb.com/example-name: mytable
+#   name: mytable
+# spec:
+#   forProvider:
+#     region: us-east-1
+#     replica:
+#       - regionName: us-east-2
+
+# ---
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: TableReplica
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/tablereplica
+  labels:
+    testing.kubedb.com/example-name: mytablerep
+  name: mytablerep
+spec:
+  forProvider:
+    globalTableArnRef:
+      name: mytable
+    region: us-west-2
+
+---
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: TableItem
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/tableitem
+  labels:
+    testing.kubedb.com/example-name: mytable
+  name: example
+spec:
+  forProvider:
+    hashKey: exampleHashKey
+    item: |
+      {
+        "exampleHashKey": {"S": "something"},
+        "one": {"N": "11111"},
+        "two": {"N": "22222"},
+        "three": {"N": "33333"},
+        "four": {"N": "44444"}
+      }
+    region: us-east-2
+    tableNameRef:
+      name: mytable
+
+---
+
+apiVersion: kinesis.aws.kubedb.com/v1alpha1
+kind: Stream
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    shardCount: 1
+
+---
+
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: KinesisStreamingDestination
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/kinesisstreamingdestination
+  labels:
+    testing.kubedb.com/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    streamArnRef:
+      name: example
+    tableNameRef:
+      name: mytable
+
+---
+
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: ContributorInsights
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/contributorinsights
+  labels:
+    testing.kubedb.com/example-name: contributor
+  name: example
+spec:
+  forProvider:
+    region: us-east-2
+    tableNameRef:
+      name: mytable
+
+---
+
+apiVersion: dynamodb.aws.kubedb.com/v1alpha1
+kind: Tag
+metadata:
+  annotations:
+    meta.kubedb.com/example-id: dynamodb/v1alpha1/tag
+  labels:
+    testing.kubedb.com/example-name: test
+  name: example
+spec:
+  forProvider:
+    key: testkey
+    region: us-east-2
+    resourceArn: arn:aws:dynamodb:us-east-2:452618475015:table/mytable
+    value: testvalue
+
+---

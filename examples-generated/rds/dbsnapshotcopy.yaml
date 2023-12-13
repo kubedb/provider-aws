@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     region: us-west-1
-    sourceDbSnapshotIdentifier: ${aws_db_snapshot.example.db_snapshot_arn}
+    sourceDbSnapshotIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     targetDbSnapshotIdentifier: testsnapshot1234-copy
 
 ---
@@ -51,8 +53,7 @@ metadata:
   name: example
 spec:
   forProvider:
-    dbInstanceIdentifier: ${aws_db_instance.example.identifier}
+    dbInstanceIdentifierSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     region: us-west-1
-
----
-

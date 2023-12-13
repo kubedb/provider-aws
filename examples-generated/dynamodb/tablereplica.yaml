@@ -8,7 +8,9 @@ metadata:
   name: example
 spec:
   forProvider:
-    globalTableArn: ${aws_dynamodb_table.example.arn}
+    globalTableArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     provider: aws.alt
     region: us-west-1
     tags:
@@ -36,6 +38,3 @@ spec:
     region: us-west-1
     streamEnabled: true
     streamViewType: NEW_AND_OLD_IMAGES
-
----
-

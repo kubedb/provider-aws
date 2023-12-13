@@ -1,13 +1,13 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package controller
 
 import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/upbound/upjet/pkg/controller"
+	"github.com/crossplane/upjet/pkg/controller"
 
 	cluster "kubedb.dev/provider-aws/internal/controller/docdb/cluster"
 	clusterinstance "kubedb.dev/provider-aws/internal/controller/docdb/clusterinstance"
@@ -24,7 +24,11 @@ import (
 	tablereplica "kubedb.dev/provider-aws/internal/controller/dynamodb/tablereplica"
 	tag "kubedb.dev/provider-aws/internal/controller/dynamodb/tag"
 	route "kubedb.dev/provider-aws/internal/controller/ec2/route"
+	securitygroup "kubedb.dev/provider-aws/internal/controller/ec2/securitygroup"
 	securitygrouprule "kubedb.dev/provider-aws/internal/controller/ec2/securitygrouprule"
+	subnet "kubedb.dev/provider-aws/internal/controller/ec2/subnet"
+	vpc "kubedb.dev/provider-aws/internal/controller/ec2/vpc"
+	vpcendpoint "kubedb.dev/provider-aws/internal/controller/ec2/vpcendpoint"
 	vpcpeeringconnection "kubedb.dev/provider-aws/internal/controller/ec2/vpcpeeringconnection"
 	clusterelasticache "kubedb.dev/provider-aws/internal/controller/elasticache/cluster"
 	parametergroup "kubedb.dev/provider-aws/internal/controller/elasticache/parametergroup"
@@ -35,6 +39,7 @@ import (
 	domain "kubedb.dev/provider-aws/internal/controller/elasticsearch/domain"
 	domainpolicy "kubedb.dev/provider-aws/internal/controller/elasticsearch/domainpolicy"
 	domainsamloptions "kubedb.dev/provider-aws/internal/controller/elasticsearch/domainsamloptions"
+	role "kubedb.dev/provider-aws/internal/controller/iam/role"
 	clusterkafka "kubedb.dev/provider-aws/internal/controller/kafka/cluster"
 	configuration "kubedb.dev/provider-aws/internal/controller/kafka/configuration"
 	stream "kubedb.dev/provider-aws/internal/controller/kinesis/stream"
@@ -66,6 +71,8 @@ import (
 	proxytarget "kubedb.dev/provider-aws/internal/controller/rds/proxytarget"
 	snapshotrds "kubedb.dev/provider-aws/internal/controller/rds/snapshot"
 	subnetgrouprds "kubedb.dev/provider-aws/internal/controller/rds/subnetgroup"
+	secret "kubedb.dev/provider-aws/internal/controller/secretsmanager/secret"
+	topic "kubedb.dev/provider-aws/internal/controller/sns/topic"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
@@ -87,7 +94,11 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		tablereplica.Setup,
 		tag.Setup,
 		route.Setup,
+		securitygroup.Setup,
 		securitygrouprule.Setup,
+		subnet.Setup,
+		vpc.Setup,
+		vpcendpoint.Setup,
 		vpcpeeringconnection.Setup,
 		clusterelasticache.Setup,
 		parametergroup.Setup,
@@ -98,6 +109,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		domain.Setup,
 		domainpolicy.Setup,
 		domainsamloptions.Setup,
+		role.Setup,
 		clusterkafka.Setup,
 		configuration.Setup,
 		stream.Setup,
@@ -129,6 +141,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		proxytarget.Setup,
 		snapshotrds.Setup,
 		subnetgrouprds.Setup,
+		secret.Setup,
+		topic.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

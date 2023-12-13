@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,30 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type GlobalClusterInitParameters struct {
+
+	// Name for an automatically created database on cluster creation.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+
+	// If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Name of the database engine to be used for this DB cluster. Current Valid values: docdb. Defaults to docdb. Conflicts with source_db_cluster_identifier.
+	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+
+	// Engine version of the global database. Upgrading the engine version will result in all cluster members being immediately updated and will.
+	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
+	// The global cluster identifier.
+	GlobalClusterIdentifier *string `json:"globalClusterIdentifier,omitempty" tf:"global_cluster_identifier,omitempty"`
+
+	// Specifies whether the DB cluster is encrypted. The default is false unless source_db_cluster_identifier is specified and encrypted.
+	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+}
+
+type GlobalClusterMembersInitParameters struct {
+}
 
 type GlobalClusterMembersObservation struct {
 
@@ -91,8 +119,18 @@ type GlobalClusterParameters struct {
 	Region *string `json:"region,omitempty" tf:"-"`
 
 	// Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation.
+	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/docdb/v1alpha1.Cluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("arn",true)
 	// +kubebuilder:validation:Optional
 	SourceDBClusterIdentifier *string `json:"sourceDbClusterIdentifier,omitempty" tf:"source_db_cluster_identifier,omitempty"`
+
+	// Reference to a Cluster in docdb to populate sourceDbClusterIdentifier.
+	// +kubebuilder:validation:Optional
+	SourceDBClusterIdentifierRef *v1.Reference `json:"sourceDbClusterIdentifierRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster in docdb to populate sourceDbClusterIdentifier.
+	// +kubebuilder:validation:Optional
+	SourceDBClusterIdentifierSelector *v1.Selector `json:"sourceDbClusterIdentifierSelector,omitempty" tf:"-"`
 
 	// Specifies whether the DB cluster is encrypted. The default is false unless source_db_cluster_identifier is specified and encrypted.
 	// +kubebuilder:validation:Optional
@@ -103,6 +141,17 @@ type GlobalClusterParameters struct {
 type GlobalClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     GlobalClusterParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider GlobalClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // GlobalClusterStatus defines the observed state of GlobalCluster.
@@ -123,8 +172,8 @@ type GlobalClusterStatus struct {
 type GlobalCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.globalClusterIdentifier)",message="globalClusterIdentifier is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.globalClusterIdentifier) || (has(self.initProvider) && has(self.initProvider.globalClusterIdentifier))",message="spec.forProvider.globalClusterIdentifier is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
 	Spec   GlobalClusterSpec   `json:"spec"`
 	Status GlobalClusterStatus `json:"status,omitempty"`
 }

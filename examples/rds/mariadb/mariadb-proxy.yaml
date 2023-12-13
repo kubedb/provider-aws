@@ -1,0 +1,87 @@
+apiVersion: rds.aws.kubedb.com/v1alpha1
+kind: Proxy
+metadata:
+  name: example
+  annotations:
+    upjet.kubedb.com/manual-intervention: "This resource has a secret reference."
+spec:
+  forProvider:
+    region: us-east-2
+    auth:
+      - authScheme: SECRETS
+        description: example
+        iamAuth: DISABLED
+        secretArnRef:
+          name: example2
+    debugLogging: false
+    engineFamily: MYSQL
+    idleClientTimeout: 1800
+    requireTls: true
+    roleArnRef:
+      name: role
+    tags:
+      Key: value
+      Name: example
+    vpcSubnetIds:
+      - subnet-0959b298efb278524
+      - subnet-0fba75208c6407ff3
+      - subnet-04ae2f304f84994d6
+---
+
+apiVersion: iam.aws.kubedb.com/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/role
+  labels:
+    testing.upbound.io/example-name: role
+  name: role
+spec:
+  forProvider:
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "rds.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    inlinePolicy:
+      - name: my_inline_policy
+        policy: |
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                  "Sid": "VisualEditor0",
+                  "Effect": "Allow",
+                  "Action": [
+                      "secretsmanager:GetRandomPassword",
+                      "secretsmanager:CreateSecret",
+                      "secretsmanager:ListSecrets"
+                  ],
+                  "Resource": "*"
+              }
+            ]
+          }
+---
+
+apiVersion: secretsmanager.aws.kubedb.com/v1alpha1
+kind: Secret
+metadata:
+  annotations:
+    meta.upbound.io/example-id: secretsmanager/v1alpha1/secretrotation
+  labels:
+    testing.upbound.io/example-name: example2
+  name: example2
+spec:
+  forProvider:
+    name: example2
+    region: us-east-2
+---
+  

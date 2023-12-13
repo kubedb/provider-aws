@@ -13,7 +13,9 @@ spec:
     - creation
     - failure
     region: us-west-1
-    snsTopicArn: ${aws_sns_topic.example.arn}
+    snsTopicArnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     sourceIds:
     - ${aws_docdb_cluster.example.id}
     sourceType: db-cluster
@@ -44,3 +46,14 @@ spec:
 
 ---
 
+apiVersion: sns.aws.kubedb.com/v1alpha1
+kind: Topic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: docdb/v1alpha1/eventsubscription
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    region: us-west-1

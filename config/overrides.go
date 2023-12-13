@@ -1,10 +1,12 @@
 package config
 
 import (
+	"github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/types/comments"
+	"github.com/crossplane/upjet/pkg/types/name"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
-	"github.com/upbound/upjet/pkg/config"
-	"github.com/upbound/upjet/pkg/types/comments"
+	"kubedb.dev/provider-aws/config/common"
 	"strings"
 )
 
@@ -12,7 +14,14 @@ var (
 	resourceGroup = map[string]string{
 		"aws_security_group_rule":    "ec2",
 		"aws_vpc_peering_connection": "ec2",
-		"aws_rote":                   "ec2",
+		"aws_route":                  "ec2",
+		"aws_vpc":                    "ec2",
+		"aws_vpc_endpoint":           "ec2",
+		"aws_subnet":                 "ec2",
+		"aws_security_group":         "ec2",
+		"aws_iam_role":               "iam",
+		"aws_secretsmanager_secret":  "secretsmanager",
+		"aws_sns_topic":              "sns",
 
 		"aws_docdb_cluster":                 "docdb",
 		"aws_docdb_global_cluster":          "docdb",
@@ -78,7 +87,14 @@ var (
 	resourceKind = map[string]string{
 		"aws_security_group_rule":    "SecurityGroupRule",
 		"aws_vpc_peering_connection": "VPCPeeringConnection",
-		"aws_rote":                   "Route",
+		"aws_route":                  "Route",
+		"aws_vpc":                    "VPC",
+		"aws_vpc_endpoint":           "VPCEndpoint",
+		"aws_subnet":                 "Subnet",
+		"aws_security_group":         "SecurityGroup",
+		"aws_iam_role":               "Role",
+		"aws_secretsmanager_secret":  "Secret",
+		"aws_sns_topic":              "Topic",
 
 		"aws_docdb_cluster":                 "Cluster",
 		"aws_docdb_global_cluster":          "GlobalCluster",
@@ -183,6 +199,66 @@ func RegionAddition() config.ResourceOption {
 				}
 				if err := ex.Dependencies.SetPathValue(k, "region", defaultRegion); err != nil {
 					panic(err)
+				}
+			}
+		}
+	}
+}
+
+// KnownReferencers adds referencers for fields that are known and common among
+// more than a few resources.
+func KnownReferencers() config.ResourceOption { //nolint:gocyclo
+	return func(r *config.Resource) {
+		for k, s := range r.TerraformResource.Schema {
+			// We shouldn't add referencers for status fields and sensitive fields
+			// since they already have secret referencer.
+			if (s.Computed && !s.Optional) || s.Sensitive {
+				continue
+			}
+			switch {
+			case strings.HasSuffix(k, "role_arn"):
+				r.References[k] = config.Reference{
+					Type:      "kubedb.dev/provider-aws/apis/iam/v1alpha1.Role",
+					Extractor: common.PathARNExtractor,
+				}
+			case strings.HasSuffix(k, "security_group_ids"):
+				r.References[k] = config.Reference{
+					Type:              "kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup",
+					RefFieldName:      name.NewFromSnake(strings.TrimSuffix(k, "s")).Camel + "Refs",
+					SelectorFieldName: name.NewFromSnake(strings.TrimSuffix(k, "s")).Camel + "Selector",
+				}
+
+			}
+			switch k {
+			case "vpc_id":
+				r.References["vpc_id"] = config.Reference{
+					Type: "kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC",
+				}
+			case "subnet_ids":
+				r.References["subnet_ids"] = config.Reference{
+					Type:              "kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet",
+					RefFieldName:      "SubnetIDRefs",
+					SelectorFieldName: "SubnetIDSelector",
+				}
+			case "subnet_id":
+				r.References["subnet_id"] = config.Reference{
+					Type: "kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet",
+				}
+			case "security_group_id":
+				r.References["security_group_id"] = config.Reference{
+					Type: "kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup",
+				}
+			case "kms_key_id":
+				r.References["kms_key_id"] = config.Reference{
+					Type: "kubedb.dev/provider-aws/apis/kms/v1alpha1.Key",
+				}
+			case "kms_key_arn":
+				r.References["kms_key_arn"] = config.Reference{
+					Type: "kubedb.dev/provider-aws/apis/kms/v1alpha1.Key",
+				}
+			case "kms_key":
+				r.References["kms_key"] = config.Reference{
+					Type: "kubedb.dev/provider-aws/apis/kms/v1alpha1.Key",
 				}
 			}
 		}
