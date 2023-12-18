@@ -118,7 +118,7 @@ var (
 		schema.GroupKind{"memorydb.aws.kubedb.com", "ParameterGroup"}:                   parametergroupmemorydb.Setup,
 		schema.GroupKind{"memorydb.aws.kubedb.com", "Snapshot"}:                         snapshot.Setup,
 		schema.GroupKind{"memorydb.aws.kubedb.com", "SubnetGroup"}:                      subnetgroupmemorydb.Setup,
-		schema.GroupKind{"aws.kubedb.com", ""}:                                          providerconfig.Setup,
+		schema.GroupKind{"providerconfig.aws.kubedb.com", ""}:                           providerconfig.Setup,
 		schema.GroupKind{"rds.aws.kubedb.com", "Cluster"}:                               clusterrds.Setup,
 		schema.GroupKind{"rds.aws.kubedb.com", "ClusterActivityStream"}:                 clusteractivitystream.Setup,
 		schema.GroupKind{"rds.aws.kubedb.com", "ClusterEndpoint"}:                       clusterendpoint.Setup,
