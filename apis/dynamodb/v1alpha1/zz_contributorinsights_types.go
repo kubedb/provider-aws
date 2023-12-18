@@ -15,53 +15,63 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ContributorInsightsInitParameters struct {
 
-	// The global secondary index name
-	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
+
+// The global secondary index name
+IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 }
+
 
 type ContributorInsightsObservation struct {
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The global secondary index name
-	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 
-	// The name of the table to enable contributor insights
-	TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+// The global secondary index name
+IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
+
+// The name of the table to enable contributor insights
+TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
 }
+
 
 type ContributorInsightsParameters struct {
 
-	// The global secondary index name
-	// +kubebuilder:validation:Optional
-	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// The global secondary index name
+// +kubebuilder:validation:Optional
+IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 
-	// The name of the table to enable contributor insights
-	// +crossplane:generate:reference:type=Table
-	// +kubebuilder:validation:Optional
-	TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Reference to a Table to populate tableName.
-	// +kubebuilder:validation:Optional
-	TableNameRef *v1.Reference `json:"tableNameRef,omitempty" tf:"-"`
+// The name of the table to enable contributor insights
+// +crossplane:generate:reference:type=Table
+// +kubebuilder:validation:Optional
+TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
 
-	// Selector for a Table to populate tableName.
-	// +kubebuilder:validation:Optional
-	TableNameSelector *v1.Selector `json:"tableNameSelector,omitempty" tf:"-"`
+// Reference to a Table to populate tableName.
+// +kubebuilder:validation:Optional
+TableNameRef *v1.Reference `json:"tableNameRef,omitempty" tf:"-"`
+
+// Selector for a Table to populate tableName.
+// +kubebuilder:validation:Optional
+TableNameSelector *v1.Selector `json:"tableNameSelector,omitempty" tf:"-"`
 }
 
 // ContributorInsightsSpec defines the desired state of ContributorInsights
 type ContributorInsightsSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ContributorInsightsParameters `json:"forProvider"`
+	ForProvider       ContributorInsightsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -72,13 +82,13 @@ type ContributorInsightsSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ContributorInsightsInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ContributorInsightsInitParameters `json:"initProvider,omitempty"`
 }
 
 // ContributorInsightsStatus defines the observed state of ContributorInsights.
 type ContributorInsightsStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ContributorInsightsObservation `json:"atProvider,omitempty"`
+	AtProvider          ContributorInsightsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -93,9 +103,9 @@ type ContributorInsightsStatus struct {
 type ContributorInsights struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ContributorInsightsSpec   `json:"spec"`
-	Status ContributorInsightsStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ContributorInsightsSpec   `json:"spec"`
+	Status            ContributorInsightsStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

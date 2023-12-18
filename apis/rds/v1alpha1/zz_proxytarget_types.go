@@ -15,99 +15,108 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ProxyTargetInitParameters struct {
 
-	// DB cluster identifier.
-	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// The name of the target group.
-	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
+// DB cluster identifier.
+DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
+
+// The name of the target group.
+TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 }
+
 
 type ProxyTargetObservation struct {
 
-	// DB cluster identifier.
-	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// DB instance identifier.
-	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
+// DB cluster identifier.
+DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// The name of the DB proxy.
-	DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
+// DB instance identifier.
+DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type.
-	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+// The name of the DB proxy.
+DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
 
-	// Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/).
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type.
+Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// Port for the target RDS DB Instance or Aurora DB Cluster.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/).
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Identifier representing the DB Instance or DB Cluster target.
-	RDSResourceID *string `json:"rdsResourceId,omitempty" tf:"rds_resource_id,omitempty"`
+// Port for the target RDS DB Instance or Aurora DB Cluster.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API.
-	TargetArn *string `json:"targetArn,omitempty" tf:"target_arn,omitempty"`
+// Identifier representing the DB Instance or DB Cluster target.
+RDSResourceID *string `json:"rdsResourceId,omitempty" tf:"rds_resource_id,omitempty"`
 
-	// The name of the target group.
-	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
+// Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API.
+TargetArn *string `json:"targetArn,omitempty" tf:"target_arn,omitempty"`
 
-	// DB Cluster identifier for the DB Instance target. Not returned unless manually importing an RDS_INSTANCE target that is part of a DB Cluster.
-	TrackedClusterID *string `json:"trackedClusterId,omitempty" tf:"tracked_cluster_id,omitempty"`
+// The name of the target group.
+TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 
-	// Type of targetE.g., RDS_INSTANCE or TRACKED_CLUSTER
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+// DB Cluster identifier for the DB Instance target. Not returned unless manually importing an RDS_INSTANCE target that is part of a DB Cluster.
+TrackedClusterID *string `json:"trackedClusterId,omitempty" tf:"tracked_cluster_id,omitempty"`
+
+// Type of targetE.g., RDS_INSTANCE or TRACKED_CLUSTER
+Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
+
 
 type ProxyTargetParameters struct {
 
-	// DB cluster identifier.
-	// +kubebuilder:validation:Optional
-	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// DB instance identifier.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
+// DB cluster identifier.
+// +kubebuilder:validation:Optional
+DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// Reference to a Instance in rds to populate dbInstanceIdentifier.
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+// DB instance identifier.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
+// +kubebuilder:validation:Optional
+DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Selector for a Instance in rds to populate dbInstanceIdentifier.
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
+// Reference to a Instance in rds to populate dbInstanceIdentifier.
+// +kubebuilder:validation:Optional
+DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
 
-	// The name of the DB proxy.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Proxy
-	// +kubebuilder:validation:Optional
-	DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
+// Selector for a Instance in rds to populate dbInstanceIdentifier.
+// +kubebuilder:validation:Optional
+DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
 
-	// Reference to a Proxy in rds to populate dbProxyName.
-	// +kubebuilder:validation:Optional
-	DBProxyNameRef *v1.Reference `json:"dbProxyNameRef,omitempty" tf:"-"`
+// The name of the DB proxy.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Proxy
+// +kubebuilder:validation:Optional
+DBProxyName *string `json:"dbProxyName,omitempty" tf:"db_proxy_name,omitempty"`
 
-	// Selector for a Proxy in rds to populate dbProxyName.
-	// +kubebuilder:validation:Optional
-	DBProxyNameSelector *v1.Selector `json:"dbProxyNameSelector,omitempty" tf:"-"`
+// Reference to a Proxy in rds to populate dbProxyName.
+// +kubebuilder:validation:Optional
+DBProxyNameRef *v1.Reference `json:"dbProxyNameRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a Proxy in rds to populate dbProxyName.
+// +kubebuilder:validation:Optional
+DBProxyNameSelector *v1.Selector `json:"dbProxyNameSelector,omitempty" tf:"-"`
 
-	// The name of the target group.
-	// +kubebuilder:validation:Optional
-	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
+
+// The name of the target group.
+// +kubebuilder:validation:Optional
+TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 }
 
 // ProxyTargetSpec defines the desired state of ProxyTarget
 type ProxyTargetSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ProxyTargetParameters `json:"forProvider"`
+	ForProvider       ProxyTargetParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -118,13 +127,13 @@ type ProxyTargetSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ProxyTargetInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ProxyTargetInitParameters `json:"initProvider,omitempty"`
 }
 
 // ProxyTargetStatus defines the observed state of ProxyTarget.
 type ProxyTargetStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ProxyTargetObservation `json:"atProvider,omitempty"`
+	AtProvider          ProxyTargetObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -139,10 +148,10 @@ type ProxyTargetStatus struct {
 type ProxyTarget struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.targetGroupName) || (has(self.initProvider) && has(self.initProvider.targetGroupName))",message="spec.forProvider.targetGroupName is a required parameter"
-	Spec   ProxyTargetSpec   `json:"spec"`
-	Status ProxyTargetStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.targetGroupName) || (has(self.initProvider) && has(self.initProvider.targetGroupName))",message="spec.forProvider.targetGroupName is a required parameter"
+	Spec              ProxyTargetSpec   `json:"spec"`
+	Status            ProxyTargetStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

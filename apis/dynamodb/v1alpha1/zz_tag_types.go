@@ -15,53 +15,62 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type TagInitParameters struct {
 
-	// Tag value.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+
+// Tag value.
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
+
 
 type TagObservation struct {
 
-	// DynamoDB resource identifier and key, separated by a comma (,)
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Tag name.
-	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+// DynamoDB resource identifier and key, separated by a comma (,)
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Amazon Resource Name (ARN) of the DynamoDB resource to tag.
-	ResourceArn *string `json:"resourceArn,omitempty" tf:"resource_arn,omitempty"`
+// Tag name.
+Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Tag value.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+// Amazon Resource Name (ARN) of the DynamoDB resource to tag.
+ResourceArn *string `json:"resourceArn,omitempty" tf:"resource_arn,omitempty"`
+
+// Tag value.
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
+
 
 type TagParameters struct {
 
-	// Tag name.
-	// +kubebuilder:validation:Required
-	Key *string `json:"key" tf:"key,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Tag name.
+// +kubebuilder:validation:Required
+Key *string `json:"key" tf:"key,omitempty"`
 
-	// Amazon Resource Name (ARN) of the DynamoDB resource to tag.
-	// +kubebuilder:validation:Required
-	ResourceArn *string `json:"resourceArn" tf:"resource_arn,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Tag value.
-	// +kubebuilder:validation:Optional
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+// Amazon Resource Name (ARN) of the DynamoDB resource to tag.
+// +kubebuilder:validation:Required
+ResourceArn *string `json:"resourceArn" tf:"resource_arn,omitempty"`
+
+// Tag value.
+// +kubebuilder:validation:Optional
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 // TagSpec defines the desired state of Tag
 type TagSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     TagParameters `json:"forProvider"`
+	ForProvider       TagParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -72,13 +81,13 @@ type TagSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider TagInitParameters `json:"initProvider,omitempty"`
+	InitProvider       TagInitParameters `json:"initProvider,omitempty"`
 }
 
 // TagStatus defines the observed state of Tag.
 type TagStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        TagObservation `json:"atProvider,omitempty"`
+	AtProvider          TagObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -93,10 +102,10 @@ type TagStatus struct {
 type Tag struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.value) || (has(self.initProvider) && has(self.initProvider.value))",message="spec.forProvider.value is a required parameter"
-	Spec   TagSpec   `json:"spec"`
-	Status TagStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.value) || (has(self.initProvider) && has(self.initProvider.value))",message="spec.forProvider.value is a required parameter"
+	Spec              TagSpec   `json:"spec"`
+	Status            TagStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

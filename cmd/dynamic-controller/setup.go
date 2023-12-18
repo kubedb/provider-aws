@@ -108,7 +108,7 @@ func (sg *ProviderGenerator) generate(rootGroup string, versionPkgList []string,
 		group := words[siz-2]
 		kind := words[siz-1]
 		importData += rmDot[0] + " " + "\"" + pkgPath + "\"\n"
-		if group == shortName {
+		if group == "controller" {
 			kindMapData += "schema.GroupKind{\"" + rootGroup + "\", "
 		} else {
 			kindMapData += "schema.GroupKind{\"" + group + "." + rootGroup + "\", "

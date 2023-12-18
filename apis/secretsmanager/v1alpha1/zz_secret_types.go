@@ -15,170 +15,185 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ReplicaInitParameters struct {
 
-	// ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Region for replicating the secret.
-	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+// ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+// Region for replicating the secret.
+Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
+
 
 type ReplicaObservation struct {
 
-	// ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Date that you last accessed the secret in the Region.
-	LastAccessedDate *string `json:"lastAccessedDate,omitempty" tf:"last_accessed_date,omitempty"`
+// ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Region for replicating the secret.
-	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+// Date that you last accessed the secret in the Region.
+LastAccessedDate *string `json:"lastAccessedDate,omitempty" tf:"last_accessed_date,omitempty"`
 
-	// Status can be InProgress, Failed, or InSync.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+// Region for replicating the secret.
+Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// Message such as Replication succeeded or Secret with this name already exists in this region.
-	StatusMessage *string `json:"statusMessage,omitempty" tf:"status_message,omitempty"`
+// Status can be InProgress, Failed, or InSync.
+Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+// Message such as Replication succeeded or Secret with this name already exists in this region.
+StatusMessage *string `json:"statusMessage,omitempty" tf:"status_message,omitempty"`
 }
+
 
 type ReplicaParameters struct {
 
-	// ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent.
-	// +kubebuilder:validation:Optional
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Region for replicating the secret.
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region" tf:"region,omitempty"`
+// ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent.
+// +kubebuilder:validation:Optional
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+// Region for replicating the secret.
+// +kubebuilder:validation:Optional
+Region *string `json:"region" tf:"region,omitempty"`
 }
+
 
 type SecretInitParameters struct {
 
-	// Description of the secret.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
-	ForceOverwriteReplicaSecret *bool `json:"forceOverwriteReplicaSecret,omitempty" tf:"force_overwrite_replica_secret,omitempty"`
+// Description of the secret.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
+ForceOverwriteReplicaSecret *bool `json:"forceOverwriteReplicaSecret,omitempty" tf:"force_overwrite_replica_secret,omitempty"`
 
-	// Creates a unique name beginning with the specified prefix. Conflicts with name.
-	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
+// Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30.
-	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
+// Creates a unique name beginning with the specified prefix. Conflicts with name.
+NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
-	// Configuration block to support secret replication. See details below.
-	Replica []ReplicaInitParameters `json:"replica,omitempty" tf:"replica,omitempty"`
+// Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30.
+RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
 
-	// Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Configuration block to support secret replication. See details below.
+Replica []ReplicaInitParameters `json:"replica,omitempty" tf:"replica,omitempty"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SecretObservation struct {
 
-	// ARN of the secret.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Description of the secret.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// ARN of the secret.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
-	ForceOverwriteReplicaSecret *bool `json:"forceOverwriteReplicaSecret,omitempty" tf:"force_overwrite_replica_secret,omitempty"`
+// Description of the secret.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ARN of the secret.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
+ForceOverwriteReplicaSecret *bool `json:"forceOverwriteReplicaSecret,omitempty" tf:"force_overwrite_replica_secret,omitempty"`
 
-	// ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret. If you need to reference a CMK in a different account, you can use only the key ARN. If you don't specify this value, then Secrets Manager defaults to using the AWS account's default KMS key (the one named aws/secretsmanager). If the default KMS key with that name doesn't yet exist, then AWS Secrets Manager creates it for you automatically the first time.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+// ARN of the secret.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret. If you need to reference a CMK in a different account, you can use only the key ARN. If you don't specify this value, then Secrets Manager defaults to using the AWS account's default KMS key (the one named aws/secretsmanager). If the default KMS key with that name doesn't yet exist, then AWS Secrets Manager creates it for you automatically the first time.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Creates a unique name beginning with the specified prefix. Conflicts with name.
-	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
+// Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Valid JSON document representing a resource policy. Removing policy from your configuration or setting policy to null or an empty string (i.e., policy = "") will not delete the policy since it could have been set by aws_secretsmanager_secret_policy. To delete the policy, set it to "{}" (an empty JSON document).
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// Creates a unique name beginning with the specified prefix. Conflicts with name.
+NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
-	// Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30.
-	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
+// Valid JSON document representing a resource policy. Removing policy from your configuration or setting policy to null or an empty string (i.e., policy = "") will not delete the policy since it could have been set by aws_secretsmanager_secret_policy. To delete the policy, set it to "{}" (an empty JSON document).
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// Configuration block to support secret replication. See details below.
-	Replica []ReplicaObservation `json:"replica,omitempty" tf:"replica,omitempty"`
+// Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30.
+RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
 
-	// Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Configuration block to support secret replication. See details below.
+Replica []ReplicaObservation `json:"replica,omitempty" tf:"replica,omitempty"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SecretParameters struct {
 
-	// Description of the secret.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
-	// +kubebuilder:validation:Optional
-	ForceOverwriteReplicaSecret *bool `json:"forceOverwriteReplicaSecret,omitempty" tf:"force_overwrite_replica_secret,omitempty"`
+// Description of the secret.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret. If you need to reference a CMK in a different account, you can use only the key ARN. If you don't specify this value, then Secrets Manager defaults to using the AWS account's default KMS key (the one named aws/secretsmanager). If the default KMS key with that name doesn't yet exist, then AWS Secrets Manager creates it for you automatically the first time.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
-	// +kubebuilder:validation:Optional
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+// Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
+// +kubebuilder:validation:Optional
+ForceOverwriteReplicaSecret *bool `json:"forceOverwriteReplicaSecret,omitempty" tf:"force_overwrite_replica_secret,omitempty"`
 
-	// Reference to a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+// ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret. If you need to reference a CMK in a different account, you can use only the key ARN. If you don't specify this value, then Secrets Manager defaults to using the AWS account's default KMS key (the one named aws/secretsmanager). If the default KMS key with that name doesn't yet exist, then AWS Secrets Manager creates it for you automatically the first time.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+// +kubebuilder:validation:Optional
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Selector for a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+// Reference to a Key in kms to populate kmsKeyId.
+// +kubebuilder:validation:Optional
+KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
 
-	// Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// Selector for a Key in kms to populate kmsKeyId.
+// +kubebuilder:validation:Optional
+KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
-	// Creates a unique name beginning with the specified prefix. Conflicts with name.
-	// +kubebuilder:validation:Optional
-	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
+// Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix.
+// +kubebuilder:validation:Optional
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30.
-	// +kubebuilder:validation:Optional
-	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
+// Creates a unique name beginning with the specified prefix. Conflicts with name.
+// +kubebuilder:validation:Optional
+NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
-	// Region for replicating the secret.
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30.
+// +kubebuilder:validation:Optional
+RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
 
-	// Configuration block to support secret replication. See details below.
-	// +kubebuilder:validation:Optional
-	Replica []ReplicaParameters `json:"replica,omitempty" tf:"replica,omitempty"`
+// Region for replicating the secret.
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Configuration block to support secret replication. See details below.
+// +kubebuilder:validation:Optional
+Replica []ReplicaParameters `json:"replica,omitempty" tf:"replica,omitempty"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // SecretSpec defines the desired state of Secret
 type SecretSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SecretParameters `json:"forProvider"`
+	ForProvider       SecretParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -189,13 +204,13 @@ type SecretSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider SecretInitParameters `json:"initProvider,omitempty"`
+	InitProvider       SecretInitParameters `json:"initProvider,omitempty"`
 }
 
 // SecretStatus defines the observed state of Secret.
 type SecretStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecretObservation `json:"atProvider,omitempty"`
+	AtProvider          SecretObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -210,9 +225,9 @@ type SecretStatus struct {
 type Secret struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   SecretSpec   `json:"spec"`
-	Status SecretStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              SecretSpec   `json:"spec"`
+	Status            SecretStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

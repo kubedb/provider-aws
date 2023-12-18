@@ -15,150 +15,165 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type StreamInitParameters struct {
 
-	// The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE.
-	EncryptionType *string `json:"encryptionType,omitempty" tf:"encryption_type,omitempty"`
 
-	// A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false.
-	EnforceConsumerDeletion *bool `json:"enforceConsumerDeletion,omitempty" tf:"enforce_consumer_deletion,omitempty"`
+// The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE.
+EncryptionType *string `json:"encryptionType,omitempty" tf:"encryption_type,omitempty"`
 
-	// Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24.
-	RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+// A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false.
+EnforceConsumerDeletion *bool `json:"enforceConsumerDeletion,omitempty" tf:"enforce_consumer_deletion,omitempty"`
 
-	// –  The number of shards that the stream will use. If the stream_mode is PROVISIONED, this field is required.
-	// Amazon has guidelines for specifying the Stream size that should be referenced when creating a Kinesis stream. See Amazon Kinesis Streams for more.
-	ShardCount *float64 `json:"shardCount,omitempty" tf:"shard_count,omitempty"`
+// Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24.
+RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
-	// A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable.
-	ShardLevelMetrics []*string `json:"shardLevelMetrics,omitempty" tf:"shard_level_metrics,omitempty"`
+// –  The number of shards that the stream will use. If the stream_mode is PROVISIONED, this field is required.
+// Amazon has guidelines for specifying the Stream size that should be referenced when creating a Kinesis stream. See Amazon Kinesis Streams for more.
+ShardCount *float64 `json:"shardCount,omitempty" tf:"shard_count,omitempty"`
 
-	// Indicates the capacity mode of the data stream. Detailed below.
-	StreamModeDetails []StreamModeDetailsInitParameters `json:"streamModeDetails,omitempty" tf:"stream_mode_details,omitempty"`
+// A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable.
+ShardLevelMetrics []*string `json:"shardLevelMetrics,omitempty" tf:"shard_level_metrics,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Indicates the capacity mode of the data stream. Detailed below.
+StreamModeDetails []StreamModeDetailsInitParameters `json:"streamModeDetails,omitempty" tf:"stream_mode_details,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type StreamModeDetailsInitParameters struct {
 
-	// Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.
-	StreamMode *string `json:"streamMode,omitempty" tf:"stream_mode,omitempty"`
+
+// Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.
+StreamMode *string `json:"streamMode,omitempty" tf:"stream_mode,omitempty"`
 }
+
 
 type StreamModeDetailsObservation struct {
 
-	// Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.
-	StreamMode *string `json:"streamMode,omitempty" tf:"stream_mode,omitempty"`
+
+// Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.
+StreamMode *string `json:"streamMode,omitempty" tf:"stream_mode,omitempty"`
 }
+
 
 type StreamModeDetailsParameters struct {
 
-	// Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.
-	// +kubebuilder:validation:Optional
-	StreamMode *string `json:"streamMode" tf:"stream_mode,omitempty"`
+
+// Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.
+// +kubebuilder:validation:Optional
+StreamMode *string `json:"streamMode" tf:"stream_mode,omitempty"`
 }
+
 
 type StreamObservation struct {
 
-	// The Amazon Resource Name (ARN) specifying the Stream (same as id)
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE.
-	EncryptionType *string `json:"encryptionType,omitempty" tf:"encryption_type,omitempty"`
+// The Amazon Resource Name (ARN) specifying the Stream (same as id)
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false.
-	EnforceConsumerDeletion *bool `json:"enforceConsumerDeletion,omitempty" tf:"enforce_consumer_deletion,omitempty"`
+// The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE.
+EncryptionType *string `json:"encryptionType,omitempty" tf:"encryption_type,omitempty"`
 
-	// The unique Stream id
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false.
+EnforceConsumerDeletion *bool `json:"enforceConsumerDeletion,omitempty" tf:"enforce_consumer_deletion,omitempty"`
 
-	// The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+// The unique Stream id
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24.
-	RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+// The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// –  The number of shards that the stream will use. If the stream_mode is PROVISIONED, this field is required.
-	// Amazon has guidelines for specifying the Stream size that should be referenced when creating a Kinesis stream. See Amazon Kinesis Streams for more.
-	ShardCount *float64 `json:"shardCount,omitempty" tf:"shard_count,omitempty"`
+// Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24.
+RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
-	// A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable.
-	ShardLevelMetrics []*string `json:"shardLevelMetrics,omitempty" tf:"shard_level_metrics,omitempty"`
+// –  The number of shards that the stream will use. If the stream_mode is PROVISIONED, this field is required.
+// Amazon has guidelines for specifying the Stream size that should be referenced when creating a Kinesis stream. See Amazon Kinesis Streams for more.
+ShardCount *float64 `json:"shardCount,omitempty" tf:"shard_count,omitempty"`
 
-	// Indicates the capacity mode of the data stream. Detailed below.
-	StreamModeDetails []StreamModeDetailsObservation `json:"streamModeDetails,omitempty" tf:"stream_mode_details,omitempty"`
+// A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable.
+ShardLevelMetrics []*string `json:"shardLevelMetrics,omitempty" tf:"shard_level_metrics,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Indicates the capacity mode of the data stream. Detailed below.
+StreamModeDetails []StreamModeDetailsObservation `json:"streamModeDetails,omitempty" tf:"stream_mode_details,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type StreamParameters struct {
 
-	// The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE.
-	// +kubebuilder:validation:Optional
-	EncryptionType *string `json:"encryptionType,omitempty" tf:"encryption_type,omitempty"`
 
-	// A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false.
-	// +kubebuilder:validation:Optional
-	EnforceConsumerDeletion *bool `json:"enforceConsumerDeletion,omitempty" tf:"enforce_consumer_deletion,omitempty"`
+// The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE.
+// +kubebuilder:validation:Optional
+EncryptionType *string `json:"encryptionType,omitempty" tf:"encryption_type,omitempty"`
 
-	// The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
-	// +kubebuilder:validation:Optional
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+// A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false.
+// +kubebuilder:validation:Optional
+EnforceConsumerDeletion *bool `json:"enforceConsumerDeletion,omitempty" tf:"enforce_consumer_deletion,omitempty"`
 
-	// Reference to a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+// The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+// +kubebuilder:validation:Optional
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Selector for a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+// Reference to a Key in kms to populate kmsKeyId.
+// +kubebuilder:validation:Optional
+KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a Key in kms to populate kmsKeyId.
+// +kubebuilder:validation:Optional
+KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
-	// Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24.
-	// +kubebuilder:validation:Optional
-	RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// –  The number of shards that the stream will use. If the stream_mode is PROVISIONED, this field is required.
-	// Amazon has guidelines for specifying the Stream size that should be referenced when creating a Kinesis stream. See Amazon Kinesis Streams for more.
-	// +kubebuilder:validation:Optional
-	ShardCount *float64 `json:"shardCount,omitempty" tf:"shard_count,omitempty"`
+// Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24.
+// +kubebuilder:validation:Optional
+RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
-	// A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable.
-	// +kubebuilder:validation:Optional
-	ShardLevelMetrics []*string `json:"shardLevelMetrics,omitempty" tf:"shard_level_metrics,omitempty"`
+// –  The number of shards that the stream will use. If the stream_mode is PROVISIONED, this field is required.
+// Amazon has guidelines for specifying the Stream size that should be referenced when creating a Kinesis stream. See Amazon Kinesis Streams for more.
+// +kubebuilder:validation:Optional
+ShardCount *float64 `json:"shardCount,omitempty" tf:"shard_count,omitempty"`
 
-	// Indicates the capacity mode of the data stream. Detailed below.
-	// +kubebuilder:validation:Optional
-	StreamModeDetails []StreamModeDetailsParameters `json:"streamModeDetails,omitempty" tf:"stream_mode_details,omitempty"`
+// A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable.
+// +kubebuilder:validation:Optional
+ShardLevelMetrics []*string `json:"shardLevelMetrics,omitempty" tf:"shard_level_metrics,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Indicates the capacity mode of the data stream. Detailed below.
+// +kubebuilder:validation:Optional
+StreamModeDetails []StreamModeDetailsParameters `json:"streamModeDetails,omitempty" tf:"stream_mode_details,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // StreamSpec defines the desired state of Stream
 type StreamSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     StreamParameters `json:"forProvider"`
+	ForProvider       StreamParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -169,13 +184,13 @@ type StreamSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider StreamInitParameters `json:"initProvider,omitempty"`
+	InitProvider       StreamInitParameters `json:"initProvider,omitempty"`
 }
 
 // StreamStatus defines the observed state of Stream.
 type StreamStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        StreamObservation `json:"atProvider,omitempty"`
+	AtProvider          StreamObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -190,9 +205,9 @@ type StreamStatus struct {
 type Stream struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   StreamSpec   `json:"spec"`
-	Status StreamStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              StreamSpec   `json:"spec"`
+	Status            StreamStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

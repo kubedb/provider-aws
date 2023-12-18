@@ -15,1063 +15,1102 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type BlueGreenUpdateInitParameters struct {
 
-	// Enables [low-downtime updates](#Low-Downtime Updates) when true.
-	// Default is false.
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+// Enables [low-downtime updates](#Low-Downtime Updates) when true.
+// Default is false.
+Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
+
 
 type BlueGreenUpdateObservation struct {
 
-	// Enables [low-downtime updates](#Low-Downtime Updates) when true.
-	// Default is false.
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+// Enables [low-downtime updates](#Low-Downtime Updates) when true.
+// Default is false.
+Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
+
 
 type BlueGreenUpdateParameters struct {
 
-	// Enables [low-downtime updates](#Low-Downtime Updates) when true.
-	// Default is false.
-	// +kubebuilder:validation:Optional
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+// Enables [low-downtime updates](#Low-Downtime Updates) when true.
+// Default is false.
+// +kubebuilder:validation:Optional
+Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
+
 
 type InstanceInitParameters struct {
 
-	// The allocated storage in gibibytes. If max_allocated_storage is configured, this argument represents the initial storage allocation and differences from the configuration will be ignored automatically when Storage Autoscaling occurs. If replicate_source_db is set, the value is ignored during the creation of the instance.
-	AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
 
-	// Indicates that major version
-	// upgrades are allowed. Changing this parameter does not result in an outage and
-	// the change is asynchronously applied as soon as possible.
-	AllowMajorVersionUpgrade *bool `json:"allowMajorVersionUpgrade,omitempty" tf:"allow_major_version_upgrade,omitempty"`
+// The allocated storage in gibibytes. If max_allocated_storage is configured, this argument represents the initial storage allocation and differences from the configuration will be ignored automatically when Storage Autoscaling occurs. If replicate_source_db is set, the value is ignored during the creation of the instance.
+AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
 
-	// Specifies whether any database modifications
-	// are applied immediately, or during the next maintenance window. Default is
-	// false. See Amazon RDS Documentation for more
-	// information.
-	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
+// Indicates that major version
+// upgrades are allowed. Changing this parameter does not result in an outage and
+// the change is asynchronously applied as soon as possible.
+AllowMajorVersionUpgrade *bool `json:"allowMajorVersionUpgrade,omitempty" tf:"allow_major_version_upgrade,omitempty"`
 
-	// Indicates that minor engine upgrades
-	// will be applied automatically to the DB instance during the maintenance window.
-	// Defaults to true.
-	AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// Specifies whether any database modifications
+// are applied immediately, or during the next maintenance window. Default is
+// false. See Amazon RDS Documentation for more
+// information.
+ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// The AZ for the RDS instance.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Indicates that minor engine upgrades
+// will be applied automatically to the DB instance during the maintenance window.
+// Defaults to true.
+AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// The days to retain backups for.
-	// Must be between 0 and 35.
-	// Default is 0.
-	// Must be greater than 0 if the database is used as a source for a Read Replica,
-	// uses low-downtime updates,
-	// or will use RDS Blue/Green deployments.
-	BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
+// The AZ for the RDS instance.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The daily time range (in UTC) during which automated backups are created if they are enabled.
-	// Example: "09:46-10:16". Must not overlap with maintenance_window.
-	BackupWindow *string `json:"backupWindow,omitempty" tf:"backup_window,omitempty"`
+// The days to retain backups for.
+// Must be between 0 and 35.
+// Default is 0.
+// Must be greater than 0 if the database is used as a source for a Read Replica,
+// uses low-downtime updates,
+// or will use RDS Blue/Green deployments.
+BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
 
-	// Enables low-downtime updates using RDS Blue/Green deployments.
-	// See blue_green_update below
-	BlueGreenUpdate []BlueGreenUpdateInitParameters `json:"blueGreenUpdate,omitempty" tf:"blue_green_update,omitempty"`
+// The daily time range (in UTC) during which automated backups are created if they are enabled.
+// Example: "09:46-10:16". Must not overlap with maintenance_window.
+BackupWindow *string `json:"backupWindow,omitempty" tf:"backup_window,omitempty"`
 
-	// The identifier of the CA certificate for the DB instance.
-	CACertIdentifier *string `json:"caCertIdentifier,omitempty" tf:"ca_cert_identifier,omitempty"`
+// Enables low-downtime updates using RDS Blue/Green deployments.
+// See blue_green_update below
+BlueGreenUpdate []BlueGreenUpdateInitParameters `json:"blueGreenUpdate,omitempty" tf:"blue_green_update,omitempty"`
 
-	// The character set name to use for DB
-	// encoding in Oracle and Microsoft SQL instances (collation). This can't be changed. See Oracle Character Sets
-	// Supported in Amazon RDS
-	// or Server-Level Collation for Microsoft SQL Server for more information.
-	CharacterSetName *string `json:"characterSetName,omitempty" tf:"character_set_name,omitempty"`
+// The identifier of the CA certificate for the DB instance.
+CACertIdentifier *string `json:"caCertIdentifier,omitempty" tf:"ca_cert_identifier,omitempty"`
 
-	// –  Copy all Instance tags to snapshots. Default is false.
-	CopyTagsToSnapshot *bool `json:"copyTagsToSnapshot,omitempty" tf:"copy_tags_to_snapshot,omitempty"`
+// The character set name to use for DB
+// encoding in Oracle and Microsoft SQL instances (collation). This can't be changed. See Oracle Character Sets
+// Supported in Amazon RDS
+// or Server-Level Collation for Microsoft SQL Server for more information.
+CharacterSetName *string `json:"characterSetName,omitempty" tf:"character_set_name,omitempty"`
 
-	// The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
-	CustomIAMInstanceProfile *string `json:"customIamInstanceProfile,omitempty" tf:"custom_iam_instance_profile,omitempty"`
+// –  Copy all Instance tags to snapshots. Default is false.
+CopyTagsToSnapshot *bool `json:"copyTagsToSnapshot,omitempty" tf:"copy_tags_to_snapshot,omitempty"`
 
-	// Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.
-	CustomerOwnedIPEnabled *bool `json:"customerOwnedIpEnabled,omitempty" tf:"customer_owned_ip_enabled,omitempty"`
+// The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
+CustomIAMInstanceProfile *string `json:"customIamInstanceProfile,omitempty" tf:"custom_iam_instance_profile,omitempty"`
 
-	// The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the AWS documentation for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
-	DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
+// Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.
+CustomerOwnedIPEnabled *bool `json:"customerOwnedIpEnabled,omitempty" tf:"customer_owned_ip_enabled,omitempty"`
 
-	// Specifies whether to remove automated backups immediately after the DB instance is deleted. Default is true.
-	DeleteAutomatedBackups *bool `json:"deleteAutomatedBackups,omitempty" tf:"delete_automated_backups,omitempty"`
+// The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the AWS documentation for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
+DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
 
-	// If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+// Specifies whether to remove automated backups immediately after the DB instance is deleted. Default is true.
+DeleteAutomatedBackups *bool `json:"deleteAutomatedBackups,omitempty" tf:"delete_automated_backups,omitempty"`
 
-	// The ID of the Directory Service Active Directory domain to create the instance in.
-	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+// If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
+DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// The name of the IAM role to be used when making API calls to the Directory Service.
-	DomainIAMRoleName *string `json:"domainIamRoleName,omitempty" tf:"domain_iam_role_name,omitempty"`
+// The ID of the Directory Service Active Directory domain to create the instance in.
+Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
-	// Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine). MySQL and MariaDB: audit, error, general, slowquery. PostgreSQL: postgresql, upgrade. MSSQL: agent , error. Oracle: alert, audit, listener, trace.
-	EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
+// The name of the IAM role to be used when making API calls to the Directory Service.
+DomainIAMRoleName *string `json:"domainIamRoleName,omitempty" tf:"domain_iam_role_name,omitempty"`
 
-	// The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine). MySQL and MariaDB: audit, error, general, slowquery. PostgreSQL: postgresql, upgrade. MSSQL: agent , error. Oracle: alert, audit, listener, trace.
+EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
 
-	// The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine version'.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// The name of your final DB snapshot
-	// when this DB instance is deleted. Must be provided if skip_final_snapshot is
-	// set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
-	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+// The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine version'.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
-	// accounts is enabled.
-	IAMDatabaseAuthenticationEnabled *bool `json:"iamDatabaseAuthenticationEnabled,omitempty" tf:"iam_database_authentication_enabled,omitempty"`
+// The name of your final DB snapshot
+// when this DB instance is deleted. Must be provided if skip_final_snapshot is
+// set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
+FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
 
-	// The instance type of the RDS instance.
-	InstanceClass *string `json:"instanceClass,omitempty" tf:"instance_class,omitempty"`
+// Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
+// accounts is enabled.
+IAMDatabaseAuthenticationEnabled *bool `json:"iamDatabaseAuthenticationEnabled,omitempty" tf:"iam_database_authentication_enabled,omitempty"`
 
-	// The amount of provisioned IOPS. Setting this implies a
-	// storage_type of "io1". Can only be set when storage_type is "io1" or "gp3".
-	// Cannot be specified for gp3 storage if the allocated_storage value is below a per-engine threshold.
-	// See the RDS User Guide for details.
-	Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
+// The instance type of the RDS instance.
+InstanceClass *string `json:"instanceClass,omitempty" tf:"instance_class,omitempty"`
 
-	// License model information for this DB instance.
-	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
+// The amount of provisioned IOPS. Setting this implies a
+// storage_type of "io1". Can only be set when storage_type is "io1" or "gp3".
+// Cannot be specified for gp3 storage if the allocated_storage value is below a per-engine threshold.
+// See the RDS User Guide for details.
+Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
 
-	// The window to perform maintenance in.
-	// Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00". See RDS
-	// Maintenance Window
-	// docs
-	// for more information.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// License model information for this DB instance.
+LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
 
-	// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if password is provided.
-	ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
+// The window to perform maintenance in.
+// Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00". See RDS
+// Maintenance Window
+// docs
+// for more information.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
-	MaxAllocatedStorage *float64 `json:"maxAllocatedStorage,omitempty" tf:"max_allocated_storage,omitempty"`
+// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if password is provided.
+ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
 
-	// The interval, in seconds, between points
-	// when Enhanced Monitoring metrics are collected for the DB instance. To disable
-	// collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
-	// Values: 0, 1, 5, 10, 15, 30, 60.
-	MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
+// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
+MaxAllocatedStorage *float64 `json:"maxAllocatedStorage,omitempty" tf:"max_allocated_storage,omitempty"`
 
-	// Specifies if the RDS instance is multi-AZ
-	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
+// The interval, in seconds, between points
+// when Enhanced Monitoring metrics are collected for the DB instance. To disable
+// collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
+// Values: 0, 1, 5, 10, 15, 30, 60.
+MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
 
-	// The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See Oracle Character Sets
-	// Supported in Amazon RDS.
-	NcharCharacterSetName *string `json:"ncharCharacterSetName,omitempty" tf:"nchar_character_set_name,omitempty"`
+// Specifies if the RDS instance is multi-AZ
+MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
 
-	// The network type of the DB instance. Valid values: IPV4, DUAL.
-	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+// The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See Oracle Character Sets
+// Supported in Amazon RDS.
+NcharCharacterSetName *string `json:"ncharCharacterSetName,omitempty" tf:"nchar_character_set_name,omitempty"`
 
-	// Name of the DB option group to associate.
-	OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
+// The network type of the DB instance. Valid values: IPV4, DUAL.
+NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
-	// Name of the DB parameter group to
-	// associate.
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// Name of the DB option group to associate.
+OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
 
-	// Specifies whether Performance Insights are enabled. Defaults to false.
-	PerformanceInsightsEnabled *bool `json:"performanceInsightsEnabled,omitempty" tf:"performance_insights_enabled,omitempty"`
+// Name of the DB parameter group to
+// associate.
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
-	PerformanceInsightsKMSKeyID *string `json:"performanceInsightsKmsKeyId,omitempty" tf:"performance_insights_kms_key_id,omitempty"`
+// Specifies whether Performance Insights are enabled. Defaults to false.
+PerformanceInsightsEnabled *bool `json:"performanceInsightsEnabled,omitempty" tf:"performance_insights_enabled,omitempty"`
 
-	// Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
-	PerformanceInsightsRetentionPeriod *float64 `json:"performanceInsightsRetentionPeriod,omitempty" tf:"performance_insights_retention_period,omitempty"`
+// The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
+PerformanceInsightsKMSKeyID *string `json:"performanceInsightsKmsKeyId,omitempty" tf:"performance_insights_kms_key_id,omitempty"`
 
-	// The port on which the DB accepts connections.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
+PerformanceInsightsRetentionPeriod *float64 `json:"performanceInsightsRetentionPeriod,omitempty" tf:"performance_insights_retention_period,omitempty"`
 
-	// Bool to control if instance is publicly
-	// accessible. Default is false.
-	PubliclyAccessible *bool `json:"publiclyAccessible,omitempty" tf:"publicly_accessible,omitempty"`
+// The port on which the DB accepts connections.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Specifies whether the replica is in either mounted or open-read-only mode. This attribute
-	// is only supported by Oracle instances. Oracle replicas operate in open-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
-	ReplicaMode *string `json:"replicaMode,omitempty" tf:"replica_mode,omitempty"`
+// Bool to control if instance is publicly
+// accessible. Default is false.
+PubliclyAccessible *bool `json:"publiclyAccessible,omitempty" tf:"publicly_accessible,omitempty"`
 
-	// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
-	RestoreToPointInTime []RestoreToPointInTimeInitParameters `json:"restoreToPointInTime,omitempty" tf:"restore_to_point_in_time,omitempty"`
+// Specifies whether the replica is in either mounted or open-read-only mode. This attribute
+// is only supported by Oracle instances. Oracle replicas operate in open-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
+ReplicaMode *string `json:"replicaMode,omitempty" tf:"replica_mode,omitempty"`
 
-	// Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
-	S3Import []S3ImportInitParameters `json:"s3Import,omitempty" tf:"s3_import,omitempty"`
+// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
+RestoreToPointInTime []RestoreToPointInTimeInitParameters `json:"restoreToPointInTime,omitempty" tf:"restore_to_point_in_time,omitempty"`
 
-	// Determines whether a final DB snapshot is
-	// created before the DB instance is deleted. If true is specified, no DBSnapshot
-	// is created. If false is specified, a DB snapshot is created before the DB
-	// instance is deleted, using the value from final_snapshot_identifier. Default
-	// is false.
-	SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
+// Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
+S3Import []S3ImportInitParameters `json:"s3Import,omitempty" tf:"s3_import,omitempty"`
 
-	// Specifies whether or not to create this
-	// database from a snapshot. This correlates to the snapshot ID you'd find in the
-	// RDS console, e.g: rds:production-2015-06-26-06-05.
-	SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
+// Determines whether a final DB snapshot is
+// created before the DB instance is deleted. If true is specified, no DBSnapshot
+// is created. If false is specified, a DB snapshot is created before the DB
+// instance is deleted, using the value from final_snapshot_identifier. Default
+// is false.
+SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
 
-	// Specifies whether the DB instance is
-	// encrypted. Note that if you are creating a cross-region read replica this field
-	// is ignored and you should instead declare kms_key_id with a valid ARN. The
-	// default is false if not specified.
-	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+// Specifies whether or not to create this
+// database from a snapshot. This correlates to the snapshot ID you'd find in the
+// RDS console, e.g: rds:production-2015-06-26-06-05.
+SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
 
-	// The storage throughput value for the DB instance. Can only be set when storage_type is "gp3". Cannot be specified if the allocated_storage value is below a per-engine threshold. See the RDS User Guide for details.
-	StorageThroughput *float64 `json:"storageThroughput,omitempty" tf:"storage_throughput,omitempty"`
+// Specifies whether the DB instance is
+// encrypted. Note that if you are creating a cross-region read replica this field
+// is ignored and you should instead declare kms_key_id with a valid ARN. The
+// default is false if not specified.
+StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
 
-	// One of "standard" (magnetic), "gp2" (general
-	// purpose SSD), "gp3" (general purpose SSD that needs iops independently)
-	// or "io1" (provisioned IOPS SSD). The default is "io1" if iops is specified,
-	// "gp2" if not.
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+// The storage throughput value for the DB instance. Can only be set when storage_type is "gp3". Cannot be specified if the allocated_storage value is below a per-engine threshold. See the RDS User Guide for details.
+StorageThroughput *float64 `json:"storageThroughput,omitempty" tf:"storage_throughput,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// One of "standard" (magnetic), "gp2" (general
+// purpose SSD), "gp3" (general purpose SSD that needs iops independently)
+// or "io1" (provisioned IOPS SSD). The default is "io1" if iops is specified,
+// "gp2" if not.
+StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Time zone of the DB instance. timezone is currently
-	// only supported by Microsoft SQL Server. The timezone can only be set on
-	// creation. See MSSQL User
-	// Guide
-	// for more information.
-	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
-	// Username for the master DB user. Cannot be specified for a replica.
-	Username *string `json:"username,omitempty" tf:"username,omitempty"`
+// Time zone of the DB instance. timezone is currently
+// only supported by Microsoft SQL Server. The timezone can only be set on
+// creation. See MSSQL User
+// Guide
+// for more information.
+Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+// Username for the master DB user. Cannot be specified for a replica.
+Username *string `json:"username,omitempty" tf:"username,omitempty"`
 }
+
 
 type InstanceObservation struct {
 
-	// The hostname of the RDS instance. See also endpoint and port.
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// The allocated storage in gibibytes. If max_allocated_storage is configured, this argument represents the initial storage allocation and differences from the configuration will be ignored automatically when Storage Autoscaling occurs. If replicate_source_db is set, the value is ignored during the creation of the instance.
-	AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
-
-	// Indicates that major version
-	// upgrades are allowed. Changing this parameter does not result in an outage and
-	// the change is asynchronously applied as soon as possible.
-	AllowMajorVersionUpgrade *bool `json:"allowMajorVersionUpgrade,omitempty" tf:"allow_major_version_upgrade,omitempty"`
+// The hostname of the RDS instance. See also endpoint and port.
+Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// Specifies whether any database modifications
-	// are applied immediately, or during the next maintenance window. Default is
-	// false. See Amazon RDS Documentation for more
-	// information.
-	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
+// The allocated storage in gibibytes. If max_allocated_storage is configured, this argument represents the initial storage allocation and differences from the configuration will be ignored automatically when Storage Autoscaling occurs. If replicate_source_db is set, the value is ignored during the creation of the instance.
+AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
 
-	// The ARN of the RDS instance.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+// Indicates that major version
+// upgrades are allowed. Changing this parameter does not result in an outage and
+// the change is asynchronously applied as soon as possible.
+AllowMajorVersionUpgrade *bool `json:"allowMajorVersionUpgrade,omitempty" tf:"allow_major_version_upgrade,omitempty"`
 
-	// Indicates that minor engine upgrades
-	// will be applied automatically to the DB instance during the maintenance window.
-	// Defaults to true.
-	AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// Specifies whether any database modifications
+// are applied immediately, or during the next maintenance window. Default is
+// false. See Amazon RDS Documentation for more
+// information.
+ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// The AZ for the RDS instance.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// The ARN of the RDS instance.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The days to retain backups for.
-	// Must be between 0 and 35.
-	// Default is 0.
-	// Must be greater than 0 if the database is used as a source for a Read Replica,
-	// uses low-downtime updates,
-	// or will use RDS Blue/Green deployments.
-	BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
+// Indicates that minor engine upgrades
+// will be applied automatically to the DB instance during the maintenance window.
+// Defaults to true.
+AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// The daily time range (in UTC) during which automated backups are created if they are enabled.
-	// Example: "09:46-10:16". Must not overlap with maintenance_window.
-	BackupWindow *string `json:"backupWindow,omitempty" tf:"backup_window,omitempty"`
+// The AZ for the RDS instance.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// Enables low-downtime updates using RDS Blue/Green deployments.
-	// See blue_green_update below
-	BlueGreenUpdate []BlueGreenUpdateObservation `json:"blueGreenUpdate,omitempty" tf:"blue_green_update,omitempty"`
+// The days to retain backups for.
+// Must be between 0 and 35.
+// Default is 0.
+// Must be greater than 0 if the database is used as a source for a Read Replica,
+// uses low-downtime updates,
+// or will use RDS Blue/Green deployments.
+BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
 
-	// The identifier of the CA certificate for the DB instance.
-	CACertIdentifier *string `json:"caCertIdentifier,omitempty" tf:"ca_cert_identifier,omitempty"`
+// The daily time range (in UTC) during which automated backups are created if they are enabled.
+// Example: "09:46-10:16". Must not overlap with maintenance_window.
+BackupWindow *string `json:"backupWindow,omitempty" tf:"backup_window,omitempty"`
 
-	// The character set name to use for DB
-	// encoding in Oracle and Microsoft SQL instances (collation). This can't be changed. See Oracle Character Sets
-	// Supported in Amazon RDS
-	// or Server-Level Collation for Microsoft SQL Server for more information.
-	CharacterSetName *string `json:"characterSetName,omitempty" tf:"character_set_name,omitempty"`
+// Enables low-downtime updates using RDS Blue/Green deployments.
+// See blue_green_update below
+BlueGreenUpdate []BlueGreenUpdateObservation `json:"blueGreenUpdate,omitempty" tf:"blue_green_update,omitempty"`
 
-	// –  Copy all Instance tags to snapshots. Default is false.
-	CopyTagsToSnapshot *bool `json:"copyTagsToSnapshot,omitempty" tf:"copy_tags_to_snapshot,omitempty"`
+// The identifier of the CA certificate for the DB instance.
+CACertIdentifier *string `json:"caCertIdentifier,omitempty" tf:"ca_cert_identifier,omitempty"`
 
-	// The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
-	CustomIAMInstanceProfile *string `json:"customIamInstanceProfile,omitempty" tf:"custom_iam_instance_profile,omitempty"`
+// The character set name to use for DB
+// encoding in Oracle and Microsoft SQL instances (collation). This can't be changed. See Oracle Character Sets
+// Supported in Amazon RDS
+// or Server-Level Collation for Microsoft SQL Server for more information.
+CharacterSetName *string `json:"characterSetName,omitempty" tf:"character_set_name,omitempty"`
 
-	// Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.
-	CustomerOwnedIPEnabled *bool `json:"customerOwnedIpEnabled,omitempty" tf:"customer_owned_ip_enabled,omitempty"`
+// –  Copy all Instance tags to snapshots. Default is false.
+CopyTagsToSnapshot *bool `json:"copyTagsToSnapshot,omitempty" tf:"copy_tags_to_snapshot,omitempty"`
 
-	// The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the AWS documentation for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
-	DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
+// The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
+CustomIAMInstanceProfile *string `json:"customIamInstanceProfile,omitempty" tf:"custom_iam_instance_profile,omitempty"`
 
-	// Name of DB subnet group. DB instance will
-	// be created in the VPC associated with the DB subnet group. If unspecified, will
-	// be created in the default VPC, or in EC2 Classic, if available. When working
-	// with read replicas, it should be specified only if the source database
-	// specifies an instance in another AWS Region. See DBSubnetGroupName in API
-	// action CreateDBInstanceReadReplica
-	// for additional read replica contraints.
-	DBSubnetGroupName *string `json:"dbSubnetGroupName,omitempty" tf:"db_subnet_group_name,omitempty"`
-
-	// Specifies whether to remove automated backups immediately after the DB instance is deleted. Default is true.
-	DeleteAutomatedBackups *bool `json:"deleteAutomatedBackups,omitempty" tf:"delete_automated_backups,omitempty"`
+// Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.
+CustomerOwnedIPEnabled *bool `json:"customerOwnedIpEnabled,omitempty" tf:"customer_owned_ip_enabled,omitempty"`
 
-	// If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+// The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the AWS documentation for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
+DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
 
-	// The ID of the Directory Service Active Directory domain to create the instance in.
-	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+// Name of DB subnet group. DB instance will
+// be created in the VPC associated with the DB subnet group. If unspecified, will
+// be created in the default VPC, or in EC2 Classic, if available. When working
+// with read replicas, it should be specified only if the source database
+// specifies an instance in another AWS Region. See DBSubnetGroupName in API
+// action CreateDBInstanceReadReplica
+// for additional read replica contraints.
+DBSubnetGroupName *string `json:"dbSubnetGroupName,omitempty" tf:"db_subnet_group_name,omitempty"`
 
-	// The name of the IAM role to be used when making API calls to the Directory Service.
-	DomainIAMRoleName *string `json:"domainIamRoleName,omitempty" tf:"domain_iam_role_name,omitempty"`
+// Specifies whether to remove automated backups immediately after the DB instance is deleted. Default is true.
+DeleteAutomatedBackups *bool `json:"deleteAutomatedBackups,omitempty" tf:"delete_automated_backups,omitempty"`
 
-	// Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine). MySQL and MariaDB: audit, error, general, slowquery. PostgreSQL: postgresql, upgrade. MSSQL: agent , error. Oracle: alert, audit, listener, trace.
-	EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
+// If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
+DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// The connection endpoint in address:port format.
-	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+// The ID of the Directory Service Active Directory domain to create the instance in.
+Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
-	// The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// The name of the IAM role to be used when making API calls to the Directory Service.
+DomainIAMRoleName *string `json:"domainIamRoleName,omitempty" tf:"domain_iam_role_name,omitempty"`
 
-	// The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine version'.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine). MySQL and MariaDB: audit, error, general, slowquery. PostgreSQL: postgresql, upgrade. MSSQL: agent , error. Oracle: alert, audit, listener, trace.
+EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
 
-	// The running version of the database.
-	EngineVersionActual *string `json:"engineVersionActual,omitempty" tf:"engine_version_actual,omitempty"`
+// The connection endpoint in address:port format.
+Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// The name of your final DB snapshot
-	// when this DB instance is deleted. Must be provided if skip_final_snapshot is
-	// set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
-	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+// The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// The canonical hosted zone ID of the DB instance (to be used
-	// in a Route 53 Alias record).
-	HostedZoneID *string `json:"hostedZoneId,omitempty" tf:"hosted_zone_id,omitempty"`
+// The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine version'.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
-	// accounts is enabled.
-	IAMDatabaseAuthenticationEnabled *bool `json:"iamDatabaseAuthenticationEnabled,omitempty" tf:"iam_database_authentication_enabled,omitempty"`
+// The running version of the database.
+EngineVersionActual *string `json:"engineVersionActual,omitempty" tf:"engine_version_actual,omitempty"`
 
-	// RDS DBI resource ID.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// The name of your final DB snapshot
+// when this DB instance is deleted. Must be provided if skip_final_snapshot is
+// set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
+FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
 
-	// The instance type of the RDS instance.
-	InstanceClass *string `json:"instanceClass,omitempty" tf:"instance_class,omitempty"`
+// The canonical hosted zone ID of the DB instance (to be used
+// in a Route 53 Alias record).
+HostedZoneID *string `json:"hostedZoneId,omitempty" tf:"hosted_zone_id,omitempty"`
 
-	// The amount of provisioned IOPS. Setting this implies a
-	// storage_type of "io1". Can only be set when storage_type is "io1" or "gp3".
-	// Cannot be specified for gp3 storage if the allocated_storage value is below a per-engine threshold.
-	// See the RDS User Guide for details.
-	Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
+// Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
+// accounts is enabled.
+IAMDatabaseAuthenticationEnabled *bool `json:"iamDatabaseAuthenticationEnabled,omitempty" tf:"iam_database_authentication_enabled,omitempty"`
 
-	// The ARN for the KMS encryption key. If creating an
-	// encrypted replica, set this to the destination KMS ARN.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+// RDS DBI resource ID.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The latest time, in UTC RFC3339 format, to which a database can be restored with point-in-time restore.
-	LatestRestorableTime *string `json:"latestRestorableTime,omitempty" tf:"latest_restorable_time,omitempty"`
+// The instance type of the RDS instance.
+InstanceClass *string `json:"instanceClass,omitempty" tf:"instance_class,omitempty"`
 
-	// License model information for this DB instance.
-	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
+// The amount of provisioned IOPS. Setting this implies a
+// storage_type of "io1". Can only be set when storage_type is "io1" or "gp3".
+// Cannot be specified for gp3 storage if the allocated_storage value is below a per-engine threshold.
+// See the RDS User Guide for details.
+Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
 
-	// Specifies the listener connection endpoint for SQL Server Always On. See endpoint below.
-	ListenerEndpoint []ListenerEndpointObservation `json:"listenerEndpoint,omitempty" tf:"listener_endpoint,omitempty"`
+// The ARN for the KMS encryption key. If creating an
+// encrypted replica, set this to the destination KMS ARN.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// The window to perform maintenance in.
-	// Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00". See RDS
-	// Maintenance Window
-	// docs
-	// for more information.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// The latest time, in UTC RFC3339 format, to which a database can be restored with point-in-time restore.
+LatestRestorableTime *string `json:"latestRestorableTime,omitempty" tf:"latest_restorable_time,omitempty"`
 
-	// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if password is provided.
-	ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
+// License model information for this DB instance.
+LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
 
-	// A block that specifies the master user secret. Only available when manage_master_user_password is set to true. Documented below.
-	MasterUserSecret []MasterUserSecretObservation `json:"masterUserSecret,omitempty" tf:"master_user_secret,omitempty"`
+// Specifies the listener connection endpoint for SQL Server Always On. See endpoint below.
+ListenerEndpoint []ListenerEndpointObservation `json:"listenerEndpoint,omitempty" tf:"listener_endpoint,omitempty"`
 
-	// The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If not specified, the default KMS key for your Amazon Web Services account is used.
-	MasterUserSecretKMSKeyID *string `json:"masterUserSecretKmsKeyId,omitempty" tf:"master_user_secret_kms_key_id,omitempty"`
+// The window to perform maintenance in.
+// Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00". See RDS
+// Maintenance Window
+// docs
+// for more information.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
-	MaxAllocatedStorage *float64 `json:"maxAllocatedStorage,omitempty" tf:"max_allocated_storage,omitempty"`
-
-	// The interval, in seconds, between points
-	// when Enhanced Monitoring metrics are collected for the DB instance. To disable
-	// collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
-	// Values: 0, 1, 5, 10, 15, 30, 60.
-	MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
+// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if password is provided.
+ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
+
+// A block that specifies the master user secret. Only available when manage_master_user_password is set to true. Documented below.
+MasterUserSecret []MasterUserSecretObservation `json:"masterUserSecret,omitempty" tf:"master_user_secret,omitempty"`
 
-	// The ARN for the IAM role that permits RDS
-	// to send enhanced monitoring metrics to CloudWatch Logs. You can find more
-	// information on the AWS
-	// Documentation
-	// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
-	MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
-
-	// Specifies if the RDS instance is multi-AZ
-	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
-
-	// The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See Oracle Character Sets
-	// Supported in Amazon RDS.
-	NcharCharacterSetName *string `json:"ncharCharacterSetName,omitempty" tf:"nchar_character_set_name,omitempty"`
-
-	// The network type of the DB instance. Valid values: IPV4, DUAL.
-	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
-
-	// Name of the DB option group to associate.
-	OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
-
-	// Name of the DB parameter group to
-	// associate.
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
-
-	// Specifies whether Performance Insights are enabled. Defaults to false.
-	PerformanceInsightsEnabled *bool `json:"performanceInsightsEnabled,omitempty" tf:"performance_insights_enabled,omitempty"`
-
-	// The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
-	PerformanceInsightsKMSKeyID *string `json:"performanceInsightsKmsKeyId,omitempty" tf:"performance_insights_kms_key_id,omitempty"`
-
-	// Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
-	PerformanceInsightsRetentionPeriod *float64 `json:"performanceInsightsRetentionPeriod,omitempty" tf:"performance_insights_retention_period,omitempty"`
-
-	// The port on which the DB accepts connections.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Bool to control if instance is publicly
-	// accessible. Default is false.
-	PubliclyAccessible *bool `json:"publiclyAccessible,omitempty" tf:"publicly_accessible,omitempty"`
-
-	// Specifies whether the replica is in either mounted or open-read-only mode. This attribute
-	// is only supported by Oracle instances. Oracle replicas operate in open-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
-	ReplicaMode *string `json:"replicaMode,omitempty" tf:"replica_mode,omitempty"`
-
-	Replicas []*string `json:"replicas,omitempty" tf:"replicas,omitempty"`
-
-	// Specifies that this resource is a Replicate
-	// database, and to use this value as the source database. This correlates to the
-	// identifier of another Amazon RDS Database to replicate (if replicating within
-	// a single region) or ARN of the Amazon RDS Database to replicate (if replicating
-	// cross-region). Note that if you are
-	// creating a cross-region replica of an encrypted database you will also need to
-	// specify a kms_key_id. See DB Instance Replication and Working with
-	// PostgreSQL and MySQL Read Replicas
-	// for more information on using Replication.
-	ReplicateSourceDB *string `json:"replicateSourceDb,omitempty" tf:"replicate_source_db,omitempty"`
-
-	// The RDS Resource ID of this instance.
-	ResourceID *string `json:"resourceId,omitempty" tf:"resource_id,omitempty"`
-
-	// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
-	RestoreToPointInTime []RestoreToPointInTimeObservation `json:"restoreToPointInTime,omitempty" tf:"restore_to_point_in_time,omitempty"`
-
-	// Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
-	S3Import []S3ImportObservation `json:"s3Import,omitempty" tf:"s3_import,omitempty"`
-
-	// Determines whether a final DB snapshot is
-	// created before the DB instance is deleted. If true is specified, no DBSnapshot
-	// is created. If false is specified, a DB snapshot is created before the DB
-	// instance is deleted, using the value from final_snapshot_identifier. Default
-	// is false.
-	SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
-
-	// Specifies whether or not to create this
-	// database from a snapshot. This correlates to the snapshot ID you'd find in the
-	// RDS console, e.g: rds:production-2015-06-26-06-05.
-	SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
-
-	// The RDS instance status.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-
-	// Specifies whether the DB instance is
-	// encrypted. Note that if you are creating a cross-region read replica this field
-	// is ignored and you should instead declare kms_key_id with a valid ARN. The
-	// default is false if not specified.
-	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
-
-	// The storage throughput value for the DB instance. Can only be set when storage_type is "gp3". Cannot be specified if the allocated_storage value is below a per-engine threshold. See the RDS User Guide for details.
-	StorageThroughput *float64 `json:"storageThroughput,omitempty" tf:"storage_throughput,omitempty"`
-
-	// One of "standard" (magnetic), "gp2" (general
-	// purpose SSD), "gp3" (general purpose SSD that needs iops independently)
-	// or "io1" (provisioned IOPS SSD). The default is "io1" if iops is specified,
-	// "gp2" if not.
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
-
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
-
-	// Time zone of the DB instance. timezone is currently
-	// only supported by Microsoft SQL Server. The timezone can only be set on
-	// creation. See MSSQL User
-	// Guide
-	// for more information.
-	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
-
-	// Username for the master DB user. Cannot be specified for a replica.
-	Username *string `json:"username,omitempty" tf:"username,omitempty"`
-
-	// List of VPC security groups to
-	// associate.
-	VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
+// The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If not specified, the default KMS key for your Amazon Web Services account is used.
+MasterUserSecretKMSKeyID *string `json:"masterUserSecretKmsKeyId,omitempty" tf:"master_user_secret_kms_key_id,omitempty"`
+
+// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
+MaxAllocatedStorage *float64 `json:"maxAllocatedStorage,omitempty" tf:"max_allocated_storage,omitempty"`
+
+// The interval, in seconds, between points
+// when Enhanced Monitoring metrics are collected for the DB instance. To disable
+// collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
+// Values: 0, 1, 5, 10, 15, 30, 60.
+MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
+
+// The ARN for the IAM role that permits RDS
+// to send enhanced monitoring metrics to CloudWatch Logs. You can find more
+// information on the AWS
+// Documentation
+// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
+MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
+
+// Specifies if the RDS instance is multi-AZ
+MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
+
+// The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See Oracle Character Sets
+// Supported in Amazon RDS.
+NcharCharacterSetName *string `json:"ncharCharacterSetName,omitempty" tf:"nchar_character_set_name,omitempty"`
+
+// The network type of the DB instance. Valid values: IPV4, DUAL.
+NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+
+// Name of the DB option group to associate.
+OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
+
+// Name of the DB parameter group to
+// associate.
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+
+// Specifies whether Performance Insights are enabled. Defaults to false.
+PerformanceInsightsEnabled *bool `json:"performanceInsightsEnabled,omitempty" tf:"performance_insights_enabled,omitempty"`
+
+// The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
+PerformanceInsightsKMSKeyID *string `json:"performanceInsightsKmsKeyId,omitempty" tf:"performance_insights_kms_key_id,omitempty"`
+
+// Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
+PerformanceInsightsRetentionPeriod *float64 `json:"performanceInsightsRetentionPeriod,omitempty" tf:"performance_insights_retention_period,omitempty"`
+
+// The port on which the DB accepts connections.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+// Bool to control if instance is publicly
+// accessible. Default is false.
+PubliclyAccessible *bool `json:"publiclyAccessible,omitempty" tf:"publicly_accessible,omitempty"`
+
+// Specifies whether the replica is in either mounted or open-read-only mode. This attribute
+// is only supported by Oracle instances. Oracle replicas operate in open-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
+ReplicaMode *string `json:"replicaMode,omitempty" tf:"replica_mode,omitempty"`
+
+Replicas []*string `json:"replicas,omitempty" tf:"replicas,omitempty"`
+
+// Specifies that this resource is a Replicate
+// database, and to use this value as the source database. This correlates to the
+// identifier of another Amazon RDS Database to replicate (if replicating within
+// a single region) or ARN of the Amazon RDS Database to replicate (if replicating
+// cross-region). Note that if you are
+// creating a cross-region replica of an encrypted database you will also need to
+// specify a kms_key_id. See DB Instance Replication and Working with
+// PostgreSQL and MySQL Read Replicas
+// for more information on using Replication.
+ReplicateSourceDB *string `json:"replicateSourceDb,omitempty" tf:"replicate_source_db,omitempty"`
+
+// The RDS Resource ID of this instance.
+ResourceID *string `json:"resourceId,omitempty" tf:"resource_id,omitempty"`
+
+// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
+RestoreToPointInTime []RestoreToPointInTimeObservation `json:"restoreToPointInTime,omitempty" tf:"restore_to_point_in_time,omitempty"`
+
+// Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
+S3Import []S3ImportObservation `json:"s3Import,omitempty" tf:"s3_import,omitempty"`
+
+// Determines whether a final DB snapshot is
+// created before the DB instance is deleted. If true is specified, no DBSnapshot
+// is created. If false is specified, a DB snapshot is created before the DB
+// instance is deleted, using the value from final_snapshot_identifier. Default
+// is false.
+SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
+
+// Specifies whether or not to create this
+// database from a snapshot. This correlates to the snapshot ID you'd find in the
+// RDS console, e.g: rds:production-2015-06-26-06-05.
+SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
+
+// The RDS instance status.
+Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+// Specifies whether the DB instance is
+// encrypted. Note that if you are creating a cross-region read replica this field
+// is ignored and you should instead declare kms_key_id with a valid ARN. The
+// default is false if not specified.
+StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+
+// The storage throughput value for the DB instance. Can only be set when storage_type is "gp3". Cannot be specified if the allocated_storage value is below a per-engine threshold. See the RDS User Guide for details.
+StorageThroughput *float64 `json:"storageThroughput,omitempty" tf:"storage_throughput,omitempty"`
+
+// One of "standard" (magnetic), "gp2" (general
+// purpose SSD), "gp3" (general purpose SSD that needs iops independently)
+// or "io1" (provisioned IOPS SSD). The default is "io1" if iops is specified,
+// "gp2" if not.
+StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Time zone of the DB instance. timezone is currently
+// only supported by Microsoft SQL Server. The timezone can only be set on
+// creation. See MSSQL User
+// Guide
+// for more information.
+Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+// Username for the master DB user. Cannot be specified for a replica.
+Username *string `json:"username,omitempty" tf:"username,omitempty"`
+
+// List of VPC security groups to
+// associate.
+VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
 }
+
 
 type InstanceParameters struct {
 
-	// The allocated storage in gibibytes. If max_allocated_storage is configured, this argument represents the initial storage allocation and differences from the configuration will be ignored automatically when Storage Autoscaling occurs. If replicate_source_db is set, the value is ignored during the creation of the instance.
-	// +kubebuilder:validation:Optional
-	AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
-
-	// Indicates that major version
-	// upgrades are allowed. Changing this parameter does not result in an outage and
-	// the change is asynchronously applied as soon as possible.
-	// +kubebuilder:validation:Optional
-	AllowMajorVersionUpgrade *bool `json:"allowMajorVersionUpgrade,omitempty" tf:"allow_major_version_upgrade,omitempty"`
-
-	// Specifies whether any database modifications
-	// are applied immediately, or during the next maintenance window. Default is
-	// false. See Amazon RDS Documentation for more
-	// information.
-	// +kubebuilder:validation:Optional
-	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
-
-	// Password for the master DB user. Note that this may show up in
-	// logs, and it will be stored in the state file. Cannot be set if manage_master_user_password is set to true.
-	// If true, the password will be auto-generated and stored in the Secret referenced by the passwordSecretRef field.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	AutoGeneratePassword *bool `json:"autoGeneratePassword,omitempty" tf:"-"`
-
-	// Indicates that minor engine upgrades
-	// will be applied automatically to the DB instance during the maintenance window.
-	// Defaults to true.
-	// +kubebuilder:validation:Optional
-	AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
-
-	// The AZ for the RDS instance.
-	// +kubebuilder:validation:Optional
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
-
-	// The days to retain backups for.
-	// Must be between 0 and 35.
-	// Default is 0.
-	// Must be greater than 0 if the database is used as a source for a Read Replica,
-	// uses low-downtime updates,
-	// or will use RDS Blue/Green deployments.
-	// +kubebuilder:validation:Optional
-	BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
-
-	// The daily time range (in UTC) during which automated backups are created if they are enabled.
-	// Example: "09:46-10:16". Must not overlap with maintenance_window.
-	// +kubebuilder:validation:Optional
-	BackupWindow *string `json:"backupWindow,omitempty" tf:"backup_window,omitempty"`
-
-	// Enables low-downtime updates using RDS Blue/Green deployments.
-	// See blue_green_update below
-	// +kubebuilder:validation:Optional
-	BlueGreenUpdate []BlueGreenUpdateParameters `json:"blueGreenUpdate,omitempty" tf:"blue_green_update,omitempty"`
-
-	// The identifier of the CA certificate for the DB instance.
-	// +kubebuilder:validation:Optional
-	CACertIdentifier *string `json:"caCertIdentifier,omitempty" tf:"ca_cert_identifier,omitempty"`
-
-	// The character set name to use for DB
-	// encoding in Oracle and Microsoft SQL instances (collation). This can't be changed. See Oracle Character Sets
-	// Supported in Amazon RDS
-	// or Server-Level Collation for Microsoft SQL Server for more information.
-	// +kubebuilder:validation:Optional
-	CharacterSetName *string `json:"characterSetName,omitempty" tf:"character_set_name,omitempty"`
-
-	// –  Copy all Instance tags to snapshots. Default is false.
-	// +kubebuilder:validation:Optional
-	CopyTagsToSnapshot *bool `json:"copyTagsToSnapshot,omitempty" tf:"copy_tags_to_snapshot,omitempty"`
-
-	// The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
-	// +kubebuilder:validation:Optional
-	CustomIAMInstanceProfile *string `json:"customIamInstanceProfile,omitempty" tf:"custom_iam_instance_profile,omitempty"`
-
-	// Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.
-	// +kubebuilder:validation:Optional
-	CustomerOwnedIPEnabled *bool `json:"customerOwnedIpEnabled,omitempty" tf:"customer_owned_ip_enabled,omitempty"`
-
-	// The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the AWS documentation for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
-	// +kubebuilder:validation:Optional
-	DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
-
-	// Name of DB subnet group. DB instance will
-	// be created in the VPC associated with the DB subnet group. If unspecified, will
-	// be created in the default VPC, or in EC2 Classic, if available. When working
-	// with read replicas, it should be specified only if the source database
-	// specifies an instance in another AWS Region. See DBSubnetGroupName in API
-	// action CreateDBInstanceReadReplica
-	// for additional read replica contraints.
-	// +crossplane:generate:reference:type=SubnetGroup
-	// +kubebuilder:validation:Optional
-	DBSubnetGroupName *string `json:"dbSubnetGroupName,omitempty" tf:"db_subnet_group_name,omitempty"`
-
-	// Reference to a SubnetGroup to populate dbSubnetGroupName.
-	// +kubebuilder:validation:Optional
-	DBSubnetGroupNameRef *v1.Reference `json:"dbSubnetGroupNameRef,omitempty" tf:"-"`
-
-	// Selector for a SubnetGroup to populate dbSubnetGroupName.
-	// +kubebuilder:validation:Optional
-	DBSubnetGroupNameSelector *v1.Selector `json:"dbSubnetGroupNameSelector,omitempty" tf:"-"`
-
-	// Specifies whether to remove automated backups immediately after the DB instance is deleted. Default is true.
-	// +kubebuilder:validation:Optional
-	DeleteAutomatedBackups *bool `json:"deleteAutomatedBackups,omitempty" tf:"delete_automated_backups,omitempty"`
-
-	// If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
-	// +kubebuilder:validation:Optional
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
-
-	// The ID of the Directory Service Active Directory domain to create the instance in.
-	// +kubebuilder:validation:Optional
-	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
-
-	// The name of the IAM role to be used when making API calls to the Directory Service.
-	// +kubebuilder:validation:Optional
-	DomainIAMRoleName *string `json:"domainIamRoleName,omitempty" tf:"domain_iam_role_name,omitempty"`
-
-	// Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine). MySQL and MariaDB: audit, error, general, slowquery. PostgreSQL: postgresql, upgrade. MSSQL: agent , error. Oracle: alert, audit, listener, trace.
-	// +kubebuilder:validation:Optional
-	EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
-
-	// The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
-	// +kubebuilder:validation:Optional
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
-
-	// The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine version'.
-	// +kubebuilder:validation:Optional
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
-
-	// The name of your final DB snapshot
-	// when this DB instance is deleted. Must be provided if skip_final_snapshot is
-	// set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
-	// +kubebuilder:validation:Optional
-	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
-
-	// Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
-	// accounts is enabled.
-	// +kubebuilder:validation:Optional
-	IAMDatabaseAuthenticationEnabled *bool `json:"iamDatabaseAuthenticationEnabled,omitempty" tf:"iam_database_authentication_enabled,omitempty"`
-
-	// The instance type of the RDS instance.
-	// +kubebuilder:validation:Optional
-	InstanceClass *string `json:"instanceClass,omitempty" tf:"instance_class,omitempty"`
-
-	// The amount of provisioned IOPS. Setting this implies a
-	// storage_type of "io1". Can only be set when storage_type is "io1" or "gp3".
-	// Cannot be specified for gp3 storage if the allocated_storage value is below a per-engine threshold.
-	// See the RDS User Guide for details.
-	// +kubebuilder:validation:Optional
-	Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
-
-	// The ARN for the KMS encryption key. If creating an
-	// encrypted replica, set this to the destination KMS ARN.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
-	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
-	// +kubebuilder:validation:Optional
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
-
-	// Reference to a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
-
-	// License model information for this DB instance.
-	// +kubebuilder:validation:Optional
-	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
-
-	// The window to perform maintenance in.
-	// Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00". See RDS
-	// Maintenance Window
-	// docs
-	// for more information.
-	// +kubebuilder:validation:Optional
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if password is provided.
-	// +kubebuilder:validation:Optional
-	ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
-
-	// The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If not specified, the default KMS key for your Amazon Web Services account is used.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key_id",true)
-	// +kubebuilder:validation:Optional
-	MasterUserSecretKMSKeyID *string `json:"masterUserSecretKmsKeyId,omitempty" tf:"master_user_secret_kms_key_id,omitempty"`
-
-	// Reference to a Key in kms to populate masterUserSecretKmsKeyId.
-	// +kubebuilder:validation:Optional
-	MasterUserSecretKMSKeyIDRef *v1.Reference `json:"masterUserSecretKmsKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a Key in kms to populate masterUserSecretKmsKeyId.
-	// +kubebuilder:validation:Optional
-	MasterUserSecretKMSKeyIDSelector *v1.Selector `json:"masterUserSecretKmsKeyIdSelector,omitempty" tf:"-"`
-
-	// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
-	// +kubebuilder:validation:Optional
-	MaxAllocatedStorage *float64 `json:"maxAllocatedStorage,omitempty" tf:"max_allocated_storage,omitempty"`
-
-	// The interval, in seconds, between points
-	// when Enhanced Monitoring metrics are collected for the DB instance. To disable
-	// collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
-	// Values: 0, 1, 5, 10, 15, 30, 60.
-	// +kubebuilder:validation:Optional
-	MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
-
-	// The ARN for the IAM role that permits RDS
-	// to send enhanced monitoring metrics to CloudWatch Logs. You can find more
-	// information on the AWS
-	// Documentation
-	// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
-	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
-	// +kubebuilder:validation:Optional
-	MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
-
-	// Reference to a Role in iam to populate monitoringRoleArn.
-	// +kubebuilder:validation:Optional
-	MonitoringRoleArnRef *v1.Reference `json:"monitoringRoleArnRef,omitempty" tf:"-"`
-
-	// Selector for a Role in iam to populate monitoringRoleArn.
-	// +kubebuilder:validation:Optional
-	MonitoringRoleArnSelector *v1.Selector `json:"monitoringRoleArnSelector,omitempty" tf:"-"`
-
-	// Specifies if the RDS instance is multi-AZ
-	// +kubebuilder:validation:Optional
-	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
-
-	// The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See Oracle Character Sets
-	// Supported in Amazon RDS.
-	// +kubebuilder:validation:Optional
-	NcharCharacterSetName *string `json:"ncharCharacterSetName,omitempty" tf:"nchar_character_set_name,omitempty"`
-
-	// The network type of the DB instance. Valid values: IPV4, DUAL.
-	// +kubebuilder:validation:Optional
-	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
-
-	// Name of the DB option group to associate.
-	// +kubebuilder:validation:Optional
-	OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
-
-	// Name of the DB parameter group to
-	// associate.
-	// +kubebuilder:validation:Optional
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
-
-	// Password for the master DB user. Note that this may show up in
-	// logs, and it will be stored in the state file. Cannot be set if manage_master_user_password is set to true.
-	// Password for the master DB user. If you set autoGeneratePassword to true, the Secret referenced here will be created or updated with generated password if it does not already contain one.
-	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
-
-	// Specifies whether Performance Insights are enabled. Defaults to false.
-	// +kubebuilder:validation:Optional
-	PerformanceInsightsEnabled *bool `json:"performanceInsightsEnabled,omitempty" tf:"performance_insights_enabled,omitempty"`
-
-	// The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
-	// +kubebuilder:validation:Optional
-	PerformanceInsightsKMSKeyID *string `json:"performanceInsightsKmsKeyId,omitempty" tf:"performance_insights_kms_key_id,omitempty"`
-
-	// Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
-	// +kubebuilder:validation:Optional
-	PerformanceInsightsRetentionPeriod *float64 `json:"performanceInsightsRetentionPeriod,omitempty" tf:"performance_insights_retention_period,omitempty"`
-
-	// The port on which the DB accepts connections.
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Bool to control if instance is publicly
-	// accessible. Default is false.
-	// +kubebuilder:validation:Optional
-	PubliclyAccessible *bool `json:"publiclyAccessible,omitempty" tf:"publicly_accessible,omitempty"`
-
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
-
-	// Specifies whether the replica is in either mounted or open-read-only mode. This attribute
-	// is only supported by Oracle instances. Oracle replicas operate in open-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
-	// +kubebuilder:validation:Optional
-	ReplicaMode *string `json:"replicaMode,omitempty" tf:"replica_mode,omitempty"`
-
-	// Specifies that this resource is a Replicate
-	// database, and to use this value as the source database. This correlates to the
-	// identifier of another Amazon RDS Database to replicate (if replicating within
-	// a single region) or ARN of the Amazon RDS Database to replicate (if replicating
-	// cross-region). Note that if you are
-	// creating a cross-region replica of an encrypted database you will also need to
-	// specify a kms_key_id. See DB Instance Replication and Working with
-	// PostgreSQL and MySQL Read Replicas
-	// for more information on using Replication.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
-	// +kubebuilder:validation:Optional
-	ReplicateSourceDB *string `json:"replicateSourceDb,omitempty" tf:"replicate_source_db,omitempty"`
-
-	// Reference to a Instance in rds to populate replicateSourceDb.
-	// +kubebuilder:validation:Optional
-	ReplicateSourceDBRef *v1.Reference `json:"replicateSourceDbRef,omitempty" tf:"-"`
-
-	// Selector for a Instance in rds to populate replicateSourceDb.
-	// +kubebuilder:validation:Optional
-	ReplicateSourceDBSelector *v1.Selector `json:"replicateSourceDbSelector,omitempty" tf:"-"`
-
-	// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
-	// +kubebuilder:validation:Optional
-	RestoreToPointInTime []RestoreToPointInTimeParameters `json:"restoreToPointInTime,omitempty" tf:"restore_to_point_in_time,omitempty"`
-
-	// Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
-	// +kubebuilder:validation:Optional
-	S3Import []S3ImportParameters `json:"s3Import,omitempty" tf:"s3_import,omitempty"`
-
-	// Determines whether a final DB snapshot is
-	// created before the DB instance is deleted. If true is specified, no DBSnapshot
-	// is created. If false is specified, a DB snapshot is created before the DB
-	// instance is deleted, using the value from final_snapshot_identifier. Default
-	// is false.
-	// +kubebuilder:validation:Optional
-	SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
-
-	// Specifies whether or not to create this
-	// database from a snapshot. This correlates to the snapshot ID you'd find in the
-	// RDS console, e.g: rds:production-2015-06-26-06-05.
-	// +kubebuilder:validation:Optional
-	SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
-
-	// Specifies whether the DB instance is
-	// encrypted. Note that if you are creating a cross-region read replica this field
-	// is ignored and you should instead declare kms_key_id with a valid ARN. The
-	// default is false if not specified.
-	// +kubebuilder:validation:Optional
-	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
-
-	// The storage throughput value for the DB instance. Can only be set when storage_type is "gp3". Cannot be specified if the allocated_storage value is below a per-engine threshold. See the RDS User Guide for details.
-	// +kubebuilder:validation:Optional
-	StorageThroughput *float64 `json:"storageThroughput,omitempty" tf:"storage_throughput,omitempty"`
-
-	// One of "standard" (magnetic), "gp2" (general
-	// purpose SSD), "gp3" (general purpose SSD that needs iops independently)
-	// or "io1" (provisioned IOPS SSD). The default is "io1" if iops is specified,
-	// "gp2" if not.
-	// +kubebuilder:validation:Optional
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
-
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
-
-	// Time zone of the DB instance. timezone is currently
-	// only supported by Microsoft SQL Server. The timezone can only be set on
-	// creation. See MSSQL User
-	// Guide
-	// for more information.
-	// +kubebuilder:validation:Optional
-	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
-
-	// Username for the master DB user. Cannot be specified for a replica.
-	// +kubebuilder:validation:Optional
-	Username *string `json:"username,omitempty" tf:"username,omitempty"`
-
-	// References to SecurityGroup in ec2 to populate vpcSecurityGroupIds.
-	// +kubebuilder:validation:Optional
-	VPCSecurityGroupIDRefs []v1.Reference `json:"vpcSecurityGroupIdRefs,omitempty" tf:"-"`
-
-	// Selector for a list of SecurityGroup in ec2 to populate vpcSecurityGroupIds.
-	// +kubebuilder:validation:Optional
-	VPCSecurityGroupIDSelector *v1.Selector `json:"vpcSecurityGroupIdSelector,omitempty" tf:"-"`
-
-	// List of VPC security groups to
-	// associate.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
-	// +crossplane:generate:reference:refFieldName=VPCSecurityGroupIDRefs
-	// +crossplane:generate:reference:selectorFieldName=VPCSecurityGroupIDSelector
-	// +kubebuilder:validation:Optional
-	VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
+
+// The allocated storage in gibibytes. If max_allocated_storage is configured, this argument represents the initial storage allocation and differences from the configuration will be ignored automatically when Storage Autoscaling occurs. If replicate_source_db is set, the value is ignored during the creation of the instance.
+// +kubebuilder:validation:Optional
+AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
+
+// Indicates that major version
+// upgrades are allowed. Changing this parameter does not result in an outage and
+// the change is asynchronously applied as soon as possible.
+// +kubebuilder:validation:Optional
+AllowMajorVersionUpgrade *bool `json:"allowMajorVersionUpgrade,omitempty" tf:"allow_major_version_upgrade,omitempty"`
+
+// Specifies whether any database modifications
+// are applied immediately, or during the next maintenance window. Default is
+// false. See Amazon RDS Documentation for more
+// information.
+// +kubebuilder:validation:Optional
+ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
+
+// Password for the master DB user. Note that this may show up in
+// logs, and it will be stored in the state file. Cannot be set if manage_master_user_password is set to true.
+// If true, the password will be auto-generated and stored in the Secret referenced by the passwordSecretRef field.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+AutoGeneratePassword *bool `json:"autoGeneratePassword,omitempty" tf:"-"`
+
+// Indicates that minor engine upgrades
+// will be applied automatically to the DB instance during the maintenance window.
+// Defaults to true.
+// +kubebuilder:validation:Optional
+AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+
+// The AZ for the RDS instance.
+// +kubebuilder:validation:Optional
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+// The days to retain backups for.
+// Must be between 0 and 35.
+// Default is 0.
+// Must be greater than 0 if the database is used as a source for a Read Replica,
+// uses low-downtime updates,
+// or will use RDS Blue/Green deployments.
+// +kubebuilder:validation:Optional
+BackupRetentionPeriod *float64 `json:"backupRetentionPeriod,omitempty" tf:"backup_retention_period,omitempty"`
+
+// The daily time range (in UTC) during which automated backups are created if they are enabled.
+// Example: "09:46-10:16". Must not overlap with maintenance_window.
+// +kubebuilder:validation:Optional
+BackupWindow *string `json:"backupWindow,omitempty" tf:"backup_window,omitempty"`
+
+// Enables low-downtime updates using RDS Blue/Green deployments.
+// See blue_green_update below
+// +kubebuilder:validation:Optional
+BlueGreenUpdate []BlueGreenUpdateParameters `json:"blueGreenUpdate,omitempty" tf:"blue_green_update,omitempty"`
+
+// The identifier of the CA certificate for the DB instance.
+// +kubebuilder:validation:Optional
+CACertIdentifier *string `json:"caCertIdentifier,omitempty" tf:"ca_cert_identifier,omitempty"`
+
+// The character set name to use for DB
+// encoding in Oracle and Microsoft SQL instances (collation). This can't be changed. See Oracle Character Sets
+// Supported in Amazon RDS
+// or Server-Level Collation for Microsoft SQL Server for more information.
+// +kubebuilder:validation:Optional
+CharacterSetName *string `json:"characterSetName,omitempty" tf:"character_set_name,omitempty"`
+
+// –  Copy all Instance tags to snapshots. Default is false.
+// +kubebuilder:validation:Optional
+CopyTagsToSnapshot *bool `json:"copyTagsToSnapshot,omitempty" tf:"copy_tags_to_snapshot,omitempty"`
+
+// The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
+// +kubebuilder:validation:Optional
+CustomIAMInstanceProfile *string `json:"customIamInstanceProfile,omitempty" tf:"custom_iam_instance_profile,omitempty"`
+
+// Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.
+// +kubebuilder:validation:Optional
+CustomerOwnedIPEnabled *bool `json:"customerOwnedIpEnabled,omitempty" tf:"customer_owned_ip_enabled,omitempty"`
+
+// The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the AWS documentation for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
+// +kubebuilder:validation:Optional
+DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
+
+// Name of DB subnet group. DB instance will
+// be created in the VPC associated with the DB subnet group. If unspecified, will
+// be created in the default VPC, or in EC2 Classic, if available. When working
+// with read replicas, it should be specified only if the source database
+// specifies an instance in another AWS Region. See DBSubnetGroupName in API
+// action CreateDBInstanceReadReplica
+// for additional read replica contraints.
+// +crossplane:generate:reference:type=SubnetGroup
+// +kubebuilder:validation:Optional
+DBSubnetGroupName *string `json:"dbSubnetGroupName,omitempty" tf:"db_subnet_group_name,omitempty"`
+
+// Reference to a SubnetGroup to populate dbSubnetGroupName.
+// +kubebuilder:validation:Optional
+DBSubnetGroupNameRef *v1.Reference `json:"dbSubnetGroupNameRef,omitempty" tf:"-"`
+
+// Selector for a SubnetGroup to populate dbSubnetGroupName.
+// +kubebuilder:validation:Optional
+DBSubnetGroupNameSelector *v1.Selector `json:"dbSubnetGroupNameSelector,omitempty" tf:"-"`
+
+// Specifies whether to remove automated backups immediately after the DB instance is deleted. Default is true.
+// +kubebuilder:validation:Optional
+DeleteAutomatedBackups *bool `json:"deleteAutomatedBackups,omitempty" tf:"delete_automated_backups,omitempty"`
+
+// If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false.
+// +kubebuilder:validation:Optional
+DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+// The ID of the Directory Service Active Directory domain to create the instance in.
+// +kubebuilder:validation:Optional
+Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+
+// The name of the IAM role to be used when making API calls to the Directory Service.
+// +kubebuilder:validation:Optional
+DomainIAMRoleName *string `json:"domainIamRoleName,omitempty" tf:"domain_iam_role_name,omitempty"`
+
+// Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine). MySQL and MariaDB: audit, error, general, slowquery. PostgreSQL: postgresql, upgrade. MSSQL: agent , error. Oracle: alert, audit, listener, trace.
+// +kubebuilder:validation:Optional
+EnabledCloudwatchLogsExports []*string `json:"enabledCloudwatchLogsExports,omitempty" tf:"enabled_cloudwatch_logs_exports,omitempty"`
+
+// The database engine to use. For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine'. For information on the difference between the available Aurora MySQL engines see Comparison in the [Amazon RDS Release Notes](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/Welcome.html).
+// +kubebuilder:validation:Optional
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+
+// The engine version to use. If `autoMinorVersionUpgrade` is enabled, you can provide a prefix of the version such as 5.7 (for 5.7.10). The actual engine version used is returned in the attribute `status.atProvider.engineVersionActual`. For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Note that for Amazon Aurora instances the engine version must match the [DB Cluster](https://marketplace.kubedb.com/providers/kubedb.dev/provider-aws/latest/resources/rds.aws.kubedb.com/Cluster/v1alpha1)'s engine version'.
+// +kubebuilder:validation:Optional
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
+// The name of your final DB snapshot
+// when this DB instance is deleted. Must be provided if skip_final_snapshot is
+// set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
+// +kubebuilder:validation:Optional
+FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+
+// Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
+// accounts is enabled.
+// +kubebuilder:validation:Optional
+IAMDatabaseAuthenticationEnabled *bool `json:"iamDatabaseAuthenticationEnabled,omitempty" tf:"iam_database_authentication_enabled,omitempty"`
+
+// The instance type of the RDS instance.
+// +kubebuilder:validation:Optional
+InstanceClass *string `json:"instanceClass,omitempty" tf:"instance_class,omitempty"`
+
+// The amount of provisioned IOPS. Setting this implies a
+// storage_type of "io1". Can only be set when storage_type is "io1" or "gp3".
+// Cannot be specified for gp3 storage if the allocated_storage value is below a per-engine threshold.
+// See the RDS User Guide for details.
+// +kubebuilder:validation:Optional
+Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
+
+// The ARN for the KMS encryption key. If creating an
+// encrypted replica, set this to the destination KMS ARN.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
+// +kubebuilder:validation:Optional
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+// Reference to a Key in kms to populate kmsKeyId.
+// +kubebuilder:validation:Optional
+KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+// Selector for a Key in kms to populate kmsKeyId.
+// +kubebuilder:validation:Optional
+KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
+// License model information for this DB instance.
+// +kubebuilder:validation:Optional
+LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
+
+// The window to perform maintenance in.
+// Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00". See RDS
+// Maintenance Window
+// docs
+// for more information.
+// +kubebuilder:validation:Optional
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+// Set to true to allow RDS to manage the master user password in Secrets Manager. Cannot be set if password is provided.
+// +kubebuilder:validation:Optional
+ManageMasterUserPassword *bool `json:"manageMasterUserPassword,omitempty" tf:"manage_master_user_password,omitempty"`
+
+// The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If not specified, the default KMS key for your Amazon Web Services account is used.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key_id",true)
+// +kubebuilder:validation:Optional
+MasterUserSecretKMSKeyID *string `json:"masterUserSecretKmsKeyId,omitempty" tf:"master_user_secret_kms_key_id,omitempty"`
+
+// Reference to a Key in kms to populate masterUserSecretKmsKeyId.
+// +kubebuilder:validation:Optional
+MasterUserSecretKMSKeyIDRef *v1.Reference `json:"masterUserSecretKmsKeyIdRef,omitempty" tf:"-"`
+
+// Selector for a Key in kms to populate masterUserSecretKmsKeyId.
+// +kubebuilder:validation:Optional
+MasterUserSecretKMSKeyIDSelector *v1.Selector `json:"masterUserSecretKmsKeyIdSelector,omitempty" tf:"-"`
+
+// When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
+// +kubebuilder:validation:Optional
+MaxAllocatedStorage *float64 `json:"maxAllocatedStorage,omitempty" tf:"max_allocated_storage,omitempty"`
+
+// The interval, in seconds, between points
+// when Enhanced Monitoring metrics are collected for the DB instance. To disable
+// collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
+// Values: 0, 1, 5, 10, 15, 30, 60.
+// +kubebuilder:validation:Optional
+MonitoringInterval *float64 `json:"monitoringInterval,omitempty" tf:"monitoring_interval,omitempty"`
+
+// The ARN for the IAM role that permits RDS
+// to send enhanced monitoring metrics to CloudWatch Logs. You can find more
+// information on the AWS
+// Documentation
+// what IAM permissions are needed to allow Enhanced Monitoring for RDS Instances.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
+// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
+// +kubebuilder:validation:Optional
+MonitoringRoleArn *string `json:"monitoringRoleArn,omitempty" tf:"monitoring_role_arn,omitempty"`
+
+// Reference to a Role in iam to populate monitoringRoleArn.
+// +kubebuilder:validation:Optional
+MonitoringRoleArnRef *v1.Reference `json:"monitoringRoleArnRef,omitempty" tf:"-"`
+
+// Selector for a Role in iam to populate monitoringRoleArn.
+// +kubebuilder:validation:Optional
+MonitoringRoleArnSelector *v1.Selector `json:"monitoringRoleArnSelector,omitempty" tf:"-"`
+
+// Specifies if the RDS instance is multi-AZ
+// +kubebuilder:validation:Optional
+MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
+
+// The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See Oracle Character Sets
+// Supported in Amazon RDS.
+// +kubebuilder:validation:Optional
+NcharCharacterSetName *string `json:"ncharCharacterSetName,omitempty" tf:"nchar_character_set_name,omitempty"`
+
+// The network type of the DB instance. Valid values: IPV4, DUAL.
+// +kubebuilder:validation:Optional
+NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+
+// Name of the DB option group to associate.
+// +kubebuilder:validation:Optional
+OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
+
+// Name of the DB parameter group to
+// associate.
+// +kubebuilder:validation:Optional
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+
+// Password for the master DB user. Note that this may show up in
+// logs, and it will be stored in the state file. Cannot be set if manage_master_user_password is set to true.
+// Password for the master DB user. If you set autoGeneratePassword to true, the Secret referenced here will be created or updated with generated password if it does not already contain one.
+// +kubebuilder:validation:Optional
+PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+// Specifies whether Performance Insights are enabled. Defaults to false.
+// +kubebuilder:validation:Optional
+PerformanceInsightsEnabled *bool `json:"performanceInsightsEnabled,omitempty" tf:"performance_insights_enabled,omitempty"`
+
+// The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
+// +kubebuilder:validation:Optional
+PerformanceInsightsKMSKeyID *string `json:"performanceInsightsKmsKeyId,omitempty" tf:"performance_insights_kms_key_id,omitempty"`
+
+// Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
+// +kubebuilder:validation:Optional
+PerformanceInsightsRetentionPeriod *float64 `json:"performanceInsightsRetentionPeriod,omitempty" tf:"performance_insights_retention_period,omitempty"`
+
+// The port on which the DB accepts connections.
+// +kubebuilder:validation:Optional
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+// Bool to control if instance is publicly
+// accessible. Default is false.
+// +kubebuilder:validation:Optional
+PubliclyAccessible *bool `json:"publiclyAccessible,omitempty" tf:"publicly_accessible,omitempty"`
+
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
+
+// Specifies whether the replica is in either mounted or open-read-only mode. This attribute
+// is only supported by Oracle instances. Oracle replicas operate in open-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
+// +kubebuilder:validation:Optional
+ReplicaMode *string `json:"replicaMode,omitempty" tf:"replica_mode,omitempty"`
+
+// Specifies that this resource is a Replicate
+// database, and to use this value as the source database. This correlates to the
+// identifier of another Amazon RDS Database to replicate (if replicating within
+// a single region) or ARN of the Amazon RDS Database to replicate (if replicating
+// cross-region). Note that if you are
+// creating a cross-region replica of an encrypted database you will also need to
+// specify a kms_key_id. See DB Instance Replication and Working with
+// PostgreSQL and MySQL Read Replicas
+// for more information on using Replication.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
+// +kubebuilder:validation:Optional
+ReplicateSourceDB *string `json:"replicateSourceDb,omitempty" tf:"replicate_source_db,omitempty"`
+
+// Reference to a Instance in rds to populate replicateSourceDb.
+// +kubebuilder:validation:Optional
+ReplicateSourceDBRef *v1.Reference `json:"replicateSourceDbRef,omitempty" tf:"-"`
+
+// Selector for a Instance in rds to populate replicateSourceDb.
+// +kubebuilder:validation:Optional
+ReplicateSourceDBSelector *v1.Selector `json:"replicateSourceDbSelector,omitempty" tf:"-"`
+
+// A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
+// +kubebuilder:validation:Optional
+RestoreToPointInTime []RestoreToPointInTimeParameters `json:"restoreToPointInTime,omitempty" tf:"restore_to_point_in_time,omitempty"`
+
+// Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
+// +kubebuilder:validation:Optional
+S3Import []S3ImportParameters `json:"s3Import,omitempty" tf:"s3_import,omitempty"`
+
+// Determines whether a final DB snapshot is
+// created before the DB instance is deleted. If true is specified, no DBSnapshot
+// is created. If false is specified, a DB snapshot is created before the DB
+// instance is deleted, using the value from final_snapshot_identifier. Default
+// is false.
+// +kubebuilder:validation:Optional
+SkipFinalSnapshot *bool `json:"skipFinalSnapshot,omitempty" tf:"skip_final_snapshot,omitempty"`
+
+// Specifies whether or not to create this
+// database from a snapshot. This correlates to the snapshot ID you'd find in the
+// RDS console, e.g: rds:production-2015-06-26-06-05.
+// +kubebuilder:validation:Optional
+SnapshotIdentifier *string `json:"snapshotIdentifier,omitempty" tf:"snapshot_identifier,omitempty"`
+
+// Specifies whether the DB instance is
+// encrypted. Note that if you are creating a cross-region read replica this field
+// is ignored and you should instead declare kms_key_id with a valid ARN. The
+// default is false if not specified.
+// +kubebuilder:validation:Optional
+StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+
+// The storage throughput value for the DB instance. Can only be set when storage_type is "gp3". Cannot be specified if the allocated_storage value is below a per-engine threshold. See the RDS User Guide for details.
+// +kubebuilder:validation:Optional
+StorageThroughput *float64 `json:"storageThroughput,omitempty" tf:"storage_throughput,omitempty"`
+
+// One of "standard" (magnetic), "gp2" (general
+// purpose SSD), "gp3" (general purpose SSD that needs iops independently)
+// or "io1" (provisioned IOPS SSD). The default is "io1" if iops is specified,
+// "gp2" if not.
+// +kubebuilder:validation:Optional
+StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Time zone of the DB instance. timezone is currently
+// only supported by Microsoft SQL Server. The timezone can only be set on
+// creation. See MSSQL User
+// Guide
+// for more information.
+// +kubebuilder:validation:Optional
+Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+// Username for the master DB user. Cannot be specified for a replica.
+// +kubebuilder:validation:Optional
+Username *string `json:"username,omitempty" tf:"username,omitempty"`
+
+// References to SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+// +kubebuilder:validation:Optional
+VPCSecurityGroupIDRefs []v1.Reference `json:"vpcSecurityGroupIdRefs,omitempty" tf:"-"`
+
+// Selector for a list of SecurityGroup in ec2 to populate vpcSecurityGroupIds.
+// +kubebuilder:validation:Optional
+VPCSecurityGroupIDSelector *v1.Selector `json:"vpcSecurityGroupIdSelector,omitempty" tf:"-"`
+
+// List of VPC security groups to
+// associate.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
+// +crossplane:generate:reference:refFieldName=VPCSecurityGroupIDRefs
+// +crossplane:generate:reference:selectorFieldName=VPCSecurityGroupIDSelector
+// +kubebuilder:validation:Optional
+VPCSecurityGroupIds []*string `json:"vpcSecurityGroupIds,omitempty" tf:"vpc_security_group_ids,omitempty"`
 }
+
 
 type ListenerEndpointInitParameters struct {
+
 }
+
 
 type ListenerEndpointObservation struct {
 
-	// The hostname of the RDS instance. See also endpoint and port.
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// The canonical hosted zone ID of the DB instance (to be used
-	// in a Route 53 Alias record).
-	HostedZoneID *string `json:"hostedZoneId,omitempty" tf:"hosted_zone_id,omitempty"`
+// The hostname of the RDS instance. See also endpoint and port.
+Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// The port on which the DB accepts connections.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// The canonical hosted zone ID of the DB instance (to be used
+// in a Route 53 Alias record).
+HostedZoneID *string `json:"hostedZoneId,omitempty" tf:"hosted_zone_id,omitempty"`
+
+// The port on which the DB accepts connections.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
+
 
 type ListenerEndpointParameters struct {
+
 }
 
+
 type MasterUserSecretInitParameters struct {
+
 }
+
 
 type MasterUserSecretObservation struct {
 
-	// The Amazon Web Services KMS key identifier that is used to encrypt the secret.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// The Amazon Resource Name (ARN) of the secret.
-	SecretArn *string `json:"secretArn,omitempty" tf:"secret_arn,omitempty"`
+// The Amazon Web Services KMS key identifier that is used to encrypt the secret.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// The status of the secret. Valid Values: creating | active | rotating | impaired.
-	SecretStatus *string `json:"secretStatus,omitempty" tf:"secret_status,omitempty"`
+// The Amazon Resource Name (ARN) of the secret.
+SecretArn *string `json:"secretArn,omitempty" tf:"secret_arn,omitempty"`
+
+// The status of the secret. Valid Values: creating | active | rotating | impaired.
+SecretStatus *string `json:"secretStatus,omitempty" tf:"secret_status,omitempty"`
 }
+
 
 type MasterUserSecretParameters struct {
+
 }
+
 
 type RestoreToPointInTimeInitParameters struct {
 
-	// The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
-	RestoreTime *string `json:"restoreTime,omitempty" tf:"restore_time,omitempty"`
 
-	// The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
-	SourceDBInstanceAutomatedBackupsArn *string `json:"sourceDbInstanceAutomatedBackupsArn,omitempty" tf:"source_db_instance_automated_backups_arn,omitempty"`
+// The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
+RestoreTime *string `json:"restoreTime,omitempty" tf:"restore_time,omitempty"`
 
-	// The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
-	SourceDBInstanceIdentifier *string `json:"sourceDbInstanceIdentifier,omitempty" tf:"source_db_instance_identifier,omitempty"`
+// The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
+SourceDBInstanceAutomatedBackupsArn *string `json:"sourceDbInstanceAutomatedBackupsArn,omitempty" tf:"source_db_instance_automated_backups_arn,omitempty"`
 
-	// The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
-	SourceDbiResourceID *string `json:"sourceDbiResourceId,omitempty" tf:"source_dbi_resource_id,omitempty"`
+// The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
+SourceDBInstanceIdentifier *string `json:"sourceDbInstanceIdentifier,omitempty" tf:"source_db_instance_identifier,omitempty"`
 
-	// A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.
-	UseLatestRestorableTime *bool `json:"useLatestRestorableTime,omitempty" tf:"use_latest_restorable_time,omitempty"`
+// The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
+SourceDbiResourceID *string `json:"sourceDbiResourceId,omitempty" tf:"source_dbi_resource_id,omitempty"`
+
+// A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.
+UseLatestRestorableTime *bool `json:"useLatestRestorableTime,omitempty" tf:"use_latest_restorable_time,omitempty"`
 }
+
 
 type RestoreToPointInTimeObservation struct {
 
-	// The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
-	RestoreTime *string `json:"restoreTime,omitempty" tf:"restore_time,omitempty"`
 
-	// The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
-	SourceDBInstanceAutomatedBackupsArn *string `json:"sourceDbInstanceAutomatedBackupsArn,omitempty" tf:"source_db_instance_automated_backups_arn,omitempty"`
+// The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
+RestoreTime *string `json:"restoreTime,omitempty" tf:"restore_time,omitempty"`
 
-	// The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
-	SourceDBInstanceIdentifier *string `json:"sourceDbInstanceIdentifier,omitempty" tf:"source_db_instance_identifier,omitempty"`
+// The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
+SourceDBInstanceAutomatedBackupsArn *string `json:"sourceDbInstanceAutomatedBackupsArn,omitempty" tf:"source_db_instance_automated_backups_arn,omitempty"`
 
-	// The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
-	SourceDbiResourceID *string `json:"sourceDbiResourceId,omitempty" tf:"source_dbi_resource_id,omitempty"`
+// The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
+SourceDBInstanceIdentifier *string `json:"sourceDbInstanceIdentifier,omitempty" tf:"source_db_instance_identifier,omitempty"`
 
-	// A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.
-	UseLatestRestorableTime *bool `json:"useLatestRestorableTime,omitempty" tf:"use_latest_restorable_time,omitempty"`
+// The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
+SourceDbiResourceID *string `json:"sourceDbiResourceId,omitempty" tf:"source_dbi_resource_id,omitempty"`
+
+// A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.
+UseLatestRestorableTime *bool `json:"useLatestRestorableTime,omitempty" tf:"use_latest_restorable_time,omitempty"`
 }
+
 
 type RestoreToPointInTimeParameters struct {
 
-	// The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
-	// +kubebuilder:validation:Optional
-	RestoreTime *string `json:"restoreTime,omitempty" tf:"restore_time,omitempty"`
 
-	// The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
-	// +kubebuilder:validation:Optional
-	SourceDBInstanceAutomatedBackupsArn *string `json:"sourceDbInstanceAutomatedBackupsArn,omitempty" tf:"source_db_instance_automated_backups_arn,omitempty"`
+// The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
+// +kubebuilder:validation:Optional
+RestoreTime *string `json:"restoreTime,omitempty" tf:"restore_time,omitempty"`
 
-	// The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
-	// +kubebuilder:validation:Optional
-	SourceDBInstanceIdentifier *string `json:"sourceDbInstanceIdentifier,omitempty" tf:"source_db_instance_identifier,omitempty"`
+// The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
+// +kubebuilder:validation:Optional
+SourceDBInstanceAutomatedBackupsArn *string `json:"sourceDbInstanceAutomatedBackupsArn,omitempty" tf:"source_db_instance_automated_backups_arn,omitempty"`
 
-	// The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
-	// +kubebuilder:validation:Optional
-	SourceDbiResourceID *string `json:"sourceDbiResourceId,omitempty" tf:"source_dbi_resource_id,omitempty"`
+// The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
+// +kubebuilder:validation:Optional
+SourceDBInstanceIdentifier *string `json:"sourceDbInstanceIdentifier,omitempty" tf:"source_db_instance_identifier,omitempty"`
 
-	// A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.
-	// +kubebuilder:validation:Optional
-	UseLatestRestorableTime *bool `json:"useLatestRestorableTime,omitempty" tf:"use_latest_restorable_time,omitempty"`
+// The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
+// +kubebuilder:validation:Optional
+SourceDbiResourceID *string `json:"sourceDbiResourceId,omitempty" tf:"source_dbi_resource_id,omitempty"`
+
+// A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.
+// +kubebuilder:validation:Optional
+UseLatestRestorableTime *bool `json:"useLatestRestorableTime,omitempty" tf:"use_latest_restorable_time,omitempty"`
 }
+
 
 type S3ImportInitParameters struct {
 
-	// The bucket name where your backup is stored
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
-	// Can be blank, but is the path to your backup
-	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
+// The bucket name where your backup is stored
+BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
-	// Role applied to load the data.
-	IngestionRole *string `json:"ingestionRole,omitempty" tf:"ingestion_role,omitempty"`
+// Can be blank, but is the path to your backup
+BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
-	// Source engine for the backup
-	SourceEngine *string `json:"sourceEngine,omitempty" tf:"source_engine,omitempty"`
+// Role applied to load the data.
+IngestionRole *string `json:"ingestionRole,omitempty" tf:"ingestion_role,omitempty"`
 
-	// Version of the source engine used to make the backup
-	SourceEngineVersion *string `json:"sourceEngineVersion,omitempty" tf:"source_engine_version,omitempty"`
+// Source engine for the backup
+SourceEngine *string `json:"sourceEngine,omitempty" tf:"source_engine,omitempty"`
+
+// Version of the source engine used to make the backup
+SourceEngineVersion *string `json:"sourceEngineVersion,omitempty" tf:"source_engine_version,omitempty"`
 }
+
 
 type S3ImportObservation struct {
 
-	// The bucket name where your backup is stored
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
-	// Can be blank, but is the path to your backup
-	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
+// The bucket name where your backup is stored
+BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
-	// Role applied to load the data.
-	IngestionRole *string `json:"ingestionRole,omitempty" tf:"ingestion_role,omitempty"`
+// Can be blank, but is the path to your backup
+BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
-	// Source engine for the backup
-	SourceEngine *string `json:"sourceEngine,omitempty" tf:"source_engine,omitempty"`
+// Role applied to load the data.
+IngestionRole *string `json:"ingestionRole,omitempty" tf:"ingestion_role,omitempty"`
 
-	// Version of the source engine used to make the backup
-	SourceEngineVersion *string `json:"sourceEngineVersion,omitempty" tf:"source_engine_version,omitempty"`
+// Source engine for the backup
+SourceEngine *string `json:"sourceEngine,omitempty" tf:"source_engine,omitempty"`
+
+// Version of the source engine used to make the backup
+SourceEngineVersion *string `json:"sourceEngineVersion,omitempty" tf:"source_engine_version,omitempty"`
 }
+
 
 type S3ImportParameters struct {
 
-	// The bucket name where your backup is stored
-	// +kubebuilder:validation:Optional
-	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
-	// Can be blank, but is the path to your backup
-	// +kubebuilder:validation:Optional
-	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
+// The bucket name where your backup is stored
+// +kubebuilder:validation:Optional
+BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
-	// Role applied to load the data.
-	// +kubebuilder:validation:Optional
-	IngestionRole *string `json:"ingestionRole" tf:"ingestion_role,omitempty"`
+// Can be blank, but is the path to your backup
+// +kubebuilder:validation:Optional
+BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
-	// Source engine for the backup
-	// +kubebuilder:validation:Optional
-	SourceEngine *string `json:"sourceEngine" tf:"source_engine,omitempty"`
+// Role applied to load the data.
+// +kubebuilder:validation:Optional
+IngestionRole *string `json:"ingestionRole" tf:"ingestion_role,omitempty"`
 
-	// Version of the source engine used to make the backup
-	// +kubebuilder:validation:Optional
-	SourceEngineVersion *string `json:"sourceEngineVersion" tf:"source_engine_version,omitempty"`
+// Source engine for the backup
+// +kubebuilder:validation:Optional
+SourceEngine *string `json:"sourceEngine" tf:"source_engine,omitempty"`
+
+// Version of the source engine used to make the backup
+// +kubebuilder:validation:Optional
+SourceEngineVersion *string `json:"sourceEngineVersion" tf:"source_engine_version,omitempty"`
 }
 
 // InstanceSpec defines the desired state of Instance
 type InstanceSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     InstanceParameters `json:"forProvider"`
+	ForProvider       InstanceParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -1082,13 +1121,13 @@ type InstanceSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider InstanceInitParameters `json:"initProvider,omitempty"`
+	InitProvider       InstanceInitParameters `json:"initProvider,omitempty"`
 }
 
 // InstanceStatus defines the observed state of Instance.
 type InstanceStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        InstanceObservation `json:"atProvider,omitempty"`
+	AtProvider          InstanceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -1103,10 +1142,10 @@ type InstanceStatus struct {
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceClass) || (has(self.initProvider) && has(self.initProvider.instanceClass))",message="spec.forProvider.instanceClass is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   InstanceSpec   `json:"spec"`
-	Status InstanceStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceClass) || (has(self.initProvider) && has(self.initProvider.instanceClass))",message="spec.forProvider.instanceClass is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              InstanceSpec   `json:"spec"`
+	Status            InstanceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

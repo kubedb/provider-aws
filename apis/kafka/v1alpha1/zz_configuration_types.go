@@ -15,74 +15,83 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ConfigurationInitParameters struct {
 
-	// Description of the configuration.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of Apache Kafka versions which can use this configuration.
-	KafkaVersions []*string `json:"kafkaVersions,omitempty" tf:"kafka_versions,omitempty"`
+// Description of the configuration.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Name of the configuration.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// List of Apache Kafka versions which can use this configuration.
+KafkaVersions []*string `json:"kafkaVersions,omitempty" tf:"kafka_versions,omitempty"`
 
-	// Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide.
-	ServerProperties *string `json:"serverProperties,omitempty" tf:"server_properties,omitempty"`
+// Name of the configuration.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide.
+ServerProperties *string `json:"serverProperties,omitempty" tf:"server_properties,omitempty"`
 }
+
 
 type ConfigurationObservation struct {
 
-	// Amazon Resource Name (ARN) of the configuration.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Description of the configuration.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Amazon Resource Name (ARN) of the configuration.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Description of the configuration.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of Apache Kafka versions which can use this configuration.
-	KafkaVersions []*string `json:"kafkaVersions,omitempty" tf:"kafka_versions,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Latest revision of the configuration.
-	LatestRevision *float64 `json:"latestRevision,omitempty" tf:"latest_revision,omitempty"`
+// List of Apache Kafka versions which can use this configuration.
+KafkaVersions []*string `json:"kafkaVersions,omitempty" tf:"kafka_versions,omitempty"`
 
-	// Name of the configuration.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// Latest revision of the configuration.
+LatestRevision *float64 `json:"latestRevision,omitempty" tf:"latest_revision,omitempty"`
 
-	// Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide.
-	ServerProperties *string `json:"serverProperties,omitempty" tf:"server_properties,omitempty"`
+// Name of the configuration.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide.
+ServerProperties *string `json:"serverProperties,omitempty" tf:"server_properties,omitempty"`
 }
+
 
 type ConfigurationParameters struct {
 
-	// Description of the configuration.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of Apache Kafka versions which can use this configuration.
-	// +kubebuilder:validation:Optional
-	KafkaVersions []*string `json:"kafkaVersions,omitempty" tf:"kafka_versions,omitempty"`
+// Description of the configuration.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Name of the configuration.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// List of Apache Kafka versions which can use this configuration.
+// +kubebuilder:validation:Optional
+KafkaVersions []*string `json:"kafkaVersions,omitempty" tf:"kafka_versions,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Name of the configuration.
+// +kubebuilder:validation:Optional
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide.
-	// +kubebuilder:validation:Optional
-	ServerProperties *string `json:"serverProperties,omitempty" tf:"server_properties,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
+
+// Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide.
+// +kubebuilder:validation:Optional
+ServerProperties *string `json:"serverProperties,omitempty" tf:"server_properties,omitempty"`
 }
 
 // ConfigurationSpec defines the desired state of Configuration
 type ConfigurationSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConfigurationParameters `json:"forProvider"`
+	ForProvider       ConfigurationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -93,13 +102,13 @@ type ConfigurationSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ConfigurationInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ConfigurationInitParameters `json:"initProvider,omitempty"`
 }
 
 // ConfigurationStatus defines the observed state of Configuration.
 type ConfigurationStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConfigurationObservation `json:"atProvider,omitempty"`
+	AtProvider          ConfigurationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -114,11 +123,11 @@ type ConfigurationStatus struct {
 type Configuration struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serverProperties) || (has(self.initProvider) && has(self.initProvider.serverProperties))",message="spec.forProvider.serverProperties is a required parameter"
-	Spec   ConfigurationSpec   `json:"spec"`
-	Status ConfigurationStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serverProperties) || (has(self.initProvider) && has(self.initProvider.serverProperties))",message="spec.forProvider.serverProperties is a required parameter"
+	Spec              ConfigurationSpec   `json:"spec"`
+	Status            ConfigurationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

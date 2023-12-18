@@ -15,54 +15,63 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type DomainPolicyInitParameters struct {
 
-	// IAM policy document specifying the access policies for the domain
-	AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
+
+// IAM policy document specifying the access policies for the domain
+AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
 }
+
 
 type DomainPolicyObservation struct {
 
-	// IAM policy document specifying the access policies for the domain
-	AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
 
-	// Name of the domain.
-	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+// IAM policy document specifying the access policies for the domain
+AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Name of the domain.
+DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
+
 
 type DomainPolicyParameters struct {
 
-	// IAM policy document specifying the access policies for the domain
-	// +kubebuilder:validation:Optional
-	AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
 
-	// Name of the domain.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticsearch/v1alpha1.Domain
-	// +kubebuilder:validation:Optional
-	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+// IAM policy document specifying the access policies for the domain
+// +kubebuilder:validation:Optional
+AccessPolicies *string `json:"accessPolicies,omitempty" tf:"access_policies,omitempty"`
 
-	// Reference to a Domain in elasticsearch to populate domainName.
-	// +kubebuilder:validation:Optional
-	DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
+// Name of the domain.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticsearch/v1alpha1.Domain
+// +kubebuilder:validation:Optional
+DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
-	// Selector for a Domain in elasticsearch to populate domainName.
-	// +kubebuilder:validation:Optional
-	DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
+// Reference to a Domain in elasticsearch to populate domainName.
+// +kubebuilder:validation:Optional
+DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a Domain in elasticsearch to populate domainName.
+// +kubebuilder:validation:Optional
+DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
+
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 }
 
 // DomainPolicySpec defines the desired state of DomainPolicy
 type DomainPolicySpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     DomainPolicyParameters `json:"forProvider"`
+	ForProvider       DomainPolicyParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -73,13 +82,13 @@ type DomainPolicySpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider DomainPolicyInitParameters `json:"initProvider,omitempty"`
+	InitProvider       DomainPolicyInitParameters `json:"initProvider,omitempty"`
 }
 
 // DomainPolicyStatus defines the observed state of DomainPolicy.
 type DomainPolicyStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        DomainPolicyObservation `json:"atProvider,omitempty"`
+	AtProvider          DomainPolicyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -94,10 +103,10 @@ type DomainPolicyStatus struct {
 type DomainPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessPolicies) || (has(self.initProvider) && has(self.initProvider.accessPolicies))",message="spec.forProvider.accessPolicies is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   DomainPolicySpec   `json:"spec"`
-	Status DomainPolicyStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessPolicies) || (has(self.initProvider) && has(self.initProvider.accessPolicies))",message="spec.forProvider.accessPolicies is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              DomainPolicySpec   `json:"spec"`
+	Status            DomainPolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

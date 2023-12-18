@@ -15,190 +15,211 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type OptionGroupInitParameters struct {
 
-	// Specifies the name of the engine that this option group should be associated with.
-	EngineName *string `json:"engineName,omitempty" tf:"engine_name,omitempty"`
 
-	// Specifies the major version of the engine that this option group should be associated with.
-	MajorEngineVersion *string `json:"majorEngineVersion,omitempty" tf:"major_engine_version,omitempty"`
+// Specifies the name of the engine that this option group should be associated with.
+EngineName *string `json:"engineName,omitempty" tf:"engine_name,omitempty"`
 
-	// A list of Options to apply.
-	Option []OptionInitParameters `json:"option,omitempty" tf:"option,omitempty"`
+// Specifies the major version of the engine that this option group should be associated with.
+MajorEngineVersion *string `json:"majorEngineVersion,omitempty" tf:"major_engine_version,omitempty"`
 
-	// The description of the option group.
-	OptionGroupDescription *string `json:"optionGroupDescription,omitempty" tf:"option_group_description,omitempty"`
+// A list of Options to apply.
+Option []OptionInitParameters `json:"option,omitempty" tf:"option,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The description of the option group.
+OptionGroupDescription *string `json:"optionGroupDescription,omitempty" tf:"option_group_description,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type OptionGroupObservation struct {
 
-	// The ARN of the db option group.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Specifies the name of the engine that this option group should be associated with.
-	EngineName *string `json:"engineName,omitempty" tf:"engine_name,omitempty"`
+// The ARN of the db option group.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The db option group name.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Specifies the name of the engine that this option group should be associated with.
+EngineName *string `json:"engineName,omitempty" tf:"engine_name,omitempty"`
 
-	// Specifies the major version of the engine that this option group should be associated with.
-	MajorEngineVersion *string `json:"majorEngineVersion,omitempty" tf:"major_engine_version,omitempty"`
+// The db option group name.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A list of Options to apply.
-	Option []OptionObservation `json:"option,omitempty" tf:"option,omitempty"`
+// Specifies the major version of the engine that this option group should be associated with.
+MajorEngineVersion *string `json:"majorEngineVersion,omitempty" tf:"major_engine_version,omitempty"`
 
-	// The description of the option group.
-	OptionGroupDescription *string `json:"optionGroupDescription,omitempty" tf:"option_group_description,omitempty"`
+// A list of Options to apply.
+Option []OptionObservation `json:"option,omitempty" tf:"option,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The description of the option group.
+OptionGroupDescription *string `json:"optionGroupDescription,omitempty" tf:"option_group_description,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type OptionGroupParameters struct {
 
-	// Specifies the name of the engine that this option group should be associated with.
-	// +kubebuilder:validation:Optional
-	EngineName *string `json:"engineName,omitempty" tf:"engine_name,omitempty"`
 
-	// Specifies the major version of the engine that this option group should be associated with.
-	// +kubebuilder:validation:Optional
-	MajorEngineVersion *string `json:"majorEngineVersion,omitempty" tf:"major_engine_version,omitempty"`
+// Specifies the name of the engine that this option group should be associated with.
+// +kubebuilder:validation:Optional
+EngineName *string `json:"engineName,omitempty" tf:"engine_name,omitempty"`
 
-	// A list of Options to apply.
-	// +kubebuilder:validation:Optional
-	Option []OptionParameters `json:"option,omitempty" tf:"option,omitempty"`
+// Specifies the major version of the engine that this option group should be associated with.
+// +kubebuilder:validation:Optional
+MajorEngineVersion *string `json:"majorEngineVersion,omitempty" tf:"major_engine_version,omitempty"`
 
-	// The description of the option group.
-	// +kubebuilder:validation:Optional
-	OptionGroupDescription *string `json:"optionGroupDescription,omitempty" tf:"option_group_description,omitempty"`
+// A list of Options to apply.
+// +kubebuilder:validation:Optional
+Option []OptionParameters `json:"option,omitempty" tf:"option,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// The description of the option group.
+// +kubebuilder:validation:Optional
+OptionGroupDescription *string `json:"optionGroupDescription,omitempty" tf:"option_group_description,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type OptionInitParameters struct {
 
-	// A list of DB Security Groups for which the option is enabled.
-	DBSecurityGroupMemberships []*string `json:"dbSecurityGroupMemberships,omitempty" tf:"db_security_group_memberships,omitempty"`
 
-	// The Name of the Option (e.g., MEMCACHED).
-	OptionName *string `json:"optionName,omitempty" tf:"option_name,omitempty"`
+// A list of DB Security Groups for which the option is enabled.
+DBSecurityGroupMemberships []*string `json:"dbSecurityGroupMemberships,omitempty" tf:"db_security_group_memberships,omitempty"`
 
-	// A list of option settings to apply.
-	OptionSettings []OptionSettingsInitParameters `json:"optionSettings,omitempty" tf:"option_settings,omitempty"`
+// The Name of the Option (e.g., MEMCACHED).
+OptionName *string `json:"optionName,omitempty" tf:"option_name,omitempty"`
 
-	// The Port number when connecting to the Option (e.g., 11211).
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// A list of option settings to apply.
+OptionSettings []OptionSettingsInitParameters `json:"optionSettings,omitempty" tf:"option_settings,omitempty"`
 
-	// A list of VPC Security Groups for which the option is enabled.
-	VPCSecurityGroupMemberships []*string `json:"vpcSecurityGroupMemberships,omitempty" tf:"vpc_security_group_memberships,omitempty"`
+// The Port number when connecting to the Option (e.g., 11211).
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The version of the option (e.g., 13.1.0.0).
-	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+// A list of VPC Security Groups for which the option is enabled.
+VPCSecurityGroupMemberships []*string `json:"vpcSecurityGroupMemberships,omitempty" tf:"vpc_security_group_memberships,omitempty"`
+
+// The version of the option (e.g., 13.1.0.0).
+Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
+
 
 type OptionObservation struct {
 
-	// A list of DB Security Groups for which the option is enabled.
-	DBSecurityGroupMemberships []*string `json:"dbSecurityGroupMemberships,omitempty" tf:"db_security_group_memberships,omitempty"`
 
-	// The Name of the Option (e.g., MEMCACHED).
-	OptionName *string `json:"optionName,omitempty" tf:"option_name,omitempty"`
+// A list of DB Security Groups for which the option is enabled.
+DBSecurityGroupMemberships []*string `json:"dbSecurityGroupMemberships,omitempty" tf:"db_security_group_memberships,omitempty"`
 
-	// A list of option settings to apply.
-	OptionSettings []OptionSettingsObservation `json:"optionSettings,omitempty" tf:"option_settings,omitempty"`
+// The Name of the Option (e.g., MEMCACHED).
+OptionName *string `json:"optionName,omitempty" tf:"option_name,omitempty"`
 
-	// The Port number when connecting to the Option (e.g., 11211).
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// A list of option settings to apply.
+OptionSettings []OptionSettingsObservation `json:"optionSettings,omitempty" tf:"option_settings,omitempty"`
 
-	// A list of VPC Security Groups for which the option is enabled.
-	VPCSecurityGroupMemberships []*string `json:"vpcSecurityGroupMemberships,omitempty" tf:"vpc_security_group_memberships,omitempty"`
+// The Port number when connecting to the Option (e.g., 11211).
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The version of the option (e.g., 13.1.0.0).
-	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+// A list of VPC Security Groups for which the option is enabled.
+VPCSecurityGroupMemberships []*string `json:"vpcSecurityGroupMemberships,omitempty" tf:"vpc_security_group_memberships,omitempty"`
+
+// The version of the option (e.g., 13.1.0.0).
+Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
+
 
 type OptionParameters struct {
 
-	// A list of DB Security Groups for which the option is enabled.
-	// +kubebuilder:validation:Optional
-	DBSecurityGroupMemberships []*string `json:"dbSecurityGroupMemberships,omitempty" tf:"db_security_group_memberships,omitempty"`
 
-	// The Name of the Option (e.g., MEMCACHED).
-	// +kubebuilder:validation:Optional
-	OptionName *string `json:"optionName" tf:"option_name,omitempty"`
+// A list of DB Security Groups for which the option is enabled.
+// +kubebuilder:validation:Optional
+DBSecurityGroupMemberships []*string `json:"dbSecurityGroupMemberships,omitempty" tf:"db_security_group_memberships,omitempty"`
 
-	// A list of option settings to apply.
-	// +kubebuilder:validation:Optional
-	OptionSettings []OptionSettingsParameters `json:"optionSettings,omitempty" tf:"option_settings,omitempty"`
+// The Name of the Option (e.g., MEMCACHED).
+// +kubebuilder:validation:Optional
+OptionName *string `json:"optionName" tf:"option_name,omitempty"`
 
-	// The Port number when connecting to the Option (e.g., 11211).
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// A list of option settings to apply.
+// +kubebuilder:validation:Optional
+OptionSettings []OptionSettingsParameters `json:"optionSettings,omitempty" tf:"option_settings,omitempty"`
 
-	// A list of VPC Security Groups for which the option is enabled.
-	// +kubebuilder:validation:Optional
-	VPCSecurityGroupMemberships []*string `json:"vpcSecurityGroupMemberships,omitempty" tf:"vpc_security_group_memberships,omitempty"`
+// The Port number when connecting to the Option (e.g., 11211).
+// +kubebuilder:validation:Optional
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The version of the option (e.g., 13.1.0.0).
-	// +kubebuilder:validation:Optional
-	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+// A list of VPC Security Groups for which the option is enabled.
+// +kubebuilder:validation:Optional
+VPCSecurityGroupMemberships []*string `json:"vpcSecurityGroupMemberships,omitempty" tf:"vpc_security_group_memberships,omitempty"`
+
+// The version of the option (e.g., 13.1.0.0).
+// +kubebuilder:validation:Optional
+Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
+
 
 type OptionSettingsInitParameters struct {
 
-	// The name of the option group. Must be lowercase, to match as it is stored in AWS.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The Value of the setting.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+// The name of the option group. Must be lowercase, to match as it is stored in AWS.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// The Value of the setting.
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
+
 
 type OptionSettingsObservation struct {
 
-	// The name of the option group. Must be lowercase, to match as it is stored in AWS.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The Value of the setting.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+// The name of the option group. Must be lowercase, to match as it is stored in AWS.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// The Value of the setting.
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
+
 
 type OptionSettingsParameters struct {
 
-	// The name of the option group. Must be lowercase, to match as it is stored in AWS.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name" tf:"name,omitempty"`
 
-	// The Value of the setting.
-	// +kubebuilder:validation:Optional
-	Value *string `json:"value" tf:"value,omitempty"`
+// The name of the option group. Must be lowercase, to match as it is stored in AWS.
+// +kubebuilder:validation:Optional
+Name *string `json:"name" tf:"name,omitempty"`
+
+// The Value of the setting.
+// +kubebuilder:validation:Optional
+Value *string `json:"value" tf:"value,omitempty"`
 }
 
 // OptionGroupSpec defines the desired state of OptionGroup
 type OptionGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     OptionGroupParameters `json:"forProvider"`
+	ForProvider       OptionGroupParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -209,13 +230,13 @@ type OptionGroupSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider OptionGroupInitParameters `json:"initProvider,omitempty"`
+	InitProvider       OptionGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // OptionGroupStatus defines the observed state of OptionGroup.
 type OptionGroupStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        OptionGroupObservation `json:"atProvider,omitempty"`
+	AtProvider          OptionGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -230,11 +251,11 @@ type OptionGroupStatus struct {
 type OptionGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engineName) || (has(self.initProvider) && has(self.initProvider.engineName))",message="spec.forProvider.engineName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.majorEngineVersion) || (has(self.initProvider) && has(self.initProvider.majorEngineVersion))",message="spec.forProvider.majorEngineVersion is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   OptionGroupSpec   `json:"spec"`
-	Status OptionGroupStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engineName) || (has(self.initProvider) && has(self.initProvider.engineName))",message="spec.forProvider.engineName is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.majorEngineVersion) || (has(self.initProvider) && has(self.initProvider.majorEngineVersion))",message="spec.forProvider.majorEngineVersion is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              OptionGroupSpec   `json:"spec"`
+	Status            OptionGroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

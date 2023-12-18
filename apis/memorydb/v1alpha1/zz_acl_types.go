@@ -15,65 +15,74 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ACLInitParameters struct {
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Set of MemoryDB user names to be included in this ACL.
-	UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Set of MemoryDB user names to be included in this ACL.
+UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
 }
+
 
 type ACLObservation struct {
 
-	// The ARN of the ACL.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Same as name.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// The ARN of the ACL.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The minimum engine version supported by the ACL.
-	MinimumEngineVersion *string `json:"minimumEngineVersion,omitempty" tf:"minimum_engine_version,omitempty"`
+// Same as name.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The minimum engine version supported by the ACL.
+MinimumEngineVersion *string `json:"minimumEngineVersion,omitempty" tf:"minimum_engine_version,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Set of MemoryDB user names to be included in this ACL.
-	UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Set of MemoryDB user names to be included in this ACL.
+UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
 }
+
 
 type ACLParameters struct {
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Set of MemoryDB user names to be included in this ACL.
-	// +kubebuilder:validation:Optional
-	UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Set of MemoryDB user names to be included in this ACL.
+// +kubebuilder:validation:Optional
+UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
 }
 
 // ACLSpec defines the desired state of ACL
 type ACLSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ACLParameters `json:"forProvider"`
+	ForProvider       ACLParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -84,13 +93,13 @@ type ACLSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ACLInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ACLInitParameters `json:"initProvider,omitempty"`
 }
 
 // ACLStatus defines the observed state of ACL.
 type ACLStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ACLObservation `json:"atProvider,omitempty"`
+	AtProvider          ACLObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -105,9 +114,9 @@ type ACLStatus struct {
 type ACL struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ACLSpec   `json:"spec"`
-	Status ACLStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ACLSpec   `json:"spec"`
+	Status            ACLStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

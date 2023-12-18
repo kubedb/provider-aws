@@ -15,138 +15,153 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
 
+
+
+
 type ClusterConfigurationInitParameters struct {
+
 }
+
 
 type ClusterConfigurationObservation struct {
 
-	// Description for the cluster.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Version number of the Redis engine used by the cluster.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Description for the cluster.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The weekly time range during which maintenance on the cluster is performed.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// Version number of the Redis engine used by the cluster.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Name of the snapshot. Conflicts with name_prefix.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// The weekly time range during which maintenance on the cluster is performed.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Compute and memory capacity of the nodes in the cluster.
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// Name of the snapshot. Conflicts with name_prefix.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Number of shards in the cluster.
-	NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
+// Compute and memory capacity of the nodes in the cluster.
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// Name of the parameter group associated with the cluster.
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// Number of shards in the cluster.
+NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
 
-	// Port number on which the cluster accepts connections.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// Name of the parameter group associated with the cluster.
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// Number of days for which MemoryDB retains automatic snapshots before deleting them.
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// Port number on which the cluster accepts connections.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of the shard.
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// Number of days for which MemoryDB retains automatic snapshots before deleting them.
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// Name of the subnet group used by the cluster.
-	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of the shard.
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// ARN of the SNS topic to which cluster notifications are sent.
-	TopicArn *string `json:"topicArn,omitempty" tf:"topic_arn,omitempty"`
+// Name of the subnet group used by the cluster.
+SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// The VPC in which the cluster exists.
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// ARN of the SNS topic to which cluster notifications are sent.
+TopicArn *string `json:"topicArn,omitempty" tf:"topic_arn,omitempty"`
+
+// The VPC in which the cluster exists.
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
+
 
 type ClusterConfigurationParameters struct {
+
 }
+
 
 type SnapshotInitParameters struct {
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SnapshotObservation struct {
 
-	// The ARN of the snapshot.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The configuration of the cluster from which the snapshot was taken.
-	ClusterConfiguration []ClusterConfigurationObservation `json:"clusterConfiguration,omitempty" tf:"cluster_configuration,omitempty"`
+// The ARN of the snapshot.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Name of the MemoryDB cluster to take a snapshot of.
-	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
+// The configuration of the cluster from which the snapshot was taken.
+ClusterConfiguration []ClusterConfigurationObservation `json:"clusterConfiguration,omitempty" tf:"cluster_configuration,omitempty"`
 
-	// The name of the snapshot.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Name of the MemoryDB cluster to take a snapshot of.
+ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// ARN of the KMS key used to encrypt the snapshot at rest.
-	KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
+// The name of the snapshot.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Indicates whether the snapshot is from an automatic backup (automated) or was created manually (manual).
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+// ARN of the KMS key used to encrypt the snapshot at rest.
+KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Indicates whether the snapshot is from an automatic backup (automated) or was created manually (manual).
+Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SnapshotParameters struct {
 
-	// Name of the MemoryDB cluster to take a snapshot of.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/memorydb/v1alpha1.Cluster
-	// +kubebuilder:validation:Optional
-	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// Reference to a Cluster in memorydb to populate clusterName.
-	// +kubebuilder:validation:Optional
-	ClusterNameRef *v1.Reference `json:"clusterNameRef,omitempty" tf:"-"`
+// Name of the MemoryDB cluster to take a snapshot of.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/memorydb/v1alpha1.Cluster
+// +kubebuilder:validation:Optional
+ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// Selector for a Cluster in memorydb to populate clusterName.
-	// +kubebuilder:validation:Optional
-	ClusterNameSelector *v1.Selector `json:"clusterNameSelector,omitempty" tf:"-"`
+// Reference to a Cluster in memorydb to populate clusterName.
+// +kubebuilder:validation:Optional
+ClusterNameRef *v1.Reference `json:"clusterNameRef,omitempty" tf:"-"`
 
-	// ARN of the KMS key used to encrypt the snapshot at rest.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
-	// +kubebuilder:validation:Optional
-	KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
+// Selector for a Cluster in memorydb to populate clusterName.
+// +kubebuilder:validation:Optional
+ClusterNameSelector *v1.Selector `json:"clusterNameSelector,omitempty" tf:"-"`
 
-	// Reference to a Key in kms to populate kmsKeyArn.
-	// +kubebuilder:validation:Optional
-	KMSKeyArnRef *v1.Reference `json:"kmsKeyArnRef,omitempty" tf:"-"`
+// ARN of the KMS key used to encrypt the snapshot at rest.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+// +kubebuilder:validation:Optional
+KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
 
-	// Selector for a Key in kms to populate kmsKeyArn.
-	// +kubebuilder:validation:Optional
-	KMSKeyArnSelector *v1.Selector `json:"kmsKeyArnSelector,omitempty" tf:"-"`
+// Reference to a Key in kms to populate kmsKeyArn.
+// +kubebuilder:validation:Optional
+KMSKeyArnRef *v1.Reference `json:"kmsKeyArnRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a Key in kms to populate kmsKeyArn.
+// +kubebuilder:validation:Optional
+KMSKeyArnSelector *v1.Selector `json:"kmsKeyArnSelector,omitempty" tf:"-"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // SnapshotSpec defines the desired state of Snapshot
 type SnapshotSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SnapshotParameters `json:"forProvider"`
+	ForProvider       SnapshotParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -157,13 +172,13 @@ type SnapshotSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider SnapshotInitParameters `json:"initProvider,omitempty"`
+	InitProvider       SnapshotInitParameters `json:"initProvider,omitempty"`
 }
 
 // SnapshotStatus defines the observed state of Snapshot.
 type SnapshotStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SnapshotObservation `json:"atProvider,omitempty"`
+	AtProvider          SnapshotObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -178,9 +193,9 @@ type SnapshotStatus struct {
 type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   SnapshotSpec   `json:"spec"`
-	Status SnapshotStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              SnapshotSpec   `json:"spec"`
+	Status            SnapshotStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -15,127 +15,142 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ClusterParameterGroupInitParameters struct {
 
-	// The description of the DB cluster parameter group.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The family of the DB cluster parameter group.
-	Family *string `json:"family,omitempty" tf:"family,omitempty"`
+// The description of the DB cluster parameter group.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group.
-	Parameter []ClusterParameterGroupParameterInitParameters `json:"parameter,omitempty" tf:"parameter,omitempty"`
+// The family of the DB cluster parameter group.
+Family *string `json:"family,omitempty" tf:"family,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group.
+Parameter []ClusterParameterGroupParameterInitParameters `json:"parameter,omitempty" tf:"parameter,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterParameterGroupObservation struct {
 
-	// The ARN of the db cluster parameter group.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The description of the DB cluster parameter group.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// The ARN of the db cluster parameter group.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The family of the DB cluster parameter group.
-	Family *string `json:"family,omitempty" tf:"family,omitempty"`
+// The description of the DB cluster parameter group.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The db cluster parameter group name.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// The family of the DB cluster parameter group.
+Family *string `json:"family,omitempty" tf:"family,omitempty"`
 
-	// A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group.
-	Parameter []ClusterParameterGroupParameterObservation `json:"parameter,omitempty" tf:"parameter,omitempty"`
+// The db cluster parameter group name.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group.
+Parameter []ClusterParameterGroupParameterObservation `json:"parameter,omitempty" tf:"parameter,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterParameterGroupParameterInitParameters struct {
 
-	// "immediate" (default), or "pending-reboot". Some
-	// engines can't apply some parameters without a reboot, and you will need to
-	// specify "pending-reboot" here.
-	ApplyMethod *string `json:"applyMethod,omitempty" tf:"apply_method,omitempty"`
 
-	// The name of the DB cluster parameter group.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// "immediate" (default), or "pending-reboot". Some
+// engines can't apply some parameters without a reboot, and you will need to
+// specify "pending-reboot" here.
+ApplyMethod *string `json:"applyMethod,omitempty" tf:"apply_method,omitempty"`
 
-	// The value of the DB parameter.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+// The name of the DB cluster parameter group.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// The value of the DB parameter.
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
+
 
 type ClusterParameterGroupParameterObservation struct {
 
-	// "immediate" (default), or "pending-reboot". Some
-	// engines can't apply some parameters without a reboot, and you will need to
-	// specify "pending-reboot" here.
-	ApplyMethod *string `json:"applyMethod,omitempty" tf:"apply_method,omitempty"`
 
-	// The name of the DB cluster parameter group.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+// "immediate" (default), or "pending-reboot". Some
+// engines can't apply some parameters without a reboot, and you will need to
+// specify "pending-reboot" here.
+ApplyMethod *string `json:"applyMethod,omitempty" tf:"apply_method,omitempty"`
 
-	// The value of the DB parameter.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+// The name of the DB cluster parameter group.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// The value of the DB parameter.
+Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
+
 
 type ClusterParameterGroupParameterParameters struct {
 
-	// "immediate" (default), or "pending-reboot". Some
-	// engines can't apply some parameters without a reboot, and you will need to
-	// specify "pending-reboot" here.
-	// +kubebuilder:validation:Optional
-	ApplyMethod *string `json:"applyMethod,omitempty" tf:"apply_method,omitempty"`
 
-	// The name of the DB cluster parameter group.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name" tf:"name,omitempty"`
+// "immediate" (default), or "pending-reboot". Some
+// engines can't apply some parameters without a reboot, and you will need to
+// specify "pending-reboot" here.
+// +kubebuilder:validation:Optional
+ApplyMethod *string `json:"applyMethod,omitempty" tf:"apply_method,omitempty"`
 
-	// The value of the DB parameter.
-	// +kubebuilder:validation:Optional
-	Value *string `json:"value" tf:"value,omitempty"`
+// The name of the DB cluster parameter group.
+// +kubebuilder:validation:Optional
+Name *string `json:"name" tf:"name,omitempty"`
+
+// The value of the DB parameter.
+// +kubebuilder:validation:Optional
+Value *string `json:"value" tf:"value,omitempty"`
 }
+
 
 type ClusterParameterGroupParameters struct {
 
-	// The description of the DB cluster parameter group.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The family of the DB cluster parameter group.
-	// +kubebuilder:validation:Optional
-	Family *string `json:"family,omitempty" tf:"family,omitempty"`
+// The description of the DB cluster parameter group.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group.
-	// +kubebuilder:validation:Optional
-	Parameter []ClusterParameterGroupParameterParameters `json:"parameter,omitempty" tf:"parameter,omitempty"`
+// The family of the DB cluster parameter group.
+// +kubebuilder:validation:Optional
+Family *string `json:"family,omitempty" tf:"family,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group.
+// +kubebuilder:validation:Optional
+Parameter []ClusterParameterGroupParameterParameters `json:"parameter,omitempty" tf:"parameter,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // ClusterParameterGroupSpec defines the desired state of ClusterParameterGroup
 type ClusterParameterGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClusterParameterGroupParameters `json:"forProvider"`
+	ForProvider       ClusterParameterGroupParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -146,13 +161,13 @@ type ClusterParameterGroupSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ClusterParameterGroupInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ClusterParameterGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterParameterGroupStatus defines the observed state of ClusterParameterGroup.
 type ClusterParameterGroupStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClusterParameterGroupObservation `json:"atProvider,omitempty"`
+	AtProvider          ClusterParameterGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -167,10 +182,10 @@ type ClusterParameterGroupStatus struct {
 type ClusterParameterGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.family) || (has(self.initProvider) && has(self.initProvider.family))",message="spec.forProvider.family is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ClusterParameterGroupSpec   `json:"spec"`
-	Status ClusterParameterGroupStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.family) || (has(self.initProvider) && has(self.initProvider.family))",message="spec.forProvider.family is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ClusterParameterGroupSpec   `json:"spec"`
+	Status            ClusterParameterGroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

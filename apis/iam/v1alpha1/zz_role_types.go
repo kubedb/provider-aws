@@ -15,178 +15,200 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type InlinePolicyInitParameters struct {
 
-	// Friendly name of the role. See IAM Identifiers for more information.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Policy document as a JSON formatted string.
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// Friendly name of the role. See IAM Identifiers for more information.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// Policy document as a JSON formatted string.
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 }
+
 
 type InlinePolicyObservation struct {
 
-	// Friendly name of the role. See IAM Identifiers for more information.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Policy document as a JSON formatted string.
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// Friendly name of the role. See IAM Identifiers for more information.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// Policy document as a JSON formatted string.
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 }
+
 
 type InlinePolicyParameters struct {
 
-	// Friendly name of the role. See IAM Identifiers for more information.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Policy document as a JSON formatted string.
-	// +kubebuilder:validation:Optional
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// Friendly name of the role. See IAM Identifiers for more information.
+// +kubebuilder:validation:Optional
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+// Policy document as a JSON formatted string.
+// +kubebuilder:validation:Optional
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 }
+
 
 type RoleInitParameters struct {
 
-	// Policy that grants an entity permission to assume the role.
-	AssumeRolePolicy *string `json:"assumeRolePolicy,omitempty" tf:"assume_role_policy,omitempty"`
 
-	// Description of the role.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Policy that grants an entity permission to assume the role.
+AssumeRolePolicy *string `json:"assumeRolePolicy,omitempty" tf:"assume_role_policy,omitempty"`
 
-	// Whether to force detaching any policies the role has before destroying it. Defaults to false.
-	ForceDetachPolicies *bool `json:"forceDetachPolicies,omitempty" tf:"force_detach_policies,omitempty"`
+// Description of the role.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Crossplane will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Crossplane to remove all inline policies added out of band on apply.
-	InlinePolicy []InlinePolicyInitParameters `json:"inlinePolicy,omitempty" tf:"inline_policy,omitempty"`
+// Whether to force detaching any policies the role has before destroying it. Defaults to false.
+ForceDetachPolicies *bool `json:"forceDetachPolicies,omitempty" tf:"force_detach_policies,omitempty"`
 
-	// Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Crossplane will ignore policy attachments to this resource. When configured, Crossplane will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Crossplane to remove all managed policy attachments.
-	ManagedPolicyArns []*string `json:"managedPolicyArns,omitempty" tf:"managed_policy_arns,omitempty"`
+// Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Crossplane will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Crossplane to remove all inline policies added out of band on apply.
+InlinePolicy []InlinePolicyInitParameters `json:"inlinePolicy,omitempty" tf:"inline_policy,omitempty"`
 
-	// Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours.
-	MaxSessionDuration *float64 `json:"maxSessionDuration,omitempty" tf:"max_session_duration,omitempty"`
+// Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Crossplane will ignore policy attachments to this resource. When configured, Crossplane will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Crossplane to remove all managed policy attachments.
+ManagedPolicyArns []*string `json:"managedPolicyArns,omitempty" tf:"managed_policy_arns,omitempty"`
 
-	// Path to the role. See IAM Identifiers for more information.
-	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+// Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours.
+MaxSessionDuration *float64 `json:"maxSessionDuration,omitempty" tf:"max_session_duration,omitempty"`
 
-	// ARN of the policy that is used to set the permissions boundary for the role.
-	PermissionsBoundary *string `json:"permissionsBoundary,omitempty" tf:"permissions_boundary,omitempty"`
+// Path to the role. See IAM Identifiers for more information.
+Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// ARN of the policy that is used to set the permissions boundary for the role.
+PermissionsBoundary *string `json:"permissionsBoundary,omitempty" tf:"permissions_boundary,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type RoleLastUsedInitParameters struct {
+
 }
+
 
 type RoleLastUsedObservation struct {
-	LastUsedDate *string `json:"lastUsedDate,omitempty" tf:"last_used_date,omitempty"`
 
-	// The name of the AWS Region in which the role was last used.
-	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+LastUsedDate *string `json:"lastUsedDate,omitempty" tf:"last_used_date,omitempty"`
+
+// The name of the AWS Region in which the role was last used.
+Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
+
 
 type RoleLastUsedParameters struct {
+
 }
+
 
 type RoleObservation struct {
 
-	// Amazon Resource Name (ARN) specifying the role.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Policy that grants an entity permission to assume the role.
-	AssumeRolePolicy *string `json:"assumeRolePolicy,omitempty" tf:"assume_role_policy,omitempty"`
+// Amazon Resource Name (ARN) specifying the role.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Creation date of the IAM role.
-	CreateDate *string `json:"createDate,omitempty" tf:"create_date,omitempty"`
+// Policy that grants an entity permission to assume the role.
+AssumeRolePolicy *string `json:"assumeRolePolicy,omitempty" tf:"assume_role_policy,omitempty"`
 
-	// Description of the role.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Creation date of the IAM role.
+CreateDate *string `json:"createDate,omitempty" tf:"create_date,omitempty"`
 
-	// Whether to force detaching any policies the role has before destroying it. Defaults to false.
-	ForceDetachPolicies *bool `json:"forceDetachPolicies,omitempty" tf:"force_detach_policies,omitempty"`
+// Description of the role.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Name of the role.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Whether to force detaching any policies the role has before destroying it. Defaults to false.
+ForceDetachPolicies *bool `json:"forceDetachPolicies,omitempty" tf:"force_detach_policies,omitempty"`
 
-	// Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Crossplane will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Crossplane to remove all inline policies added out of band on apply.
-	InlinePolicy []InlinePolicyObservation `json:"inlinePolicy,omitempty" tf:"inline_policy,omitempty"`
+// Name of the role.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Crossplane will ignore policy attachments to this resource. When configured, Crossplane will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Crossplane to remove all managed policy attachments.
-	ManagedPolicyArns []*string `json:"managedPolicyArns,omitempty" tf:"managed_policy_arns,omitempty"`
+// Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Crossplane will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Crossplane to remove all inline policies added out of band on apply.
+InlinePolicy []InlinePolicyObservation `json:"inlinePolicy,omitempty" tf:"inline_policy,omitempty"`
 
-	// Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours.
-	MaxSessionDuration *float64 `json:"maxSessionDuration,omitempty" tf:"max_session_duration,omitempty"`
+// Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Crossplane will ignore policy attachments to this resource. When configured, Crossplane will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Crossplane to remove all managed policy attachments.
+ManagedPolicyArns []*string `json:"managedPolicyArns,omitempty" tf:"managed_policy_arns,omitempty"`
 
-	// Path to the role. See IAM Identifiers for more information.
-	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+// Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours.
+MaxSessionDuration *float64 `json:"maxSessionDuration,omitempty" tf:"max_session_duration,omitempty"`
 
-	// ARN of the policy that is used to set the permissions boundary for the role.
-	PermissionsBoundary *string `json:"permissionsBoundary,omitempty" tf:"permissions_boundary,omitempty"`
+// Path to the role. See IAM Identifiers for more information.
+Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Contains information about the last time that an IAM role was used. See role_last_used for details.
-	RoleLastUsed []RoleLastUsedObservation `json:"roleLastUsed,omitempty" tf:"role_last_used,omitempty"`
+// ARN of the policy that is used to set the permissions boundary for the role.
+PermissionsBoundary *string `json:"permissionsBoundary,omitempty" tf:"permissions_boundary,omitempty"`
 
-	// Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Contains information about the last time that an IAM role was used. See role_last_used for details.
+RoleLastUsed []RoleLastUsedObservation `json:"roleLastUsed,omitempty" tf:"role_last_used,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Stable and unique string identifying the role.
-	UniqueID *string `json:"uniqueId,omitempty" tf:"unique_id,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Stable and unique string identifying the role.
+UniqueID *string `json:"uniqueId,omitempty" tf:"unique_id,omitempty"`
 }
+
 
 type RoleParameters struct {
 
-	// Policy that grants an entity permission to assume the role.
-	// +kubebuilder:validation:Optional
-	AssumeRolePolicy *string `json:"assumeRolePolicy,omitempty" tf:"assume_role_policy,omitempty"`
 
-	// Description of the role.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Policy that grants an entity permission to assume the role.
+// +kubebuilder:validation:Optional
+AssumeRolePolicy *string `json:"assumeRolePolicy,omitempty" tf:"assume_role_policy,omitempty"`
 
-	// Whether to force detaching any policies the role has before destroying it. Defaults to false.
-	// +kubebuilder:validation:Optional
-	ForceDetachPolicies *bool `json:"forceDetachPolicies,omitempty" tf:"force_detach_policies,omitempty"`
+// Description of the role.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Crossplane will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Crossplane to remove all inline policies added out of band on apply.
-	// +kubebuilder:validation:Optional
-	InlinePolicy []InlinePolicyParameters `json:"inlinePolicy,omitempty" tf:"inline_policy,omitempty"`
+// Whether to force detaching any policies the role has before destroying it. Defaults to false.
+// +kubebuilder:validation:Optional
+ForceDetachPolicies *bool `json:"forceDetachPolicies,omitempty" tf:"force_detach_policies,omitempty"`
 
-	// Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Crossplane will ignore policy attachments to this resource. When configured, Crossplane will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Crossplane to remove all managed policy attachments.
-	// +kubebuilder:validation:Optional
-	ManagedPolicyArns []*string `json:"managedPolicyArns,omitempty" tf:"managed_policy_arns,omitempty"`
+// Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Crossplane will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Crossplane to remove all inline policies added out of band on apply.
+// +kubebuilder:validation:Optional
+InlinePolicy []InlinePolicyParameters `json:"inlinePolicy,omitempty" tf:"inline_policy,omitempty"`
 
-	// Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours.
-	// +kubebuilder:validation:Optional
-	MaxSessionDuration *float64 `json:"maxSessionDuration,omitempty" tf:"max_session_duration,omitempty"`
+// Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Crossplane will ignore policy attachments to this resource. When configured, Crossplane will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Crossplane to remove all managed policy attachments.
+// +kubebuilder:validation:Optional
+ManagedPolicyArns []*string `json:"managedPolicyArns,omitempty" tf:"managed_policy_arns,omitempty"`
 
-	// Path to the role. See IAM Identifiers for more information.
-	// +kubebuilder:validation:Optional
-	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+// Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours.
+// +kubebuilder:validation:Optional
+MaxSessionDuration *float64 `json:"maxSessionDuration,omitempty" tf:"max_session_duration,omitempty"`
 
-	// ARN of the policy that is used to set the permissions boundary for the role.
-	// +kubebuilder:validation:Optional
-	PermissionsBoundary *string `json:"permissionsBoundary,omitempty" tf:"permissions_boundary,omitempty"`
+// Path to the role. See IAM Identifiers for more information.
+// +kubebuilder:validation:Optional
+Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// ARN of the policy that is used to set the permissions boundary for the role.
+// +kubebuilder:validation:Optional
+PermissionsBoundary *string `json:"permissionsBoundary,omitempty" tf:"permissions_boundary,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // RoleSpec defines the desired state of Role
 type RoleSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     RoleParameters `json:"forProvider"`
+	ForProvider       RoleParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -197,13 +219,13 @@ type RoleSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider RoleInitParameters `json:"initProvider,omitempty"`
+	InitProvider       RoleInitParameters `json:"initProvider,omitempty"`
 }
 
 // RoleStatus defines the observed state of Role.
 type RoleStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        RoleObservation `json:"atProvider,omitempty"`
+	AtProvider          RoleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -218,9 +240,9 @@ type RoleStatus struct {
 type Role struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.assumeRolePolicy) || (has(self.initProvider) && has(self.initProvider.assumeRolePolicy))",message="spec.forProvider.assumeRolePolicy is a required parameter"
-	Spec   RoleSpec   `json:"spec"`
-	Status RoleStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.assumeRolePolicy) || (has(self.initProvider) && has(self.initProvider.assumeRolePolicy))",message="spec.forProvider.assumeRolePolicy is a required parameter"
+	Spec              RoleSpec   `json:"spec"`
+	Status            RoleStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

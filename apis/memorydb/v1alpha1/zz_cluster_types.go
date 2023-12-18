@@ -15,362 +15,395 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
 
+
+
+
 type ClusterEndpointInitParameters struct {
+
 }
+
 
 type ClusterEndpointObservation struct {
 
-	// DNS hostname of the cluster configuration endpoint.
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// The port number on which each of the nodes accepts connections. Defaults to 6379.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// DNS hostname of the cluster configuration endpoint.
+Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+// The port number on which each of the nodes accepts connections. Defaults to 6379.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
+
 
 type ClusterEndpointParameters struct {
+
 }
+
 
 type ClusterInitParameters struct {
 
-	// The name of the Access Control List to associate with the cluster.
-	ACLName *string `json:"aclName,omitempty" tf:"acl_name,omitempty"`
 
-	// When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
-	AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// The name of the Access Control List to associate with the cluster.
+ACLName *string `json:"aclName,omitempty" tf:"acl_name,omitempty"`
 
-	// Enables data tiering. This option is not supported by all instance types. For more information, see Data tiering.
-	DataTiering *bool `json:"dataTiering,omitempty" tf:"data_tiering,omitempty"`
+// When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
+AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// Description for the cluster.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Enables data tiering. This option is not supported by all instance types. For more information, see Data tiering.
+DataTiering *bool `json:"dataTiering,omitempty" tf:"data_tiering,omitempty"`
 
-	// Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Description for the cluster.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
-	FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
+// Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
+FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
 
-	// The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
-	NumReplicasPerShard *float64 `json:"numReplicasPerShard,omitempty" tf:"num_replicas_per_shard,omitempty"`
+// The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// The number of shards in the cluster. Defaults to 1.
-	NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
+// The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
+NumReplicasPerShard *float64 `json:"numReplicasPerShard,omitempty" tf:"num_replicas_per_shard,omitempty"`
 
-	// The name of the parameter group associated with the cluster.
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// The number of shards in the cluster. Defaults to 1.
+NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
 
-	// The port number on which each of the nodes accepts connections. Defaults to 6379.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// The name of the parameter group associated with the cluster.
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
-	SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
+// The port number on which each of the nodes accepts connections. Defaults to 6379.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The name of a snapshot from which to restore data into the new cluster.
-	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
+// List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
+SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
 
-	// The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// The name of a snapshot from which to restore data into the new cluster.
+SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
-	// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// ARN of the SNS topic to which cluster notifications are sent.
-	SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
+// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
-	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+// ARN of the SNS topic to which cluster notifications are sent.
+SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
+TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterObservation struct {
 
-	// The name of the Access Control List to associate with the cluster.
-	ACLName *string `json:"aclName,omitempty" tf:"acl_name,omitempty"`
 
-	// The ARN of the cluster.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+// The name of the Access Control List to associate with the cluster.
+ACLName *string `json:"aclName,omitempty" tf:"acl_name,omitempty"`
 
-	// When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
-	AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// The ARN of the cluster.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	ClusterEndpoint []ClusterEndpointObservation `json:"clusterEndpoint,omitempty" tf:"cluster_endpoint,omitempty"`
+// When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
+AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// Enables data tiering. This option is not supported by all instance types. For more information, see Data tiering.
-	DataTiering *bool `json:"dataTiering,omitempty" tf:"data_tiering,omitempty"`
+ClusterEndpoint []ClusterEndpointObservation `json:"clusterEndpoint,omitempty" tf:"cluster_endpoint,omitempty"`
 
-	// Description for the cluster.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Enables data tiering. This option is not supported by all instance types. For more information, see Data tiering.
+DataTiering *bool `json:"dataTiering,omitempty" tf:"data_tiering,omitempty"`
 
-	// Patch version number of the Redis engine used by the cluster.
-	EnginePatchVersion *string `json:"enginePatchVersion,omitempty" tf:"engine_patch_version,omitempty"`
+// Description for the cluster.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Patch version number of the Redis engine used by the cluster.
+EnginePatchVersion *string `json:"enginePatchVersion,omitempty" tf:"engine_patch_version,omitempty"`
 
-	// Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
-	FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
+// Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Same as name.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
+FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
 
-	// ARN of the KMS key used to encrypt the cluster at rest.
-	KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
+// Same as name.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// ARN of the KMS key used to encrypt the cluster at rest.
+KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
 
-	// The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
-	NumReplicasPerShard *float64 `json:"numReplicasPerShard,omitempty" tf:"num_replicas_per_shard,omitempty"`
+// The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// The number of shards in the cluster. Defaults to 1.
-	NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
+// The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
+NumReplicasPerShard *float64 `json:"numReplicasPerShard,omitempty" tf:"num_replicas_per_shard,omitempty"`
 
-	// The name of the parameter group associated with the cluster.
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// The number of shards in the cluster. Defaults to 1.
+NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
 
-	// The port number on which each of the nodes accepts connections. Defaults to 6379.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// The name of the parameter group associated with the cluster.
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// Set of VPC Security Group ID-s to associate with this cluster.
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+// The port number on which each of the nodes accepts connections. Defaults to 6379.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Set of shards in this cluster.
-	Shards []ShardsObservation `json:"shards,omitempty" tf:"shards,omitempty"`
+// Set of VPC Security Group ID-s to associate with this cluster.
+SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
-	SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
+// Set of shards in this cluster.
+Shards []ShardsObservation `json:"shards,omitempty" tf:"shards,omitempty"`
 
-	// The name of a snapshot from which to restore data into the new cluster.
-	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
+// List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
+SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
 
-	// The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// The name of a snapshot from which to restore data into the new cluster.
+SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
-	// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// ARN of the SNS topic to which cluster notifications are sent.
-	SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
+// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// The name of the subnet group to be used for the cluster. Defaults to a subnet group consisting of default VPC subnets.
-	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+// ARN of the SNS topic to which cluster notifications are sent.
+SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
 
-	// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
-	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+// The name of the subnet group to be used for the cluster. Defaults to a subnet group consisting of default VPC subnets.
+SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
+TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterParameters struct {
 
-	// The name of the Access Control List to associate with the cluster.
-	// +kubebuilder:validation:Optional
-	ACLName *string `json:"aclName,omitempty" tf:"acl_name,omitempty"`
 
-	// When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
-	// +kubebuilder:validation:Optional
-	AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// The name of the Access Control List to associate with the cluster.
+// +kubebuilder:validation:Optional
+ACLName *string `json:"aclName,omitempty" tf:"acl_name,omitempty"`
 
-	// Enables data tiering. This option is not supported by all instance types. For more information, see Data tiering.
-	// +kubebuilder:validation:Optional
-	DataTiering *bool `json:"dataTiering,omitempty" tf:"data_tiering,omitempty"`
+// When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
+// +kubebuilder:validation:Optional
+AutoMinorVersionUpgrade *bool `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// Description for the cluster.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// Enables data tiering. This option is not supported by all instance types. For more information, see Data tiering.
+// +kubebuilder:validation:Optional
+DataTiering *bool `json:"dataTiering,omitempty" tf:"data_tiering,omitempty"`
 
-	// Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
-	// +kubebuilder:validation:Optional
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Description for the cluster.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
-	// +kubebuilder:validation:Optional
-	FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
+// Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
+// +kubebuilder:validation:Optional
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// ARN of the KMS key used to encrypt the cluster at rest.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
-	// +kubebuilder:validation:Optional
-	KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
+// Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
+// +kubebuilder:validation:Optional
+FinalSnapshotName *string `json:"finalSnapshotName,omitempty" tf:"final_snapshot_name,omitempty"`
 
-	// Reference to a Key in kms to populate kmsKeyArn.
-	// +kubebuilder:validation:Optional
-	KMSKeyArnRef *v1.Reference `json:"kmsKeyArnRef,omitempty" tf:"-"`
+// ARN of the KMS key used to encrypt the cluster at rest.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/kms/v1alpha1.Key
+// +kubebuilder:validation:Optional
+KMSKeyArn *string `json:"kmsKeyArn,omitempty" tf:"kms_key_arn,omitempty"`
 
-	// Selector for a Key in kms to populate kmsKeyArn.
-	// +kubebuilder:validation:Optional
-	KMSKeyArnSelector *v1.Selector `json:"kmsKeyArnSelector,omitempty" tf:"-"`
+// Reference to a Key in kms to populate kmsKeyArn.
+// +kubebuilder:validation:Optional
+KMSKeyArnRef *v1.Reference `json:"kmsKeyArnRef,omitempty" tf:"-"`
 
-	// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
-	// +kubebuilder:validation:Optional
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// Selector for a Key in kms to populate kmsKeyArn.
+// +kubebuilder:validation:Optional
+KMSKeyArnSelector *v1.Selector `json:"kmsKeyArnSelector,omitempty" tf:"-"`
 
-	// The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
-	// +kubebuilder:validation:Optional
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.
+// +kubebuilder:validation:Optional
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
-	// +kubebuilder:validation:Optional
-	NumReplicasPerShard *float64 `json:"numReplicasPerShard,omitempty" tf:"num_replicas_per_shard,omitempty"`
+// The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
+// +kubebuilder:validation:Optional
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// The number of shards in the cluster. Defaults to 1.
-	// +kubebuilder:validation:Optional
-	NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
+// The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
+// +kubebuilder:validation:Optional
+NumReplicasPerShard *float64 `json:"numReplicasPerShard,omitempty" tf:"num_replicas_per_shard,omitempty"`
 
-	// The name of the parameter group associated with the cluster.
-	// +kubebuilder:validation:Optional
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// The number of shards in the cluster. Defaults to 1.
+// +kubebuilder:validation:Optional
+NumShards *float64 `json:"numShards,omitempty" tf:"num_shards,omitempty"`
 
-	// The port number on which each of the nodes accepts connections. Defaults to 6379.
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// The name of the parameter group associated with the cluster.
+// +kubebuilder:validation:Optional
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// The port number on which each of the nodes accepts connections. Defaults to 6379.
+// +kubebuilder:validation:Optional
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// References to SecurityGroup in ec2 to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+// References to SecurityGroup in ec2 to populate securityGroupIds.
+// +kubebuilder:validation:Optional
+SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
 
-	// Set of VPC Security Group ID-s to associate with this cluster.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
-	// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
-	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
-	// +kubebuilder:validation:Optional
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
+// +kubebuilder:validation:Optional
+SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
-	// +kubebuilder:validation:Optional
-	SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
+// Set of VPC Security Group ID-s to associate with this cluster.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
+// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
+// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
+// +kubebuilder:validation:Optional
+SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// The name of a snapshot from which to restore data into the new cluster.
-	// +kubebuilder:validation:Optional
-	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
+// List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
+// +kubebuilder:validation:Optional
+SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
 
-	// The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
-	// +kubebuilder:validation:Optional
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// The name of a snapshot from which to restore data into the new cluster.
+// +kubebuilder:validation:Optional
+SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
-	// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.
-	// +kubebuilder:validation:Optional
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
+// +kubebuilder:validation:Optional
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// ARN of the SNS topic to which cluster notifications are sent.
-	// +kubebuilder:validation:Optional
-	SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
+// The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.
+// +kubebuilder:validation:Optional
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// The name of the subnet group to be used for the cluster. Defaults to a subnet group consisting of default VPC subnets.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/memorydb/v1alpha1.SubnetGroup
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+// ARN of the SNS topic to which cluster notifications are sent.
+// +kubebuilder:validation:Optional
+SnsTopicArn *string `json:"snsTopicArn,omitempty" tf:"sns_topic_arn,omitempty"`
 
-	// Reference to a SubnetGroup in memorydb to populate subnetGroupName.
-	// +kubebuilder:validation:Optional
-	SubnetGroupNameRef *v1.Reference `json:"subnetGroupNameRef,omitempty" tf:"-"`
+// The name of the subnet group to be used for the cluster. Defaults to a subnet group consisting of default VPC subnets.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/memorydb/v1alpha1.SubnetGroup
+// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+// +kubebuilder:validation:Optional
+SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// Selector for a SubnetGroup in memorydb to populate subnetGroupName.
-	// +kubebuilder:validation:Optional
-	SubnetGroupNameSelector *v1.Selector `json:"subnetGroupNameSelector,omitempty" tf:"-"`
+// Reference to a SubnetGroup in memorydb to populate subnetGroupName.
+// +kubebuilder:validation:Optional
+SubnetGroupNameRef *v1.Reference `json:"subnetGroupNameRef,omitempty" tf:"-"`
 
-	// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
-	// +kubebuilder:validation:Optional
-	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+// Selector for a SubnetGroup in memorydb to populate subnetGroupName.
+// +kubebuilder:validation:Optional
+SubnetGroupNameSelector *v1.Selector `json:"subnetGroupNameSelector,omitempty" tf:"-"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.
+// +kubebuilder:validation:Optional
+TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type EndpointInitParameters struct {
+
 }
+
 
 type EndpointObservation struct {
 
-	// DNS hostname of the cluster configuration endpoint.
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// The port number on which each of the nodes accepts connections. Defaults to 6379.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// DNS hostname of the cluster configuration endpoint.
+Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+// The port number on which each of the nodes accepts connections. Defaults to 6379.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
+
 
 type EndpointParameters struct {
+
 }
 
+
 type NodesInitParameters struct {
+
 }
+
 
 type NodesObservation struct {
 
-	// The Availability Zone in which the node resides.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The date and time when the node was created. Example: 2022-01-01T21:00:00Z.
-	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
+// The Availability Zone in which the node resides.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	Endpoint []EndpointObservation `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+// The date and time when the node was created. Example: 2022-01-01T21:00:00Z.
+CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Name of the cluster. Conflicts with name_prefix.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+Endpoint []EndpointObservation `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+// Name of the cluster. Conflicts with name_prefix.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
+
 
 type NodesParameters struct {
+
 }
 
+
 type ShardsInitParameters struct {
+
 }
+
 
 type ShardsObservation struct {
 
-	// Name of the cluster. Conflicts with name_prefix.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Set of nodes in this shard.
-	Nodes []NodesObservation `json:"nodes,omitempty" tf:"nodes,omitempty"`
+// Name of the cluster. Conflicts with name_prefix.
+Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Number of individual nodes in this shard.
-	NumNodes *float64 `json:"numNodes,omitempty" tf:"num_nodes,omitempty"`
+// Set of nodes in this shard.
+Nodes []NodesObservation `json:"nodes,omitempty" tf:"nodes,omitempty"`
 
-	// Keyspace for this shard. Example: 0-16383.
-	Slots *string `json:"slots,omitempty" tf:"slots,omitempty"`
+// Number of individual nodes in this shard.
+NumNodes *float64 `json:"numNodes,omitempty" tf:"num_nodes,omitempty"`
+
+// Keyspace for this shard. Example: 0-16383.
+Slots *string `json:"slots,omitempty" tf:"slots,omitempty"`
 }
 
+
 type ShardsParameters struct {
+
 }
 
 // ClusterSpec defines the desired state of Cluster
 type ClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClusterParameters `json:"forProvider"`
+	ForProvider       ClusterParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -381,13 +414,13 @@ type ClusterSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ClusterInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterStatus defines the observed state of Cluster.
 type ClusterStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClusterObservation `json:"atProvider,omitempty"`
+	AtProvider          ClusterObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -402,11 +435,11 @@ type ClusterStatus struct {
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.aclName) || (has(self.initProvider) && has(self.initProvider.aclName))",message="spec.forProvider.aclName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nodeType) || (has(self.initProvider) && has(self.initProvider.nodeType))",message="spec.forProvider.nodeType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ClusterSpec   `json:"spec"`
-	Status ClusterStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.aclName) || (has(self.initProvider) && has(self.initProvider.aclName))",message="spec.forProvider.aclName is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nodeType) || (has(self.initProvider) && has(self.initProvider.nodeType))",message="spec.forProvider.nodeType is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ClusterSpec   `json:"spec"`
+	Status            ClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
