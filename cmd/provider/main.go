@@ -9,6 +9,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/certificates"
 	"github.com/crossplane/crossplane-runtime/pkg/feature"
 	"gopkg.in/alecthomas/kingpin.v2"
+	"k8s.io/klog/v2"
 	"os"
 	"path/filepath"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
@@ -87,7 +88,7 @@ func main() {
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add AWS APIs to scheme")
-
+	kingpin.FatalIfError(apis.AddToSchemeCrd(mgr.GetScheme()), "Cannot add Azure APIs to scheme")
 	// if the native Terraform provider plugin's path is not configured via
 	// the env. variable TERRAFORM_NATIVE_PROVIDER_PATH or
 	// the `--terraform-native-provider-path` command-line option,
@@ -154,7 +155,10 @@ func main() {
 			Status: v1alpha1.StoreConfigStatus{},
 		})), "cannot create default store config")
 	}
-
-	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Aws controllers")
+	if err := controller.NewCustomResourceReconciler(mgr, o).SetupWithManager(mgr); err != nil {
+		klog.Error(err, "unable to create controller", "controller", "CustomResourceReconciler")
+		os.Exit(1)
+	}
+	//kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Aws controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }

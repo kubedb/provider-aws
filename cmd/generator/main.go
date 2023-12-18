@@ -7,6 +7,7 @@ package main
 import (
 	"context"
 	"fmt"
+	dynamic_controller "kubedb.dev/provider-aws/cmd/dynamic-controller"
 	"os"
 	"path/filepath"
 
@@ -26,4 +27,5 @@ func main() {
 	}
 	p, err := config.GetProvider(context.Background(), true)
 	pipeline.Run(p, absRootDir)
+	dynamic_controller.GenerateController(p, absRootDir)
 }

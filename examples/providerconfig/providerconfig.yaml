@@ -6,6 +6,14 @@ spec:
   credentials:
     source: Secret
     secretRef:
-      name: example-creds
+      name: aws-secret
+      key: creds
       namespace: crossplane-system
-      key: credentials
+
+#  echo '
+#  [default]
+#  aws_access_key_id = <your_access_key>
+#  aws_secret_access_key = <your_secret_access_key>
+#  ' > aws-credentials.txt
+
+#  kubectl create secret  generic aws-secret -n crossplane-system --from-file=creds=./aws-credentials.txt
