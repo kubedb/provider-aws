@@ -15,74 +15,83 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type TableItemInitParameters struct {
 
-	// Hash key to use for lookups and identification of the item
-	HashKey *string `json:"hashKey,omitempty" tf:"hash_key,omitempty"`
 
-	// JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.
-	Item *string `json:"item,omitempty" tf:"item,omitempty"`
+// Hash key to use for lookups and identification of the item
+HashKey *string `json:"hashKey,omitempty" tf:"hash_key,omitempty"`
 
-	// Range key to use for lookups and identification of the item. Required if there is range key defined in the table.
-	RangeKey *string `json:"rangeKey,omitempty" tf:"range_key,omitempty"`
+// JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.
+Item *string `json:"item,omitempty" tf:"item,omitempty"`
+
+// Range key to use for lookups and identification of the item. Required if there is range key defined in the table.
+RangeKey *string `json:"rangeKey,omitempty" tf:"range_key,omitempty"`
 }
+
 
 type TableItemObservation struct {
 
-	// Hash key to use for lookups and identification of the item
-	HashKey *string `json:"hashKey,omitempty" tf:"hash_key,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Hash key to use for lookups and identification of the item
+HashKey *string `json:"hashKey,omitempty" tf:"hash_key,omitempty"`
 
-	// JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.
-	Item *string `json:"item,omitempty" tf:"item,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Range key to use for lookups and identification of the item. Required if there is range key defined in the table.
-	RangeKey *string `json:"rangeKey,omitempty" tf:"range_key,omitempty"`
+// JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.
+Item *string `json:"item,omitempty" tf:"item,omitempty"`
 
-	// Name of the table to contain the item.
-	TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
+// Range key to use for lookups and identification of the item. Required if there is range key defined in the table.
+RangeKey *string `json:"rangeKey,omitempty" tf:"range_key,omitempty"`
+
+// Name of the table to contain the item.
+TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
 }
+
 
 type TableItemParameters struct {
 
-	// Hash key to use for lookups and identification of the item
-	// +kubebuilder:validation:Optional
-	HashKey *string `json:"hashKey,omitempty" tf:"hash_key,omitempty"`
 
-	// JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.
-	// +kubebuilder:validation:Optional
-	Item *string `json:"item,omitempty" tf:"item,omitempty"`
+// Hash key to use for lookups and identification of the item
+// +kubebuilder:validation:Optional
+HashKey *string `json:"hashKey,omitempty" tf:"hash_key,omitempty"`
 
-	// Range key to use for lookups and identification of the item. Required if there is range key defined in the table.
-	// +kubebuilder:validation:Optional
-	RangeKey *string `json:"rangeKey,omitempty" tf:"range_key,omitempty"`
+// JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.
+// +kubebuilder:validation:Optional
+Item *string `json:"item,omitempty" tf:"item,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Range key to use for lookups and identification of the item. Required if there is range key defined in the table.
+// +kubebuilder:validation:Optional
+RangeKey *string `json:"rangeKey,omitempty" tf:"range_key,omitempty"`
 
-	// Name of the table to contain the item.
-	// +crossplane:generate:reference:type=Table
-	// +kubebuilder:validation:Optional
-	TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Reference to a Table to populate tableName.
-	// +kubebuilder:validation:Optional
-	TableNameRef *v1.Reference `json:"tableNameRef,omitempty" tf:"-"`
+// Name of the table to contain the item.
+// +crossplane:generate:reference:type=Table
+// +kubebuilder:validation:Optional
+TableName *string `json:"tableName,omitempty" tf:"table_name,omitempty"`
 
-	// Selector for a Table to populate tableName.
-	// +kubebuilder:validation:Optional
-	TableNameSelector *v1.Selector `json:"tableNameSelector,omitempty" tf:"-"`
+// Reference to a Table to populate tableName.
+// +kubebuilder:validation:Optional
+TableNameRef *v1.Reference `json:"tableNameRef,omitempty" tf:"-"`
+
+// Selector for a Table to populate tableName.
+// +kubebuilder:validation:Optional
+TableNameSelector *v1.Selector `json:"tableNameSelector,omitempty" tf:"-"`
 }
 
 // TableItemSpec defines the desired state of TableItem
 type TableItemSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     TableItemParameters `json:"forProvider"`
+	ForProvider       TableItemParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -93,13 +102,13 @@ type TableItemSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider TableItemInitParameters `json:"initProvider,omitempty"`
+	InitProvider       TableItemInitParameters `json:"initProvider,omitempty"`
 }
 
 // TableItemStatus defines the observed state of TableItem.
 type TableItemStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        TableItemObservation `json:"atProvider,omitempty"`
+	AtProvider          TableItemObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -114,11 +123,11 @@ type TableItemStatus struct {
 type TableItem struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hashKey) || (has(self.initProvider) && has(self.initProvider.hashKey))",message="spec.forProvider.hashKey is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.item) || (has(self.initProvider) && has(self.initProvider.item))",message="spec.forProvider.item is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   TableItemSpec   `json:"spec"`
-	Status TableItemStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hashKey) || (has(self.initProvider) && has(self.initProvider.hashKey))",message="spec.forProvider.hashKey is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.item) || (has(self.initProvider) && has(self.initProvider.item))",message="spec.forProvider.item is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              TableItemSpec   `json:"spec"`
+	Status            TableItemStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

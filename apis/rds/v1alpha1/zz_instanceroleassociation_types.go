@@ -15,72 +15,81 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type InstanceRoleAssociationInitParameters struct {
 
-	// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
-	FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
+
+// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
+FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
 }
+
 
 type InstanceRoleAssociationObservation struct {
 
-	// DB Instance Identifier to associate with the IAM Role.
-	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
-	FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
+// DB Instance Identifier to associate with the IAM Role.
+DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// DB Instance Identifier and IAM Role ARN separated by a comma (,)
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
+FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
 
-	// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
-	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
+// DB Instance Identifier and IAM Role ARN separated by a comma (,)
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
+RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
 }
+
 
 type InstanceRoleAssociationParameters struct {
 
-	// DB Instance Identifier to associate with the IAM Role.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Reference to a Instance in rds to populate dbInstanceIdentifier.
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+// DB Instance Identifier to associate with the IAM Role.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
+// +kubebuilder:validation:Optional
+DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Selector for a Instance in rds to populate dbInstanceIdentifier.
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
+// Reference to a Instance in rds to populate dbInstanceIdentifier.
+// +kubebuilder:validation:Optional
+DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
 
-	// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
-	// +kubebuilder:validation:Optional
-	FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
+// Selector for a Instance in rds to populate dbInstanceIdentifier.
+// +kubebuilder:validation:Optional
+DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions.
+// +kubebuilder:validation:Optional
+FeatureName *string `json:"featureName,omitempty" tf:"feature_name,omitempty"`
 
-	// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
-	// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
-	// +kubebuilder:validation:Optional
-	RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Reference to a Role in iam to populate roleArn.
-	// +kubebuilder:validation:Optional
-	RoleArnRef *v1.Reference `json:"roleArnRef,omitempty" tf:"-"`
+// Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/iam/v1alpha1.Role
+// +crossplane:generate:reference:extractor=kubedb.dev/provider-aws/config/common.ARNExtractor()
+// +kubebuilder:validation:Optional
+RoleArn *string `json:"roleArn,omitempty" tf:"role_arn,omitempty"`
 
-	// Selector for a Role in iam to populate roleArn.
-	// +kubebuilder:validation:Optional
-	RoleArnSelector *v1.Selector `json:"roleArnSelector,omitempty" tf:"-"`
+// Reference to a Role in iam to populate roleArn.
+// +kubebuilder:validation:Optional
+RoleArnRef *v1.Reference `json:"roleArnRef,omitempty" tf:"-"`
+
+// Selector for a Role in iam to populate roleArn.
+// +kubebuilder:validation:Optional
+RoleArnSelector *v1.Selector `json:"roleArnSelector,omitempty" tf:"-"`
 }
 
 // InstanceRoleAssociationSpec defines the desired state of InstanceRoleAssociation
 type InstanceRoleAssociationSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     InstanceRoleAssociationParameters `json:"forProvider"`
+	ForProvider       InstanceRoleAssociationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -91,13 +100,13 @@ type InstanceRoleAssociationSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider InstanceRoleAssociationInitParameters `json:"initProvider,omitempty"`
+	InitProvider       InstanceRoleAssociationInitParameters `json:"initProvider,omitempty"`
 }
 
 // InstanceRoleAssociationStatus defines the observed state of InstanceRoleAssociation.
 type InstanceRoleAssociationStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        InstanceRoleAssociationObservation `json:"atProvider,omitempty"`
+	AtProvider          InstanceRoleAssociationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -112,10 +121,10 @@ type InstanceRoleAssociationStatus struct {
 type InstanceRoleAssociation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.featureName) || (has(self.initProvider) && has(self.initProvider.featureName))",message="spec.forProvider.featureName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   InstanceRoleAssociationSpec   `json:"spec"`
-	Status InstanceRoleAssociationStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.featureName) || (has(self.initProvider) && has(self.initProvider.featureName))",message="spec.forProvider.featureName is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              InstanceRoleAssociationSpec   `json:"spec"`
+	Status            InstanceRoleAssociationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -15,126 +15,142 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type AuthenticationModeInitParameters struct {
 
-	// Specifies the authentication type. Possible options are: password, no-password-required or iam.
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+// Specifies the authentication type. Possible options are: password, no-password-required or iam.
+Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
+
 
 type AuthenticationModeObservation struct {
-	PasswordCount *float64 `json:"passwordCount,omitempty" tf:"password_count,omitempty"`
 
-	// Specifies the authentication type. Possible options are: password, no-password-required or iam.
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+PasswordCount *float64 `json:"passwordCount,omitempty" tf:"password_count,omitempty"`
+
+// Specifies the authentication type. Possible options are: password, no-password-required or iam.
+Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
+
 
 type AuthenticationModeParameters struct {
 
-	// Specifies the passwords to use for authentication if type is set to password.
-	// +kubebuilder:validation:Optional
-	PasswordsSecretRef *[]v1.SecretKeySelector `json:"passwordsSecretRef,omitempty" tf:"-"`
 
-	// Specifies the authentication type. Possible options are: password, no-password-required or iam.
-	// +kubebuilder:validation:Optional
-	Type *string `json:"type" tf:"type,omitempty"`
+// Specifies the passwords to use for authentication if type is set to password.
+// +kubebuilder:validation:Optional
+PasswordsSecretRef *[]v1.SecretKeySelector `json:"passwordsSecretRef,omitempty" tf:"-"`
+
+// Specifies the authentication type. Possible options are: password, no-password-required or iam.
+// +kubebuilder:validation:Optional
+Type *string `json:"type" tf:"type,omitempty"`
 }
+
 
 type UserInitParameters struct {
 
-	// Access permissions string used for this user. See Specifying Permissions Using an Access String for more details.
-	AccessString *string `json:"accessString,omitempty" tf:"access_string,omitempty"`
 
-	// Denotes the user's authentication properties. Detailed below.
-	AuthenticationMode []AuthenticationModeInitParameters `json:"authenticationMode,omitempty" tf:"authentication_mode,omitempty"`
+// Access permissions string used for this user. See Specifying Permissions Using an Access String for more details.
+AccessString *string `json:"accessString,omitempty" tf:"access_string,omitempty"`
 
-	// The current supported value is REDIS.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Denotes the user's authentication properties. Detailed below.
+AuthenticationMode []AuthenticationModeInitParameters `json:"authenticationMode,omitempty" tf:"authentication_mode,omitempty"`
 
-	// Indicates a password is not required for this user.
-	NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
+// The current supported value is REDIS.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// A list of tags to be added to this resource. A tag is a key-value pair.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Indicates a password is not required for this user.
+NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
 
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A list of tags to be added to this resource. A tag is a key-value pair.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The username of the user.
-	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The username of the user.
+UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
+
 
 type UserObservation struct {
 
-	// Access permissions string used for this user. See Specifying Permissions Using an Access String for more details.
-	AccessString *string `json:"accessString,omitempty" tf:"access_string,omitempty"`
 
-	// The ARN of the created ElastiCache User.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+// Access permissions string used for this user. See Specifying Permissions Using an Access String for more details.
+AccessString *string `json:"accessString,omitempty" tf:"access_string,omitempty"`
 
-	// Denotes the user's authentication properties. Detailed below.
-	AuthenticationMode []AuthenticationModeObservation `json:"authenticationMode,omitempty" tf:"authentication_mode,omitempty"`
+// The ARN of the created ElastiCache User.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The current supported value is REDIS.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Denotes the user's authentication properties. Detailed below.
+AuthenticationMode []AuthenticationModeObservation `json:"authenticationMode,omitempty" tf:"authentication_mode,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// The current supported value is REDIS.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Indicates a password is not required for this user.
-	NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A list of tags to be added to this resource. A tag is a key-value pair.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Indicates a password is not required for this user.
+NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
 
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A list of tags to be added to this resource. A tag is a key-value pair.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The username of the user.
-	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The username of the user.
+UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
+
 
 type UserParameters struct {
 
-	// Access permissions string used for this user. See Specifying Permissions Using an Access String for more details.
-	// +kubebuilder:validation:Optional
-	AccessString *string `json:"accessString,omitempty" tf:"access_string,omitempty"`
 
-	// Denotes the user's authentication properties. Detailed below.
-	// +kubebuilder:validation:Optional
-	AuthenticationMode []AuthenticationModeParameters `json:"authenticationMode,omitempty" tf:"authentication_mode,omitempty"`
+// Access permissions string used for this user. See Specifying Permissions Using an Access String for more details.
+// +kubebuilder:validation:Optional
+AccessString *string `json:"accessString,omitempty" tf:"access_string,omitempty"`
 
-	// The current supported value is REDIS.
-	// +kubebuilder:validation:Optional
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Denotes the user's authentication properties. Detailed below.
+// +kubebuilder:validation:Optional
+AuthenticationMode []AuthenticationModeParameters `json:"authenticationMode,omitempty" tf:"authentication_mode,omitempty"`
 
-	// Indicates a password is not required for this user.
-	// +kubebuilder:validation:Optional
-	NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
+// The current supported value is REDIS.
+// +kubebuilder:validation:Optional
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Passwords used for this user. You can create up to two passwords for each user.
-	// +kubebuilder:validation:Optional
-	PasswordsSecretRef *[]v1.SecretKeySelector `json:"passwordsSecretRef,omitempty" tf:"-"`
+// Indicates a password is not required for this user.
+// +kubebuilder:validation:Optional
+NoPasswordRequired *bool `json:"noPasswordRequired,omitempty" tf:"no_password_required,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Passwords used for this user. You can create up to two passwords for each user.
+// +kubebuilder:validation:Optional
+PasswordsSecretRef *[]v1.SecretKeySelector `json:"passwordsSecretRef,omitempty" tf:"-"`
 
-	// A list of tags to be added to this resource. A tag is a key-value pair.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A list of tags to be added to this resource. A tag is a key-value pair.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The username of the user.
-	// +kubebuilder:validation:Optional
-	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The username of the user.
+// +kubebuilder:validation:Optional
+UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
 
 // UserSpec defines the desired state of User
 type UserSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     UserParameters `json:"forProvider"`
+	ForProvider       UserParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -145,13 +161,13 @@ type UserSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider UserInitParameters `json:"initProvider,omitempty"`
+	InitProvider       UserInitParameters `json:"initProvider,omitempty"`
 }
 
 // UserStatus defines the observed state of User.
 type UserStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        UserObservation `json:"atProvider,omitempty"`
+	AtProvider          UserObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -166,12 +182,12 @@ type UserStatus struct {
 type User struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessString) || (has(self.initProvider) && has(self.initProvider.accessString))",message="spec.forProvider.accessString is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engine) || (has(self.initProvider) && has(self.initProvider.engine))",message="spec.forProvider.engine is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userName) || (has(self.initProvider) && has(self.initProvider.userName))",message="spec.forProvider.userName is a required parameter"
-	Spec   UserSpec   `json:"spec"`
-	Status UserStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessString) || (has(self.initProvider) && has(self.initProvider.accessString))",message="spec.forProvider.accessString is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engine) || (has(self.initProvider) && has(self.initProvider.engine))",message="spec.forProvider.engine is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userName) || (has(self.initProvider) && has(self.initProvider.userName))",message="spec.forProvider.userName is a required parameter"
+	Spec              UserSpec   `json:"spec"`
+	Status            UserStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

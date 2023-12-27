@@ -15,123 +15,132 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type SnapshotInitParameters struct {
 
-	// List of AWS Account ids to share snapshot with, use all to make snaphot public.
-	SharedAccounts []*string `json:"sharedAccounts,omitempty" tf:"shared_accounts,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// List of AWS Account ids to share snapshot with, use all to make snaphot public.
+SharedAccounts []*string `json:"sharedAccounts,omitempty" tf:"shared_accounts,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SnapshotObservation struct {
 
-	// Specifies the allocated storage size in gigabytes (GB).
-	AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
 
-	// Specifies the name of the Availability Zone the DB instance was located in at the time of the DB snapshot.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specifies the allocated storage size in gigabytes (GB).
+AllocatedStorage *float64 `json:"allocatedStorage,omitempty" tf:"allocated_storage,omitempty"`
 
-	// The DB Instance Identifier from which to take the snapshot.
-	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
+// Specifies the name of the Availability Zone the DB instance was located in at the time of the DB snapshot.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The Amazon Resource Name (ARN) for the DB snapshot.
-	DBSnapshotArn *string `json:"dbSnapshotArn,omitempty" tf:"db_snapshot_arn,omitempty"`
+// The DB Instance Identifier from which to take the snapshot.
+DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Specifies whether the DB snapshot is encrypted.
-	Encrypted *bool `json:"encrypted,omitempty" tf:"encrypted,omitempty"`
+// The Amazon Resource Name (ARN) for the DB snapshot.
+DBSnapshotArn *string `json:"dbSnapshotArn,omitempty" tf:"db_snapshot_arn,omitempty"`
 
-	// Specifies the name of the database engine.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Specifies whether the DB snapshot is encrypted.
+Encrypted *bool `json:"encrypted,omitempty" tf:"encrypted,omitempty"`
 
-	// Specifies the version of the database engine.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Specifies the name of the database engine.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Specifies the version of the database engine.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Specifies the Provisioned IOPS (I/O operations per second) value of the DB instance at the time of the snapshot.
-	Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The ARN for the KMS encryption key.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+// Specifies the Provisioned IOPS (I/O operations per second) value of the DB instance at the time of the snapshot.
+Iops *float64 `json:"iops,omitempty" tf:"iops,omitempty"`
 
-	// License model information for the restored DB instance.
-	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
+// The ARN for the KMS encryption key.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	// Provides the option group name for the DB snapshot.
-	OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
+// License model information for the restored DB instance.
+LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
 
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// Provides the option group name for the DB snapshot.
+OptionGroupName *string `json:"optionGroupName,omitempty" tf:"option_group_name,omitempty"`
 
-	// List of AWS Account ids to share snapshot with, use all to make snaphot public.
-	SharedAccounts []*string `json:"sharedAccounts,omitempty" tf:"shared_accounts,omitempty"`
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	SnapshotType *string `json:"snapshotType,omitempty" tf:"snapshot_type,omitempty"`
+// List of AWS Account ids to share snapshot with, use all to make snaphot public.
+SharedAccounts []*string `json:"sharedAccounts,omitempty" tf:"shared_accounts,omitempty"`
 
-	// The DB snapshot Arn that the DB snapshot was copied from. It only has value in case of cross customer or cross region copy.
-	SourceDBSnapshotIdentifier *string `json:"sourceDbSnapshotIdentifier,omitempty" tf:"source_db_snapshot_identifier,omitempty"`
+SnapshotType *string `json:"snapshotType,omitempty" tf:"snapshot_type,omitempty"`
 
-	// The region that the DB snapshot was created in or copied from.
-	SourceRegion *string `json:"sourceRegion,omitempty" tf:"source_region,omitempty"`
+// The DB snapshot Arn that the DB snapshot was copied from. It only has value in case of cross customer or cross region copy.
+SourceDBSnapshotIdentifier *string `json:"sourceDbSnapshotIdentifier,omitempty" tf:"source_db_snapshot_identifier,omitempty"`
 
-	// Specifies the status of this DB snapshot.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+// The region that the DB snapshot was created in or copied from.
+SourceRegion *string `json:"sourceRegion,omitempty" tf:"source_region,omitempty"`
 
-	// Specifies the storage type associated with DB snapshot.
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+// Specifies the status of this DB snapshot.
+Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Specifies the storage type associated with DB snapshot.
+StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Provides the VPC ID associated with the DB snapshot.
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// Provides the VPC ID associated with the DB snapshot.
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
+
 
 type SnapshotParameters struct {
 
-	// The DB Instance Identifier from which to take the snapshot.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Reference to a Instance in rds to populate dbInstanceIdentifier.
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
+// The DB Instance Identifier from which to take the snapshot.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Instance
+// +kubebuilder:validation:Optional
+DBInstanceIdentifier *string `json:"dbInstanceIdentifier,omitempty" tf:"db_instance_identifier,omitempty"`
 
-	// Selector for a Instance in rds to populate dbInstanceIdentifier.
-	// +kubebuilder:validation:Optional
-	DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
+// Reference to a Instance in rds to populate dbInstanceIdentifier.
+// +kubebuilder:validation:Optional
+DBInstanceIdentifierRef *v1.Reference `json:"dbInstanceIdentifierRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a Instance in rds to populate dbInstanceIdentifier.
+// +kubebuilder:validation:Optional
+DBInstanceIdentifierSelector *v1.Selector `json:"dbInstanceIdentifierSelector,omitempty" tf:"-"`
 
-	// List of AWS Account ids to share snapshot with, use all to make snaphot public.
-	// +kubebuilder:validation:Optional
-	SharedAccounts []*string `json:"sharedAccounts,omitempty" tf:"shared_accounts,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// List of AWS Account ids to share snapshot with, use all to make snaphot public.
+// +kubebuilder:validation:Optional
+SharedAccounts []*string `json:"sharedAccounts,omitempty" tf:"shared_accounts,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // SnapshotSpec defines the desired state of Snapshot
 type SnapshotSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SnapshotParameters `json:"forProvider"`
+	ForProvider       SnapshotParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -142,13 +151,13 @@ type SnapshotSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider SnapshotInitParameters `json:"initProvider,omitempty"`
+	InitProvider       SnapshotInitParameters `json:"initProvider,omitempty"`
 }
 
 // SnapshotStatus defines the observed state of Snapshot.
 type SnapshotStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SnapshotObservation `json:"atProvider,omitempty"`
+	AtProvider          SnapshotObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -163,9 +172,9 @@ type SnapshotStatus struct {
 type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   SnapshotSpec   `json:"spec"`
-	Status SnapshotStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              SnapshotSpec   `json:"spec"`
+	Status            SnapshotStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

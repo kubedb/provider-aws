@@ -15,151 +15,160 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type SecurityGroupRuleInitParameters struct {
 
-	// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
-	CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// Description of the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
+CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
-	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
+// Description of the rule.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
-	IPv6CidrBlocks []*string `json:"ipv6CidrBlocks,omitempty" tf:"ipv6_cidr_blocks,omitempty"`
+// Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
+FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// List of Prefix List IDs.
-	PrefixListIds []*string `json:"prefixListIds,omitempty" tf:"prefix_list_ids,omitempty"`
+// List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
+IPv6CidrBlocks []*string `json:"ipv6CidrBlocks,omitempty" tf:"ipv6_cidr_blocks,omitempty"`
 
-	// Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+// List of Prefix List IDs.
+PrefixListIds []*string `json:"prefixListIds,omitempty" tf:"prefix_list_ids,omitempty"`
 
-	// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
-	Self *bool `json:"self,omitempty" tf:"self,omitempty"`
+// Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
+Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.
-	SourceSecurityGroupID *string `json:"sourceSecurityGroupId,omitempty" tf:"source_security_group_id,omitempty"`
+// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
+Self *bool `json:"self,omitempty" tf:"self,omitempty"`
 
-	// End port (or ICMP code if protocol is "icmp").
-	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+// Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.
+SourceSecurityGroupID *string `json:"sourceSecurityGroupId,omitempty" tf:"source_security_group_id,omitempty"`
 
-	// Type of rule being created. Valid options are ingress (inbound)
-	// or egress (outbound).
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+// End port (or ICMP code if protocol is "icmp").
+ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+
+// Type of rule being created. Valid options are ingress (inbound)
+// or egress (outbound).
+Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
+
 
 type SecurityGroupRuleObservation struct {
 
-	// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
-	CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// Description of the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
+CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
-	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
+// Description of the rule.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the security group rule.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
+FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
-	IPv6CidrBlocks []*string `json:"ipv6CidrBlocks,omitempty" tf:"ipv6_cidr_blocks,omitempty"`
+// ID of the security group rule.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// List of Prefix List IDs.
-	PrefixListIds []*string `json:"prefixListIds,omitempty" tf:"prefix_list_ids,omitempty"`
+// List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
+IPv6CidrBlocks []*string `json:"ipv6CidrBlocks,omitempty" tf:"ipv6_cidr_blocks,omitempty"`
 
-	// Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+// List of Prefix List IDs.
+PrefixListIds []*string `json:"prefixListIds,omitempty" tf:"prefix_list_ids,omitempty"`
 
-	// Security group to apply this rule to.
-	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
+// Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
+Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// If the aws_security_group_rule resource has a single source or destination then this is the AWS Security Group Rule resource ID. Otherwise it is empty.
-	SecurityGroupRuleID *string `json:"securityGroupRuleId,omitempty" tf:"security_group_rule_id,omitempty"`
+// Security group to apply this rule to.
+SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
-	// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
-	Self *bool `json:"self,omitempty" tf:"self,omitempty"`
+// If the aws_security_group_rule resource has a single source or destination then this is the AWS Security Group Rule resource ID. Otherwise it is empty.
+SecurityGroupRuleID *string `json:"securityGroupRuleId,omitempty" tf:"security_group_rule_id,omitempty"`
 
-	// Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.
-	SourceSecurityGroupID *string `json:"sourceSecurityGroupId,omitempty" tf:"source_security_group_id,omitempty"`
+// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
+Self *bool `json:"self,omitempty" tf:"self,omitempty"`
 
-	// End port (or ICMP code if protocol is "icmp").
-	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+// Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.
+SourceSecurityGroupID *string `json:"sourceSecurityGroupId,omitempty" tf:"source_security_group_id,omitempty"`
 
-	// Type of rule being created. Valid options are ingress (inbound)
-	// or egress (outbound).
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+// End port (or ICMP code if protocol is "icmp").
+ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+
+// Type of rule being created. Valid options are ingress (inbound)
+// or egress (outbound).
+Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
+
 
 type SecurityGroupRuleParameters struct {
 
-	// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
-	// +kubebuilder:validation:Optional
-	CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// Description of the rule.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+// List of CIDR blocks. Cannot be specified with source_security_group_id or self.
+// +kubebuilder:validation:Optional
+CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
-	// +kubebuilder:validation:Optional
-	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
+// Description of the rule.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
-	// +kubebuilder:validation:Optional
-	IPv6CidrBlocks []*string `json:"ipv6CidrBlocks,omitempty" tf:"ipv6_cidr_blocks,omitempty"`
+// Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
+// +kubebuilder:validation:Optional
+FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// List of Prefix List IDs.
-	// +kubebuilder:validation:Optional
-	PrefixListIds []*string `json:"prefixListIds,omitempty" tf:"prefix_list_ids,omitempty"`
+// List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
+// +kubebuilder:validation:Optional
+IPv6CidrBlocks []*string `json:"ipv6CidrBlocks,omitempty" tf:"ipv6_cidr_blocks,omitempty"`
 
-	// Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
-	// +kubebuilder:validation:Optional
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+// List of Prefix List IDs.
+// +kubebuilder:validation:Optional
+PrefixListIds []*string `json:"prefixListIds,omitempty" tf:"prefix_list_ids,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
+// +kubebuilder:validation:Optional
+Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// Security group to apply this rule to.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
-	// +kubebuilder:validation:Optional
-	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Reference to a SecurityGroup in ec2 to populate securityGroupId.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDRef *v1.Reference `json:"securityGroupIdRef,omitempty" tf:"-"`
+// Security group to apply this rule to.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
+// +kubebuilder:validation:Optional
+SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
-	// Selector for a SecurityGroup in ec2 to populate securityGroupId.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+// Reference to a SecurityGroup in ec2 to populate securityGroupId.
+// +kubebuilder:validation:Optional
+SecurityGroupIDRef *v1.Reference `json:"securityGroupIdRef,omitempty" tf:"-"`
 
-	// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
-	// +kubebuilder:validation:Optional
-	Self *bool `json:"self,omitempty" tf:"self,omitempty"`
+// Selector for a SecurityGroup in ec2 to populate securityGroupId.
+// +kubebuilder:validation:Optional
+SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.
-	// +kubebuilder:validation:Optional
-	SourceSecurityGroupID *string `json:"sourceSecurityGroupId,omitempty" tf:"source_security_group_id,omitempty"`
+// Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
+// +kubebuilder:validation:Optional
+Self *bool `json:"self,omitempty" tf:"self,omitempty"`
 
-	// End port (or ICMP code if protocol is "icmp").
-	// +kubebuilder:validation:Optional
-	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+// Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.
+// +kubebuilder:validation:Optional
+SourceSecurityGroupID *string `json:"sourceSecurityGroupId,omitempty" tf:"source_security_group_id,omitempty"`
 
-	// Type of rule being created. Valid options are ingress (inbound)
-	// or egress (outbound).
-	// +kubebuilder:validation:Optional
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+// End port (or ICMP code if protocol is "icmp").
+// +kubebuilder:validation:Optional
+ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+
+// Type of rule being created. Valid options are ingress (inbound)
+// or egress (outbound).
+// +kubebuilder:validation:Optional
+Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 // SecurityGroupRuleSpec defines the desired state of SecurityGroupRule
 type SecurityGroupRuleSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SecurityGroupRuleParameters `json:"forProvider"`
+	ForProvider       SecurityGroupRuleParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -170,13 +179,13 @@ type SecurityGroupRuleSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider SecurityGroupRuleInitParameters `json:"initProvider,omitempty"`
+	InitProvider       SecurityGroupRuleInitParameters `json:"initProvider,omitempty"`
 }
 
 // SecurityGroupRuleStatus defines the observed state of SecurityGroupRule.
 type SecurityGroupRuleStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecurityGroupRuleObservation `json:"atProvider,omitempty"`
+	AtProvider          SecurityGroupRuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -191,13 +200,13 @@ type SecurityGroupRuleStatus struct {
 type SecurityGroupRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.fromPort) || (has(self.initProvider) && has(self.initProvider.fromPort))",message="spec.forProvider.fromPort is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protocol) || (has(self.initProvider) && has(self.initProvider.protocol))",message="spec.forProvider.protocol is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.toPort) || (has(self.initProvider) && has(self.initProvider.toPort))",message="spec.forProvider.toPort is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
-	Spec   SecurityGroupRuleSpec   `json:"spec"`
-	Status SecurityGroupRuleStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.fromPort) || (has(self.initProvider) && has(self.initProvider.fromPort))",message="spec.forProvider.fromPort is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protocol) || (has(self.initProvider) && has(self.initProvider.protocol))",message="spec.forProvider.protocol is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.toPort) || (has(self.initProvider) && has(self.initProvider.toPort))",message="spec.forProvider.toPort is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
+	Spec              SecurityGroupRuleSpec   `json:"spec"`
+	Status            SecurityGroupRuleStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

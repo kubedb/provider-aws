@@ -15,191 +15,212 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type AccepterInitParameters struct {
 
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+
+// Allow a local VPC to resolve public DNS hostnames to
+// private IP addresses when queried from instances in the peer VPC.
+AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
+
 
 type AccepterObservation struct {
 
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+
+// Allow a local VPC to resolve public DNS hostnames to
+// private IP addresses when queried from instances in the peer VPC.
+AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
+
 
 type AccepterParameters struct {
 
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	// +kubebuilder:validation:Optional
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+
+// Allow a local VPC to resolve public DNS hostnames to
+// private IP addresses when queried from instances in the peer VPC.
+// +kubebuilder:validation:Optional
+AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
+
 
 type RequesterInitParameters struct {
 
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+
+// Allow a local VPC to resolve public DNS hostnames to
+// private IP addresses when queried from instances in the peer VPC.
+AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
+
 
 type RequesterObservation struct {
 
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+
+// Allow a local VPC to resolve public DNS hostnames to
+// private IP addresses when queried from instances in the peer VPC.
+AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
+
 
 type RequesterParameters struct {
 
-	// Allow a local VPC to resolve public DNS hostnames to
-	// private IP addresses when queried from instances in the peer VPC.
-	// +kubebuilder:validation:Optional
-	AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
+
+// Allow a local VPC to resolve public DNS hostnames to
+// private IP addresses when queried from instances in the peer VPC.
+// +kubebuilder:validation:Optional
+AllowRemoteVPCDNSResolution *bool `json:"allowRemoteVpcDnsResolution,omitempty" tf:"allow_remote_vpc_dns_resolution,omitempty"`
 }
+
 
 type VPCPeeringConnectionInitParameters struct {
 
-	// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
-	// the peering connection (a maximum of one).
-	Accepter []AccepterInitParameters `json:"accepter,omitempty" tf:"accepter,omitempty"`
 
-	// Accept the peering (both VPCs need to be in the same AWS account and region).
-	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
+// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
+// the peering connection (a maximum of one).
+Accepter []AccepterInitParameters `json:"accepter,omitempty" tf:"accepter,omitempty"`
 
-	// The AWS account ID of the owner of the peer VPC.
-	// Defaults to the account ID the AWS provider is currently connected to.
-	PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
+// Accept the peering (both VPCs need to be in the same AWS account and region).
+AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
-	// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
-	PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
+// The AWS account ID of the owner of the peer VPC.
+// Defaults to the account ID the AWS provider is currently connected to.
+PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
 
-	// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
-	// the peering connection (a maximum of one).
-	Requester []RequesterInitParameters `json:"requester,omitempty" tf:"requester,omitempty"`
+// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
+// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
+PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
+// the peering connection (a maximum of one).
+Requester []RequesterInitParameters `json:"requester,omitempty" tf:"requester,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type VPCPeeringConnectionObservation struct {
 
-	// The status of the VPC Peering Connection request.
-	AcceptStatus *string `json:"acceptStatus,omitempty" tf:"accept_status,omitempty"`
 
-	// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
-	// the peering connection (a maximum of one).
-	Accepter []AccepterObservation `json:"accepter,omitempty" tf:"accepter,omitempty"`
+// The status of the VPC Peering Connection request.
+AcceptStatus *string `json:"acceptStatus,omitempty" tf:"accept_status,omitempty"`
 
-	// Accept the peering (both VPCs need to be in the same AWS account and region).
-	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
+// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
+// the peering connection (a maximum of one).
+Accepter []AccepterObservation `json:"accepter,omitempty" tf:"accepter,omitempty"`
 
-	// The ID of the VPC Peering Connection.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Accept the peering (both VPCs need to be in the same AWS account and region).
+AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The AWS account ID of the owner of the peer VPC.
-	// Defaults to the account ID the AWS provider is currently connected to.
-	PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
+// The ID of the VPC Peering Connection.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
-	// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
-	PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
+// The AWS account ID of the owner of the peer VPC.
+// Defaults to the account ID the AWS provider is currently connected to.
+PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
 
-	// The ID of the VPC with which you are creating the VPC Peering Connection.
-	PeerVPCID *string `json:"peerVpcId,omitempty" tf:"peer_vpc_id,omitempty"`
+// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
+// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
+PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
 
-	// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
-	// the peering connection (a maximum of one).
-	Requester []RequesterObservation `json:"requester,omitempty" tf:"requester,omitempty"`
+// The ID of the VPC with which you are creating the VPC Peering Connection.
+PeerVPCID *string `json:"peerVpcId,omitempty" tf:"peer_vpc_id,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
+// the peering connection (a maximum of one).
+Requester []RequesterObservation `json:"requester,omitempty" tf:"requester,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The ID of the requester VPC.
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The ID of the requester VPC.
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
+
 
 type VPCPeeringConnectionParameters struct {
 
-	// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
-	// the peering connection (a maximum of one).
-	// +kubebuilder:validation:Optional
-	Accepter []AccepterParameters `json:"accepter,omitempty" tf:"accepter,omitempty"`
 
-	// Accept the peering (both VPCs need to be in the same AWS account and region).
-	// +kubebuilder:validation:Optional
-	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
+// An optional configuration block that allows for VPC Peering Connection options to be set for the VPC that accepts
+// the peering connection (a maximum of one).
+// +kubebuilder:validation:Optional
+Accepter []AccepterParameters `json:"accepter,omitempty" tf:"accepter,omitempty"`
 
-	// The AWS account ID of the owner of the peer VPC.
-	// Defaults to the account ID the AWS provider is currently connected to.
-	// +kubebuilder:validation:Optional
-	PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
+// Accept the peering (both VPCs need to be in the same AWS account and region).
+// +kubebuilder:validation:Optional
+AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
-	// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
-	// +kubebuilder:validation:Optional
-	PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
+// The AWS account ID of the owner of the peer VPC.
+// Defaults to the account ID the AWS provider is currently connected to.
+// +kubebuilder:validation:Optional
+PeerOwnerID *string `json:"peerOwnerId,omitempty" tf:"peer_owner_id,omitempty"`
 
-	// The ID of the VPC with which you are creating the VPC Peering Connection.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	PeerVPCID *string `json:"peerVpcId,omitempty" tf:"peer_vpc_id,omitempty"`
+// The region of the accepter VPC of the VPC Peering Connection. auto_accept must be false,
+// and use the aws_vpc_peering_connection_accepter to manage the accepter side.
+// +kubebuilder:validation:Optional
+PeerRegion *string `json:"peerRegion,omitempty" tf:"peer_region,omitempty"`
 
-	// Reference to a VPC in ec2 to populate peerVpcId.
-	// +kubebuilder:validation:Optional
-	PeerVPCIDRef *v1.Reference `json:"peerVpcIdRef,omitempty" tf:"-"`
+// The ID of the VPC with which you are creating the VPC Peering Connection.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
+// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+// +kubebuilder:validation:Optional
+PeerVPCID *string `json:"peerVpcId,omitempty" tf:"peer_vpc_id,omitempty"`
 
-	// Selector for a VPC in ec2 to populate peerVpcId.
-	// +kubebuilder:validation:Optional
-	PeerVPCIDSelector *v1.Selector `json:"peerVpcIdSelector,omitempty" tf:"-"`
+// Reference to a VPC in ec2 to populate peerVpcId.
+// +kubebuilder:validation:Optional
+PeerVPCIDRef *v1.Reference `json:"peerVpcIdRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a VPC in ec2 to populate peerVpcId.
+// +kubebuilder:validation:Optional
+PeerVPCIDSelector *v1.Selector `json:"peerVpcIdSelector,omitempty" tf:"-"`
 
-	// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
-	// the peering connection (a maximum of one).
-	// +kubebuilder:validation:Optional
-	Requester []RequesterParameters `json:"requester,omitempty" tf:"requester,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// A optional configuration block that allows for VPC Peering Connection options to be set for the VPC that requests
+// the peering connection (a maximum of one).
+// +kubebuilder:validation:Optional
+Requester []RequesterParameters `json:"requester,omitempty" tf:"requester,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The ID of the requester VPC.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
-	// +kubebuilder:validation:Optional
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
-	// Reference to a VPC in ec2 to populate vpcId.
-	// +kubebuilder:validation:Optional
-	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+// The ID of the requester VPC.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
+// +kubebuilder:validation:Optional
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
-	// Selector for a VPC in ec2 to populate vpcId.
-	// +kubebuilder:validation:Optional
-	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
+// Reference to a VPC in ec2 to populate vpcId.
+// +kubebuilder:validation:Optional
+VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+// Selector for a VPC in ec2 to populate vpcId.
+// +kubebuilder:validation:Optional
+VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 // VPCPeeringConnectionSpec defines the desired state of VPCPeeringConnection
 type VPCPeeringConnectionSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     VPCPeeringConnectionParameters `json:"forProvider"`
+	ForProvider       VPCPeeringConnectionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -210,13 +231,13 @@ type VPCPeeringConnectionSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider VPCPeeringConnectionInitParameters `json:"initProvider,omitempty"`
+	InitProvider       VPCPeeringConnectionInitParameters `json:"initProvider,omitempty"`
 }
 
 // VPCPeeringConnectionStatus defines the observed state of VPCPeeringConnection.
 type VPCPeeringConnectionStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        VPCPeeringConnectionObservation `json:"atProvider,omitempty"`
+	AtProvider          VPCPeeringConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -231,9 +252,9 @@ type VPCPeeringConnectionStatus struct {
 type VPCPeeringConnection struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   VPCPeeringConnectionSpec   `json:"spec"`
-	Status VPCPeeringConnectionStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              VPCPeeringConnectionSpec   `json:"spec"`
+	Status            VPCPeeringConnectionStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

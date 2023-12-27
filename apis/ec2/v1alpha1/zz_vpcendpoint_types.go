@@ -15,244 +15,265 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
 
+
+
+
 type DNSEntryInitParameters struct {
+
 }
+
 
 type DNSEntryObservation struct {
 
-	// The DNS name.
-	DNSName *string `json:"dnsName,omitempty" tf:"dns_name,omitempty"`
 
-	// The ID of the private hosted zone.
-	HostedZoneID *string `json:"hostedZoneId,omitempty" tf:"hosted_zone_id,omitempty"`
+// The DNS name.
+DNSName *string `json:"dnsName,omitempty" tf:"dns_name,omitempty"`
+
+// The ID of the private hosted zone.
+HostedZoneID *string `json:"hostedZoneId,omitempty" tf:"hosted_zone_id,omitempty"`
 }
+
 
 type DNSEntryParameters struct {
+
 }
+
 
 type DNSOptionsInitParameters struct {
 
-	// The DNS records created for the endpoint. Valid values are ipv4, dualstack, service-defined, and ipv6.
-	DNSRecordIPType *string `json:"dnsRecordIpType,omitempty" tf:"dns_record_ip_type,omitempty"`
+
+// The DNS records created for the endpoint. Valid values are ipv4, dualstack, service-defined, and ipv6.
+DNSRecordIPType *string `json:"dnsRecordIpType,omitempty" tf:"dns_record_ip_type,omitempty"`
 }
+
 
 type DNSOptionsObservation struct {
 
-	// The DNS records created for the endpoint. Valid values are ipv4, dualstack, service-defined, and ipv6.
-	DNSRecordIPType *string `json:"dnsRecordIpType,omitempty" tf:"dns_record_ip_type,omitempty"`
+
+// The DNS records created for the endpoint. Valid values are ipv4, dualstack, service-defined, and ipv6.
+DNSRecordIPType *string `json:"dnsRecordIpType,omitempty" tf:"dns_record_ip_type,omitempty"`
 }
+
 
 type DNSOptionsParameters struct {
 
-	// The DNS records created for the endpoint. Valid values are ipv4, dualstack, service-defined, and ipv6.
-	// +kubebuilder:validation:Optional
-	DNSRecordIPType *string `json:"dnsRecordIpType,omitempty" tf:"dns_record_ip_type,omitempty"`
+
+// The DNS records created for the endpoint. Valid values are ipv4, dualstack, service-defined, and ipv6.
+// +kubebuilder:validation:Optional
+DNSRecordIPType *string `json:"dnsRecordIpType,omitempty" tf:"dns_record_ip_type,omitempty"`
 }
+
 
 type VPCEndpointInitParameters struct {
 
-	// Accept the VPC endpoint (the VPC endpoint and service need to be in the same AWS account).
-	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The DNS options for the endpoint. See dns_options below.
-	DNSOptions []DNSOptionsInitParameters `json:"dnsOptions,omitempty" tf:"dns_options,omitempty"`
+// Accept the VPC endpoint (the VPC endpoint and service need to be in the same AWS account).
+AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The IP address type for the endpoint. Valid values are ipv4, dualstack, and ipv6.
-	IPAddressType *string `json:"ipAddressType,omitempty" tf:"ip_address_type,omitempty"`
+// The DNS options for the endpoint. See dns_options below.
+DNSOptions []DNSOptionsInitParameters `json:"dnsOptions,omitempty" tf:"dns_options,omitempty"`
 
-	// A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details.
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// The IP address type for the endpoint. Valid values are ipv4, dualstack, and ipv6.
+IPAddressType *string `json:"ipAddressType,omitempty" tf:"ip_address_type,omitempty"`
 
-	// Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface.
-	// Defaults to false.
-	PrivateDNSEnabled *bool `json:"privateDnsEnabled,omitempty" tf:"private_dns_enabled,omitempty"`
+// A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details.
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// One or more route table IDs. Applicable for endpoints of type Gateway.
-	RouteTableIds []*string `json:"routeTableIds,omitempty" tf:"route_table_ids,omitempty"`
+// Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface.
+// Defaults to false.
+PrivateDNSEnabled *bool `json:"privateDnsEnabled,omitempty" tf:"private_dns_enabled,omitempty"`
 
-	// The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service> (the SageMaker Notebook service is an exception to this rule, the service name is in the form aws.sagemaker.<region>.notebook).
-	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
+// One or more route table IDs. Applicable for endpoints of type Gateway.
+RouteTableIds []*string `json:"routeTableIds,omitempty" tf:"route_table_ids,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service> (the SageMaker Notebook service is an exception to this rule, the service name is in the form aws.sagemaker.<region>.notebook).
+ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
-	VPCEndpointType *string `json:"vpcEndpointType,omitempty" tf:"vpc_endpoint_type,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
+VPCEndpointType *string `json:"vpcEndpointType,omitempty" tf:"vpc_endpoint_type,omitempty"`
 }
+
 
 type VPCEndpointObservation struct {
 
-	// The Amazon Resource Name (ARN) of the VPC endpoint.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Accept the VPC endpoint (the VPC endpoint and service need to be in the same AWS account).
-	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
+// The Amazon Resource Name (ARN) of the VPC endpoint.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The list of CIDR blocks for the exposed AWS service. Applicable for endpoints of type Gateway.
-	CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
+// Accept the VPC endpoint (the VPC endpoint and service need to be in the same AWS account).
+AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The DNS entries for the VPC Endpoint. Applicable for endpoints of type Interface. DNS blocks are documented below.
-	DNSEntry []DNSEntryObservation `json:"dnsEntry,omitempty" tf:"dns_entry,omitempty"`
+// The list of CIDR blocks for the exposed AWS service. Applicable for endpoints of type Gateway.
+CidrBlocks []*string `json:"cidrBlocks,omitempty" tf:"cidr_blocks,omitempty"`
 
-	// The DNS options for the endpoint. See dns_options below.
-	DNSOptions []DNSOptionsObservation `json:"dnsOptions,omitempty" tf:"dns_options,omitempty"`
+// The DNS entries for the VPC Endpoint. Applicable for endpoints of type Interface. DNS blocks are documented below.
+DNSEntry []DNSEntryObservation `json:"dnsEntry,omitempty" tf:"dns_entry,omitempty"`
 
-	// The ID of the VPC endpoint.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// The DNS options for the endpoint. See dns_options below.
+DNSOptions []DNSOptionsObservation `json:"dnsOptions,omitempty" tf:"dns_options,omitempty"`
 
-	// The IP address type for the endpoint. Valid values are ipv4, dualstack, and ipv6.
-	IPAddressType *string `json:"ipAddressType,omitempty" tf:"ip_address_type,omitempty"`
+// The ID of the VPC endpoint.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// One or more network interfaces for the VPC Endpoint. Applicable for endpoints of type Interface.
-	NetworkInterfaceIds []*string `json:"networkInterfaceIds,omitempty" tf:"network_interface_ids,omitempty"`
+// The IP address type for the endpoint. Valid values are ipv4, dualstack, and ipv6.
+IPAddressType *string `json:"ipAddressType,omitempty" tf:"ip_address_type,omitempty"`
 
-	// The ID of the AWS account that owns the VPC endpoint.
-	OwnerID *string `json:"ownerId,omitempty" tf:"owner_id,omitempty"`
+// One or more network interfaces for the VPC Endpoint. Applicable for endpoints of type Interface.
+NetworkInterfaceIds []*string `json:"networkInterfaceIds,omitempty" tf:"network_interface_ids,omitempty"`
 
-	// A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details.
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// The ID of the AWS account that owns the VPC endpoint.
+OwnerID *string `json:"ownerId,omitempty" tf:"owner_id,omitempty"`
 
-	// The prefix list ID of the exposed AWS service. Applicable for endpoints of type Gateway.
-	PrefixListID *string `json:"prefixListId,omitempty" tf:"prefix_list_id,omitempty"`
+// A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details.
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface.
-	// Defaults to false.
-	PrivateDNSEnabled *bool `json:"privateDnsEnabled,omitempty" tf:"private_dns_enabled,omitempty"`
+// The prefix list ID of the exposed AWS service. Applicable for endpoints of type Gateway.
+PrefixListID *string `json:"prefixListId,omitempty" tf:"prefix_list_id,omitempty"`
 
-	// Whether or not the VPC Endpoint is being managed by its service - true or false.
-	RequesterManaged *bool `json:"requesterManaged,omitempty" tf:"requester_managed,omitempty"`
+// Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface.
+// Defaults to false.
+PrivateDNSEnabled *bool `json:"privateDnsEnabled,omitempty" tf:"private_dns_enabled,omitempty"`
 
-	// One or more route table IDs. Applicable for endpoints of type Gateway.
-	RouteTableIds []*string `json:"routeTableIds,omitempty" tf:"route_table_ids,omitempty"`
+// Whether or not the VPC Endpoint is being managed by its service - true or false.
+RequesterManaged *bool `json:"requesterManaged,omitempty" tf:"requester_managed,omitempty"`
 
-	// The ID of one or more security groups to associate with the network interface. Applicable for endpoints of type Interface.
-	// If no security groups are specified, the VPC's default security group is associated with the endpoint.
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+// One or more route table IDs. Applicable for endpoints of type Gateway.
+RouteTableIds []*string `json:"routeTableIds,omitempty" tf:"route_table_ids,omitempty"`
 
-	// The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service> (the SageMaker Notebook service is an exception to this rule, the service name is in the form aws.sagemaker.<region>.notebook).
-	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
+// The ID of one or more security groups to associate with the network interface. Applicable for endpoints of type Interface.
+// If no security groups are specified, the VPC's default security group is associated with the endpoint.
+SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// The state of the VPC endpoint.
-	State *string `json:"state,omitempty" tf:"state,omitempty"`
+// The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service> (the SageMaker Notebook service is an exception to this rule, the service name is in the form aws.sagemaker.<region>.notebook).
+ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
-	// The ID of one or more subnets in which to create a network interface for the endpoint. Applicable for endpoints of type GatewayLoadBalancer and Interface.
-	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+// The state of the VPC endpoint.
+State *string `json:"state,omitempty" tf:"state,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The ID of one or more subnets in which to create a network interface for the endpoint. Applicable for endpoints of type GatewayLoadBalancer and Interface.
+SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
-	VPCEndpointType *string `json:"vpcEndpointType,omitempty" tf:"vpc_endpoint_type,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
-	// The ID of the VPC in which the endpoint will be used.
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
+VPCEndpointType *string `json:"vpcEndpointType,omitempty" tf:"vpc_endpoint_type,omitempty"`
+
+// The ID of the VPC in which the endpoint will be used.
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
+
 
 type VPCEndpointParameters struct {
 
-	// Accept the VPC endpoint (the VPC endpoint and service need to be in the same AWS account).
-	// +kubebuilder:validation:Optional
-	AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The DNS options for the endpoint. See dns_options below.
-	// +kubebuilder:validation:Optional
-	DNSOptions []DNSOptionsParameters `json:"dnsOptions,omitempty" tf:"dns_options,omitempty"`
+// Accept the VPC endpoint (the VPC endpoint and service need to be in the same AWS account).
+// +kubebuilder:validation:Optional
+AutoAccept *bool `json:"autoAccept,omitempty" tf:"auto_accept,omitempty"`
 
-	// The IP address type for the endpoint. Valid values are ipv4, dualstack, and ipv6.
-	// +kubebuilder:validation:Optional
-	IPAddressType *string `json:"ipAddressType,omitempty" tf:"ip_address_type,omitempty"`
+// The DNS options for the endpoint. See dns_options below.
+// +kubebuilder:validation:Optional
+DNSOptions []DNSOptionsParameters `json:"dnsOptions,omitempty" tf:"dns_options,omitempty"`
 
-	// A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details.
-	// +kubebuilder:validation:Optional
-	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+// The IP address type for the endpoint. Valid values are ipv4, dualstack, and ipv6.
+// +kubebuilder:validation:Optional
+IPAddressType *string `json:"ipAddressType,omitempty" tf:"ip_address_type,omitempty"`
 
-	// Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface.
-	// Defaults to false.
-	// +kubebuilder:validation:Optional
-	PrivateDNSEnabled *bool `json:"privateDnsEnabled,omitempty" tf:"private_dns_enabled,omitempty"`
+// A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details.
+// +kubebuilder:validation:Optional
+Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface.
+// Defaults to false.
+// +kubebuilder:validation:Optional
+PrivateDNSEnabled *bool `json:"privateDnsEnabled,omitempty" tf:"private_dns_enabled,omitempty"`
 
-	// One or more route table IDs. Applicable for endpoints of type Gateway.
-	// +kubebuilder:validation:Optional
-	RouteTableIds []*string `json:"routeTableIds,omitempty" tf:"route_table_ids,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// References to SecurityGroup in ec2 to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
+// One or more route table IDs. Applicable for endpoints of type Gateway.
+// +kubebuilder:validation:Optional
+RouteTableIds []*string `json:"routeTableIds,omitempty" tf:"route_table_ids,omitempty"`
 
-	// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+// References to SecurityGroup in ec2 to populate securityGroupIds.
+// +kubebuilder:validation:Optional
+SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
 
-	// The ID of one or more security groups to associate with the network interface. Applicable for endpoints of type Interface.
-	// If no security groups are specified, the VPC's default security group is associated with the endpoint.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
-	// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
-	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
-	// +kubebuilder:validation:Optional
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
+// +kubebuilder:validation:Optional
+SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service> (the SageMaker Notebook service is an exception to this rule, the service name is in the form aws.sagemaker.<region>.notebook).
-	// +kubebuilder:validation:Optional
-	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
+// The ID of one or more security groups to associate with the network interface. Applicable for endpoints of type Interface.
+// If no security groups are specified, the VPC's default security group is associated with the endpoint.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
+// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
+// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
+// +kubebuilder:validation:Optional
+SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// References to Subnet in ec2 to populate subnetIds.
-	// +kubebuilder:validation:Optional
-	SubnetIDRefs []v1.Reference `json:"subnetIdRefs,omitempty" tf:"-"`
+// The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service> (the SageMaker Notebook service is an exception to this rule, the service name is in the form aws.sagemaker.<region>.notebook).
+// +kubebuilder:validation:Optional
+ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
-	// Selector for a list of Subnet in ec2 to populate subnetIds.
-	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+// References to Subnet in ec2 to populate subnetIds.
+// +kubebuilder:validation:Optional
+SubnetIDRefs []v1.Reference `json:"subnetIdRefs,omitempty" tf:"-"`
 
-	// The ID of one or more subnets in which to create a network interface for the endpoint. Applicable for endpoints of type GatewayLoadBalancer and Interface.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet
-	// +crossplane:generate:reference:refFieldName=SubnetIDRefs
-	// +crossplane:generate:reference:selectorFieldName=SubnetIDSelector
-	// +kubebuilder:validation:Optional
-	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+// Selector for a list of Subnet in ec2 to populate subnetIds.
+// +kubebuilder:validation:Optional
+SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The ID of one or more subnets in which to create a network interface for the endpoint. Applicable for endpoints of type GatewayLoadBalancer and Interface.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet
+// +crossplane:generate:reference:refFieldName=SubnetIDRefs
+// +crossplane:generate:reference:selectorFieldName=SubnetIDSelector
+// +kubebuilder:validation:Optional
+SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
-	// +kubebuilder:validation:Optional
-	VPCEndpointType *string `json:"vpcEndpointType,omitempty" tf:"vpc_endpoint_type,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
-	// The ID of the VPC in which the endpoint will be used.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
-	// +kubebuilder:validation:Optional
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
+// +kubebuilder:validation:Optional
+VPCEndpointType *string `json:"vpcEndpointType,omitempty" tf:"vpc_endpoint_type,omitempty"`
 
-	// Reference to a VPC in ec2 to populate vpcId.
-	// +kubebuilder:validation:Optional
-	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+// The ID of the VPC in which the endpoint will be used.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
+// +kubebuilder:validation:Optional
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
-	// Selector for a VPC in ec2 to populate vpcId.
-	// +kubebuilder:validation:Optional
-	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
+// Reference to a VPC in ec2 to populate vpcId.
+// +kubebuilder:validation:Optional
+VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+// Selector for a VPC in ec2 to populate vpcId.
+// +kubebuilder:validation:Optional
+VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 // VPCEndpointSpec defines the desired state of VPCEndpoint
 type VPCEndpointSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     VPCEndpointParameters `json:"forProvider"`
+	ForProvider       VPCEndpointParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -263,13 +284,13 @@ type VPCEndpointSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider VPCEndpointInitParameters `json:"initProvider,omitempty"`
+	InitProvider       VPCEndpointInitParameters `json:"initProvider,omitempty"`
 }
 
 // VPCEndpointStatus defines the observed state of VPCEndpoint.
 type VPCEndpointStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        VPCEndpointObservation `json:"atProvider,omitempty"`
+	AtProvider          VPCEndpointObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -284,10 +305,10 @@ type VPCEndpointStatus struct {
 type VPCEndpoint struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serviceName) || (has(self.initProvider) && has(self.initProvider.serviceName))",message="spec.forProvider.serviceName is a required parameter"
-	Spec   VPCEndpointSpec   `json:"spec"`
-	Status VPCEndpointStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serviceName) || (has(self.initProvider) && has(self.initProvider.serviceName))",message="spec.forProvider.serviceName is a required parameter"
+	Spec              VPCEndpointSpec   `json:"spec"`
+	Status            VPCEndpointStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

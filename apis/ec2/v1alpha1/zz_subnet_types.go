@@ -15,239 +15,248 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type SubnetInitParameters struct {
 
-	// Specify true to indicate
-	// that network interfaces created in the specified subnet should be
-	// assigned an IPv6 address. Default is false
-	AssignIPv6AddressOnCreation *bool `json:"assignIpv6AddressOnCreation,omitempty" tf:"assign_ipv6_address_on_creation,omitempty"`
 
-	// AZ for the subnet.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specify true to indicate
+// that network interfaces created in the specified subnet should be
+// assigned an IPv6 address. Default is false
+AssignIPv6AddressOnCreation *bool `json:"assignIpv6AddressOnCreation,omitempty" tf:"assign_ipv6_address_on_creation,omitempty"`
 
-	// AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
-	AvailabilityZoneID *string `json:"availabilityZoneId,omitempty" tf:"availability_zone_id,omitempty"`
+// AZ for the subnet.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The IPv4 CIDR block for the subnet.
-	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+// AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
+AvailabilityZoneID *string `json:"availabilityZoneId,omitempty" tf:"availability_zone_id,omitempty"`
 
-	// The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
-	CustomerOwnedIPv4Pool *string `json:"customerOwnedIpv4Pool,omitempty" tf:"customer_owned_ipv4_pool,omitempty"`
+// The IPv4 CIDR block for the subnet.
+CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.
-	EnableDns64 *bool `json:"enableDns64,omitempty" tf:"enable_dns64,omitempty"`
+// The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
+CustomerOwnedIPv4Pool *string `json:"customerOwnedIpv4Pool,omitempty" tf:"customer_owned_ipv4_pool,omitempty"`
 
-	// Indicates the device position for local network interfaces in this subnet. For example, 1 indicates local network interfaces in this subnet are the secondary network interface (eth1). A local network interface cannot be the primary network interface (eth0).
-	EnableLniAtDeviceIndex *float64 `json:"enableLniAtDeviceIndex,omitempty" tf:"enable_lni_at_device_index,omitempty"`
+// Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.
+EnableDns64 *bool `json:"enableDns64,omitempty" tf:"enable_dns64,omitempty"`
 
-	// Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.
-	EnableResourceNameDNSARecordOnLaunch *bool `json:"enableResourceNameDnsARecordOnLaunch,omitempty" tf:"enable_resource_name_dns_a_record_on_launch,omitempty"`
+// Indicates the device position for local network interfaces in this subnet. For example, 1 indicates local network interfaces in this subnet are the secondary network interface (eth1). A local network interface cannot be the primary network interface (eth0).
+EnableLniAtDeviceIndex *float64 `json:"enableLniAtDeviceIndex,omitempty" tf:"enable_lni_at_device_index,omitempty"`
 
-	// Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.
-	EnableResourceNameDNSAaaaRecordOnLaunch *bool `json:"enableResourceNameDnsAaaaRecordOnLaunch,omitempty" tf:"enable_resource_name_dns_aaaa_record_on_launch,omitempty"`
+// Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.
+EnableResourceNameDNSARecordOnLaunch *bool `json:"enableResourceNameDnsARecordOnLaunch,omitempty" tf:"enable_resource_name_dns_a_record_on_launch,omitempty"`
 
-	// The IPv6 network range for the subnet,
-	// in CIDR notation. The subnet size must use a /64 prefix length.
-	IPv6CidrBlock *string `json:"ipv6CidrBlock,omitempty" tf:"ipv6_cidr_block,omitempty"`
+// Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.
+EnableResourceNameDNSAaaaRecordOnLaunch *bool `json:"enableResourceNameDnsAaaaRecordOnLaunch,omitempty" tf:"enable_resource_name_dns_aaaa_record_on_launch,omitempty"`
 
-	// Indicates whether to create an IPv6-only subnet. Default: false.
-	IPv6Native *bool `json:"ipv6Native,omitempty" tf:"ipv6_native,omitempty"`
+// The IPv6 network range for the subnet,
+// in CIDR notation. The subnet size must use a /64 prefix length.
+IPv6CidrBlock *string `json:"ipv6CidrBlock,omitempty" tf:"ipv6_cidr_block,omitempty"`
 
-	// Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.
-	MapCustomerOwnedIPOnLaunch *bool `json:"mapCustomerOwnedIpOnLaunch,omitempty" tf:"map_customer_owned_ip_on_launch,omitempty"`
+// Indicates whether to create an IPv6-only subnet. Default: false.
+IPv6Native *bool `json:"ipv6Native,omitempty" tf:"ipv6_native,omitempty"`
 
-	// Specify true to indicate
-	// that instances launched into the subnet should be assigned
-	// a public IP address. Default is false.
-	MapPublicIPOnLaunch *bool `json:"mapPublicIpOnLaunch,omitempty" tf:"map_public_ip_on_launch,omitempty"`
+// Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.
+MapCustomerOwnedIPOnLaunch *bool `json:"mapCustomerOwnedIpOnLaunch,omitempty" tf:"map_customer_owned_ip_on_launch,omitempty"`
 
-	// The Amazon Resource Name (ARN) of the Outpost.
-	OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
+// Specify true to indicate
+// that instances launched into the subnet should be assigned
+// a public IP address. Default is false.
+MapPublicIPOnLaunch *bool `json:"mapPublicIpOnLaunch,omitempty" tf:"map_public_ip_on_launch,omitempty"`
 
-	// The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.
-	PrivateDNSHostnameTypeOnLaunch *string `json:"privateDnsHostnameTypeOnLaunch,omitempty" tf:"private_dns_hostname_type_on_launch,omitempty"`
+// The Amazon Resource Name (ARN) of the Outpost.
+OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.
+PrivateDNSHostnameTypeOnLaunch *string `json:"privateDnsHostnameTypeOnLaunch,omitempty" tf:"private_dns_hostname_type_on_launch,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SubnetObservation struct {
 
-	// The ARN of the subnet.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Specify true to indicate
-	// that network interfaces created in the specified subnet should be
-	// assigned an IPv6 address. Default is false
-	AssignIPv6AddressOnCreation *bool `json:"assignIpv6AddressOnCreation,omitempty" tf:"assign_ipv6_address_on_creation,omitempty"`
+// The ARN of the subnet.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// AZ for the subnet.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specify true to indicate
+// that network interfaces created in the specified subnet should be
+// assigned an IPv6 address. Default is false
+AssignIPv6AddressOnCreation *bool `json:"assignIpv6AddressOnCreation,omitempty" tf:"assign_ipv6_address_on_creation,omitempty"`
 
-	// AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
-	AvailabilityZoneID *string `json:"availabilityZoneId,omitempty" tf:"availability_zone_id,omitempty"`
+// AZ for the subnet.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The IPv4 CIDR block for the subnet.
-	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+// AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
+AvailabilityZoneID *string `json:"availabilityZoneId,omitempty" tf:"availability_zone_id,omitempty"`
 
-	// The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
-	CustomerOwnedIPv4Pool *string `json:"customerOwnedIpv4Pool,omitempty" tf:"customer_owned_ipv4_pool,omitempty"`
+// The IPv4 CIDR block for the subnet.
+CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.
-	EnableDns64 *bool `json:"enableDns64,omitempty" tf:"enable_dns64,omitempty"`
+// The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
+CustomerOwnedIPv4Pool *string `json:"customerOwnedIpv4Pool,omitempty" tf:"customer_owned_ipv4_pool,omitempty"`
 
-	// Indicates the device position for local network interfaces in this subnet. For example, 1 indicates local network interfaces in this subnet are the secondary network interface (eth1). A local network interface cannot be the primary network interface (eth0).
-	EnableLniAtDeviceIndex *float64 `json:"enableLniAtDeviceIndex,omitempty" tf:"enable_lni_at_device_index,omitempty"`
+// Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.
+EnableDns64 *bool `json:"enableDns64,omitempty" tf:"enable_dns64,omitempty"`
 
-	// Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.
-	EnableResourceNameDNSARecordOnLaunch *bool `json:"enableResourceNameDnsARecordOnLaunch,omitempty" tf:"enable_resource_name_dns_a_record_on_launch,omitempty"`
+// Indicates the device position for local network interfaces in this subnet. For example, 1 indicates local network interfaces in this subnet are the secondary network interface (eth1). A local network interface cannot be the primary network interface (eth0).
+EnableLniAtDeviceIndex *float64 `json:"enableLniAtDeviceIndex,omitempty" tf:"enable_lni_at_device_index,omitempty"`
 
-	// Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.
-	EnableResourceNameDNSAaaaRecordOnLaunch *bool `json:"enableResourceNameDnsAaaaRecordOnLaunch,omitempty" tf:"enable_resource_name_dns_aaaa_record_on_launch,omitempty"`
+// Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.
+EnableResourceNameDNSARecordOnLaunch *bool `json:"enableResourceNameDnsARecordOnLaunch,omitempty" tf:"enable_resource_name_dns_a_record_on_launch,omitempty"`
 
-	// The ID of the subnet
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.
+EnableResourceNameDNSAaaaRecordOnLaunch *bool `json:"enableResourceNameDnsAaaaRecordOnLaunch,omitempty" tf:"enable_resource_name_dns_aaaa_record_on_launch,omitempty"`
 
-	// The IPv6 network range for the subnet,
-	// in CIDR notation. The subnet size must use a /64 prefix length.
-	IPv6CidrBlock *string `json:"ipv6CidrBlock,omitempty" tf:"ipv6_cidr_block,omitempty"`
+// The ID of the subnet
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The association ID for the IPv6 CIDR block.
-	IPv6CidrBlockAssociationID *string `json:"ipv6CidrBlockAssociationId,omitempty" tf:"ipv6_cidr_block_association_id,omitempty"`
+// The IPv6 network range for the subnet,
+// in CIDR notation. The subnet size must use a /64 prefix length.
+IPv6CidrBlock *string `json:"ipv6CidrBlock,omitempty" tf:"ipv6_cidr_block,omitempty"`
 
-	// Indicates whether to create an IPv6-only subnet. Default: false.
-	IPv6Native *bool `json:"ipv6Native,omitempty" tf:"ipv6_native,omitempty"`
+// The association ID for the IPv6 CIDR block.
+IPv6CidrBlockAssociationID *string `json:"ipv6CidrBlockAssociationId,omitempty" tf:"ipv6_cidr_block_association_id,omitempty"`
 
-	// Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.
-	MapCustomerOwnedIPOnLaunch *bool `json:"mapCustomerOwnedIpOnLaunch,omitempty" tf:"map_customer_owned_ip_on_launch,omitempty"`
+// Indicates whether to create an IPv6-only subnet. Default: false.
+IPv6Native *bool `json:"ipv6Native,omitempty" tf:"ipv6_native,omitempty"`
 
-	// Specify true to indicate
-	// that instances launched into the subnet should be assigned
-	// a public IP address. Default is false.
-	MapPublicIPOnLaunch *bool `json:"mapPublicIpOnLaunch,omitempty" tf:"map_public_ip_on_launch,omitempty"`
+// Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.
+MapCustomerOwnedIPOnLaunch *bool `json:"mapCustomerOwnedIpOnLaunch,omitempty" tf:"map_customer_owned_ip_on_launch,omitempty"`
 
-	// The Amazon Resource Name (ARN) of the Outpost.
-	OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
+// Specify true to indicate
+// that instances launched into the subnet should be assigned
+// a public IP address. Default is false.
+MapPublicIPOnLaunch *bool `json:"mapPublicIpOnLaunch,omitempty" tf:"map_public_ip_on_launch,omitempty"`
 
-	// The ID of the AWS account that owns the subnet.
-	OwnerID *string `json:"ownerId,omitempty" tf:"owner_id,omitempty"`
+// The Amazon Resource Name (ARN) of the Outpost.
+OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
 
-	// The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.
-	PrivateDNSHostnameTypeOnLaunch *string `json:"privateDnsHostnameTypeOnLaunch,omitempty" tf:"private_dns_hostname_type_on_launch,omitempty"`
+// The ID of the AWS account that owns the subnet.
+OwnerID *string `json:"ownerId,omitempty" tf:"owner_id,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.
+PrivateDNSHostnameTypeOnLaunch *string `json:"privateDnsHostnameTypeOnLaunch,omitempty" tf:"private_dns_hostname_type_on_launch,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The VPC ID.
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The VPC ID.
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
+
 
 type SubnetParameters struct {
 
-	// Specify true to indicate
-	// that network interfaces created in the specified subnet should be
-	// assigned an IPv6 address. Default is false
-	// +kubebuilder:validation:Optional
-	AssignIPv6AddressOnCreation *bool `json:"assignIpv6AddressOnCreation,omitempty" tf:"assign_ipv6_address_on_creation,omitempty"`
 
-	// AZ for the subnet.
-	// +kubebuilder:validation:Optional
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specify true to indicate
+// that network interfaces created in the specified subnet should be
+// assigned an IPv6 address. Default is false
+// +kubebuilder:validation:Optional
+AssignIPv6AddressOnCreation *bool `json:"assignIpv6AddressOnCreation,omitempty" tf:"assign_ipv6_address_on_creation,omitempty"`
 
-	// AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
-	// +kubebuilder:validation:Optional
-	AvailabilityZoneID *string `json:"availabilityZoneId,omitempty" tf:"availability_zone_id,omitempty"`
+// AZ for the subnet.
+// +kubebuilder:validation:Optional
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The IPv4 CIDR block for the subnet.
-	// +kubebuilder:validation:Optional
-	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+// AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
+// +kubebuilder:validation:Optional
+AvailabilityZoneID *string `json:"availabilityZoneId,omitempty" tf:"availability_zone_id,omitempty"`
 
-	// The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
-	// +kubebuilder:validation:Optional
-	CustomerOwnedIPv4Pool *string `json:"customerOwnedIpv4Pool,omitempty" tf:"customer_owned_ipv4_pool,omitempty"`
+// The IPv4 CIDR block for the subnet.
+// +kubebuilder:validation:Optional
+CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.
-	// +kubebuilder:validation:Optional
-	EnableDns64 *bool `json:"enableDns64,omitempty" tf:"enable_dns64,omitempty"`
+// The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
+// +kubebuilder:validation:Optional
+CustomerOwnedIPv4Pool *string `json:"customerOwnedIpv4Pool,omitempty" tf:"customer_owned_ipv4_pool,omitempty"`
 
-	// Indicates the device position for local network interfaces in this subnet. For example, 1 indicates local network interfaces in this subnet are the secondary network interface (eth1). A local network interface cannot be the primary network interface (eth0).
-	// +kubebuilder:validation:Optional
-	EnableLniAtDeviceIndex *float64 `json:"enableLniAtDeviceIndex,omitempty" tf:"enable_lni_at_device_index,omitempty"`
+// Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.
+// +kubebuilder:validation:Optional
+EnableDns64 *bool `json:"enableDns64,omitempty" tf:"enable_dns64,omitempty"`
 
-	// Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.
-	// +kubebuilder:validation:Optional
-	EnableResourceNameDNSARecordOnLaunch *bool `json:"enableResourceNameDnsARecordOnLaunch,omitempty" tf:"enable_resource_name_dns_a_record_on_launch,omitempty"`
+// Indicates the device position for local network interfaces in this subnet. For example, 1 indicates local network interfaces in this subnet are the secondary network interface (eth1). A local network interface cannot be the primary network interface (eth0).
+// +kubebuilder:validation:Optional
+EnableLniAtDeviceIndex *float64 `json:"enableLniAtDeviceIndex,omitempty" tf:"enable_lni_at_device_index,omitempty"`
 
-	// Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.
-	// +kubebuilder:validation:Optional
-	EnableResourceNameDNSAaaaRecordOnLaunch *bool `json:"enableResourceNameDnsAaaaRecordOnLaunch,omitempty" tf:"enable_resource_name_dns_aaaa_record_on_launch,omitempty"`
+// Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.
+// +kubebuilder:validation:Optional
+EnableResourceNameDNSARecordOnLaunch *bool `json:"enableResourceNameDnsARecordOnLaunch,omitempty" tf:"enable_resource_name_dns_a_record_on_launch,omitempty"`
 
-	// The IPv6 network range for the subnet,
-	// in CIDR notation. The subnet size must use a /64 prefix length.
-	// +kubebuilder:validation:Optional
-	IPv6CidrBlock *string `json:"ipv6CidrBlock,omitempty" tf:"ipv6_cidr_block,omitempty"`
+// Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.
+// +kubebuilder:validation:Optional
+EnableResourceNameDNSAaaaRecordOnLaunch *bool `json:"enableResourceNameDnsAaaaRecordOnLaunch,omitempty" tf:"enable_resource_name_dns_aaaa_record_on_launch,omitempty"`
 
-	// Indicates whether to create an IPv6-only subnet. Default: false.
-	// +kubebuilder:validation:Optional
-	IPv6Native *bool `json:"ipv6Native,omitempty" tf:"ipv6_native,omitempty"`
+// The IPv6 network range for the subnet,
+// in CIDR notation. The subnet size must use a /64 prefix length.
+// +kubebuilder:validation:Optional
+IPv6CidrBlock *string `json:"ipv6CidrBlock,omitempty" tf:"ipv6_cidr_block,omitempty"`
 
-	// Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.
-	// +kubebuilder:validation:Optional
-	MapCustomerOwnedIPOnLaunch *bool `json:"mapCustomerOwnedIpOnLaunch,omitempty" tf:"map_customer_owned_ip_on_launch,omitempty"`
+// Indicates whether to create an IPv6-only subnet. Default: false.
+// +kubebuilder:validation:Optional
+IPv6Native *bool `json:"ipv6Native,omitempty" tf:"ipv6_native,omitempty"`
 
-	// Specify true to indicate
-	// that instances launched into the subnet should be assigned
-	// a public IP address. Default is false.
-	// +kubebuilder:validation:Optional
-	MapPublicIPOnLaunch *bool `json:"mapPublicIpOnLaunch,omitempty" tf:"map_public_ip_on_launch,omitempty"`
+// Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.
+// +kubebuilder:validation:Optional
+MapCustomerOwnedIPOnLaunch *bool `json:"mapCustomerOwnedIpOnLaunch,omitempty" tf:"map_customer_owned_ip_on_launch,omitempty"`
 
-	// The Amazon Resource Name (ARN) of the Outpost.
-	// +kubebuilder:validation:Optional
-	OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
+// Specify true to indicate
+// that instances launched into the subnet should be assigned
+// a public IP address. Default is false.
+// +kubebuilder:validation:Optional
+MapPublicIPOnLaunch *bool `json:"mapPublicIpOnLaunch,omitempty" tf:"map_public_ip_on_launch,omitempty"`
 
-	// The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.
-	// +kubebuilder:validation:Optional
-	PrivateDNSHostnameTypeOnLaunch *string `json:"privateDnsHostnameTypeOnLaunch,omitempty" tf:"private_dns_hostname_type_on_launch,omitempty"`
+// The Amazon Resource Name (ARN) of the Outpost.
+// +kubebuilder:validation:Optional
+OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.
+// +kubebuilder:validation:Optional
+PrivateDNSHostnameTypeOnLaunch *string `json:"privateDnsHostnameTypeOnLaunch,omitempty" tf:"private_dns_hostname_type_on_launch,omitempty"`
 
-	// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The VPC ID.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
-	// +kubebuilder:validation:Optional
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
-	// Reference to a VPC in ec2 to populate vpcId.
-	// +kubebuilder:validation:Optional
-	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+// The VPC ID.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.VPC
+// +kubebuilder:validation:Optional
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
-	// Selector for a VPC in ec2 to populate vpcId.
-	// +kubebuilder:validation:Optional
-	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
+// Reference to a VPC in ec2 to populate vpcId.
+// +kubebuilder:validation:Optional
+VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+// Selector for a VPC in ec2 to populate vpcId.
+// +kubebuilder:validation:Optional
+VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 // SubnetSpec defines the desired state of Subnet
 type SubnetSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SubnetParameters `json:"forProvider"`
+	ForProvider       SubnetParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -258,13 +267,13 @@ type SubnetSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider SubnetInitParameters `json:"initProvider,omitempty"`
+	InitProvider       SubnetInitParameters `json:"initProvider,omitempty"`
 }
 
 // SubnetStatus defines the observed state of Subnet.
 type SubnetStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SubnetObservation `json:"atProvider,omitempty"`
+	AtProvider          SubnetObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -279,9 +288,9 @@ type SubnetStatus struct {
 type Subnet struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   SubnetSpec   `json:"spec"`
-	Status SubnetStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              SubnetSpec   `json:"spec"`
+	Status            SubnetStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

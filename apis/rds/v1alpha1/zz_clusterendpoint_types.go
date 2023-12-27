@@ -15,102 +15,111 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type ClusterEndpointInitParameters struct {
 
-	// The type of the endpoint. One of: READER , ANY .
-	CustomEndpointType *string `json:"customEndpointType,omitempty" tf:"custom_endpoint_type,omitempty"`
 
-	// List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members.
-	ExcludedMembers []*string `json:"excludedMembers,omitempty" tf:"excluded_members,omitempty"`
+// The type of the endpoint. One of: READER , ANY .
+CustomEndpointType *string `json:"customEndpointType,omitempty" tf:"custom_endpoint_type,omitempty"`
 
-	// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
-	StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
+// List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members.
+ExcludedMembers []*string `json:"excludedMembers,omitempty" tf:"excluded_members,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
+StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterEndpointObservation struct {
 
-	// Amazon Resource Name (ARN) of cluster
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The cluster identifier.
-	ClusterIdentifier *string `json:"clusterIdentifier,omitempty" tf:"cluster_identifier,omitempty"`
+// Amazon Resource Name (ARN) of cluster
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The type of the endpoint. One of: READER , ANY .
-	CustomEndpointType *string `json:"customEndpointType,omitempty" tf:"custom_endpoint_type,omitempty"`
+// The cluster identifier.
+ClusterIdentifier *string `json:"clusterIdentifier,omitempty" tf:"cluster_identifier,omitempty"`
 
-	// A custom endpoint for the Aurora cluster
-	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+// The type of the endpoint. One of: READER , ANY .
+CustomEndpointType *string `json:"customEndpointType,omitempty" tf:"custom_endpoint_type,omitempty"`
 
-	// List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members.
-	ExcludedMembers []*string `json:"excludedMembers,omitempty" tf:"excluded_members,omitempty"`
+// A custom endpoint for the Aurora cluster
+Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// The RDS Cluster Endpoint Identifier
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members.
+ExcludedMembers []*string `json:"excludedMembers,omitempty" tf:"excluded_members,omitempty"`
 
-	// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
-	StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
+// The RDS Cluster Endpoint Identifier
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
+StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterEndpointParameters struct {
 
-	// The cluster identifier.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	ClusterIdentifier *string `json:"clusterIdentifier,omitempty" tf:"cluster_identifier,omitempty"`
 
-	// Reference to a Cluster in rds to populate clusterIdentifier.
-	// +kubebuilder:validation:Optional
-	ClusterIdentifierRef *v1.Reference `json:"clusterIdentifierRef,omitempty" tf:"-"`
+// The cluster identifier.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/rds/v1alpha1.Cluster
+// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+// +kubebuilder:validation:Optional
+ClusterIdentifier *string `json:"clusterIdentifier,omitempty" tf:"cluster_identifier,omitempty"`
 
-	// Selector for a Cluster in rds to populate clusterIdentifier.
-	// +kubebuilder:validation:Optional
-	ClusterIdentifierSelector *v1.Selector `json:"clusterIdentifierSelector,omitempty" tf:"-"`
+// Reference to a Cluster in rds to populate clusterIdentifier.
+// +kubebuilder:validation:Optional
+ClusterIdentifierRef *v1.Reference `json:"clusterIdentifierRef,omitempty" tf:"-"`
 
-	// The type of the endpoint. One of: READER , ANY .
-	// +kubebuilder:validation:Optional
-	CustomEndpointType *string `json:"customEndpointType,omitempty" tf:"custom_endpoint_type,omitempty"`
+// Selector for a Cluster in rds to populate clusterIdentifier.
+// +kubebuilder:validation:Optional
+ClusterIdentifierSelector *v1.Selector `json:"clusterIdentifierSelector,omitempty" tf:"-"`
 
-	// List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members.
-	// +kubebuilder:validation:Optional
-	ExcludedMembers []*string `json:"excludedMembers,omitempty" tf:"excluded_members,omitempty"`
+// The type of the endpoint. One of: READER , ANY .
+// +kubebuilder:validation:Optional
+CustomEndpointType *string `json:"customEndpointType,omitempty" tf:"custom_endpoint_type,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members.
+// +kubebuilder:validation:Optional
+ExcludedMembers []*string `json:"excludedMembers,omitempty" tf:"excluded_members,omitempty"`
 
-	// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
-	// +kubebuilder:validation:Optional
-	StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members.
+// +kubebuilder:validation:Optional
+StaticMembers []*string `json:"staticMembers,omitempty" tf:"static_members,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // ClusterEndpointSpec defines the desired state of ClusterEndpoint
 type ClusterEndpointSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClusterEndpointParameters `json:"forProvider"`
+	ForProvider       ClusterEndpointParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -121,13 +130,13 @@ type ClusterEndpointSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ClusterEndpointInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ClusterEndpointInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterEndpointStatus defines the observed state of ClusterEndpoint.
 type ClusterEndpointStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClusterEndpointObservation `json:"atProvider,omitempty"`
+	AtProvider          ClusterEndpointObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -142,10 +151,10 @@ type ClusterEndpointStatus struct {
 type ClusterEndpoint struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.customEndpointType) || (has(self.initProvider) && has(self.initProvider.customEndpointType))",message="spec.forProvider.customEndpointType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ClusterEndpointSpec   `json:"spec"`
-	Status ClusterEndpointStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.customEndpointType) || (has(self.initProvider) && has(self.initProvider.customEndpointType))",message="spec.forProvider.customEndpointType is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ClusterEndpointSpec   `json:"spec"`
+	Status            ClusterEndpointStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -15,77 +15,86 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
 
+
+
+
 type ClusterSnapshotInitParameters struct {
+
 }
+
 
 type ClusterSnapshotObservation struct {
 
-	// List of EC2 Availability Zones that instances in the DocumentDB cluster snapshot can be restored in.
-	AvailabilityZones []*string `json:"availabilityZones,omitempty" tf:"availability_zones,omitempty"`
 
-	// The DocumentDB Cluster Identifier from which to take the snapshot.
-	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
+// List of EC2 Availability Zones that instances in the DocumentDB cluster snapshot can be restored in.
+AvailabilityZones []*string `json:"availabilityZones,omitempty" tf:"availability_zones,omitempty"`
 
-	// The Amazon Resource Name (ARN) for the DocumentDB Cluster Snapshot.
-	DBClusterSnapshotArn *string `json:"dbClusterSnapshotArn,omitempty" tf:"db_cluster_snapshot_arn,omitempty"`
+// The DocumentDB Cluster Identifier from which to take the snapshot.
+DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// Specifies the name of the database engine.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// The Amazon Resource Name (ARN) for the DocumentDB Cluster Snapshot.
+DBClusterSnapshotArn *string `json:"dbClusterSnapshotArn,omitempty" tf:"db_cluster_snapshot_arn,omitempty"`
 
-	// Version of the database engine for this DocumentDB cluster snapshot.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// Specifies the name of the database engine.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Version of the database engine for this DocumentDB cluster snapshot.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocumentDB cluster snapshot.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Port that the DocumentDB cluster was listening on at the time of the snapshot.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocumentDB cluster snapshot.
+KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
-	SnapshotType *string `json:"snapshotType,omitempty" tf:"snapshot_type,omitempty"`
+// Port that the DocumentDB cluster was listening on at the time of the snapshot.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The Amazon Resource Name (ARN) for the DocumentDB Cluster Snapshot.
-	SourceDBClusterSnapshotArn *string `json:"sourceDbClusterSnapshotArn,omitempty" tf:"source_db_cluster_snapshot_arn,omitempty"`
+SnapshotType *string `json:"snapshotType,omitempty" tf:"snapshot_type,omitempty"`
 
-	// The status of this DocumentDB Cluster Snapshot.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+// The Amazon Resource Name (ARN) for the DocumentDB Cluster Snapshot.
+SourceDBClusterSnapshotArn *string `json:"sourceDbClusterSnapshotArn,omitempty" tf:"source_db_cluster_snapshot_arn,omitempty"`
 
-	// Specifies whether the DocumentDB cluster snapshot is encrypted.
-	StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+// The status of this DocumentDB Cluster Snapshot.
+Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// The VPC ID associated with the DocumentDB cluster snapshot.
-	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+// Specifies whether the DocumentDB cluster snapshot is encrypted.
+StorageEncrypted *bool `json:"storageEncrypted,omitempty" tf:"storage_encrypted,omitempty"`
+
+// The VPC ID associated with the DocumentDB cluster snapshot.
+VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
+
 
 type ClusterSnapshotParameters struct {
 
-	// The DocumentDB Cluster Identifier from which to take the snapshot.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/docdb/v1alpha1.Cluster
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// Reference to a Cluster in docdb to populate dbClusterIdentifier.
-	// +kubebuilder:validation:Optional
-	DBClusterIdentifierRef *v1.Reference `json:"dbClusterIdentifierRef,omitempty" tf:"-"`
+// The DocumentDB Cluster Identifier from which to take the snapshot.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/docdb/v1alpha1.Cluster
+// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+// +kubebuilder:validation:Optional
+DBClusterIdentifier *string `json:"dbClusterIdentifier,omitempty" tf:"db_cluster_identifier,omitempty"`
 
-	// Selector for a Cluster in docdb to populate dbClusterIdentifier.
-	// +kubebuilder:validation:Optional
-	DBClusterIdentifierSelector *v1.Selector `json:"dbClusterIdentifierSelector,omitempty" tf:"-"`
+// Reference to a Cluster in docdb to populate dbClusterIdentifier.
+// +kubebuilder:validation:Optional
+DBClusterIdentifierRef *v1.Reference `json:"dbClusterIdentifierRef,omitempty" tf:"-"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// Selector for a Cluster in docdb to populate dbClusterIdentifier.
+// +kubebuilder:validation:Optional
+DBClusterIdentifierSelector *v1.Selector `json:"dbClusterIdentifierSelector,omitempty" tf:"-"`
+
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 }
 
 // ClusterSnapshotSpec defines the desired state of ClusterSnapshot
 type ClusterSnapshotSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClusterSnapshotParameters `json:"forProvider"`
+	ForProvider       ClusterSnapshotParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -96,13 +105,13 @@ type ClusterSnapshotSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ClusterSnapshotInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ClusterSnapshotInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterSnapshotStatus defines the observed state of ClusterSnapshot.
 type ClusterSnapshotStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClusterSnapshotObservation `json:"atProvider,omitempty"`
+	AtProvider          ClusterSnapshotObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -117,9 +126,9 @@ type ClusterSnapshotStatus struct {
 type ClusterSnapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ClusterSnapshotSpec   `json:"spec"`
-	Status ClusterSnapshotStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ClusterSnapshotSpec   `json:"spec"`
+	Status            ClusterSnapshotStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

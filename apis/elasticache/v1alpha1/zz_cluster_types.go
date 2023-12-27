@@ -15,447 +15,469 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
 
+
+
+
 type CacheNodesInitParameters struct {
+
 }
+
 
 type CacheNodesObservation struct {
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// The ARN of the created ElastiCache Cluster.
-	OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
+// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// create the resource.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+// The ARN of the created ElastiCache Cluster.
+OutpostArn *string `json:"outpostArn,omitempty" tf:"outpost_arn,omitempty"`
+
+// create the resource.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
+
 
 type CacheNodesParameters struct {
+
 }
+
 
 type ClusterInitParameters struct {
 
-	// Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
-	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
-	// Only supported for engine type "redis" and if the engine version is 6 or higher.
-	// Defaults to true.
-	AutoMinorVersionUpgrade *string `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
+ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
+// Only supported for engine type "redis" and if the engine version is 6 or higher.
+// Defaults to true.
+AutoMinorVersionUpgrade *string `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
-	AzMode *string `json:"azMode,omitempty" tf:"az_mode,omitempty"`
+// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// –  Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
+AzMode *string `json:"azMode,omitempty" tf:"az_mode,omitempty"`
 
-	// –  Version number of the cache engine to be used.
-	// If not set, defaults to the latest version.
-	// See Describe Cache Engine Versions in the AWS Documentation for supported versions.
-	// When engine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.2,
-	// or the minor version can be unspecified which will use the latest version at creation time, e.g., 6.x.
-	// Otherwise, specify the full version desired, e.g., 5.0.6.
-	// The actual engine version used is returned in the attribute engine_version_actual, see Attributes Reference below.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// –  Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Name of your final cluster snapshot. If omitted, no final snapshot will be made.
-	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+// –  Version number of the cache engine to be used.
+// If not set, defaults to the latest version.
+// See Describe Cache Engine Versions in the AWS Documentation for supported versions.
+// When engine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.2,
+// or the minor version can be unspecified which will use the latest version at creation time, e.g., 6.x.
+// Otherwise, specify the full version desired, e.g., 5.0.6.
+// The actual engine version used is returned in the attribute engine_version_actual, see Attributes Reference below.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// The IP version to advertise in the discovery protocol. Valid values are ipv4 or ipv6.
-	IPDiscovery *string `json:"ipDiscovery,omitempty" tf:"ip_discovery,omitempty"`
+// Name of your final cluster snapshot. If omitted, no final snapshot will be made.
+FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
 
-	// Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
-	LogDeliveryConfiguration []LogDeliveryConfigurationInitParameters `json:"logDeliveryConfiguration,omitempty" tf:"log_delivery_configuration,omitempty"`
+// The IP version to advertise in the discovery protocol. Valid values are ipv4 or ipv6.
+IPDiscovery *string `json:"ipDiscovery,omitempty" tf:"ip_discovery,omitempty"`
 
-	// ddd:hh24:mi (24H Clock UTC).
-	// The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+LogDeliveryConfiguration []LogDeliveryConfigurationInitParameters `json:"logDeliveryConfiguration,omitempty" tf:"log_delivery_configuration,omitempty"`
 
-	// The IP versions for cache cluster connections. IPv6 is supported with Redis engine 6.2 onword or Memcached version 1.6.6 for all Nitro system instances. Valid values are ipv4, ipv6 or dual_stack.
-	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+// ddd:hh24:mi (24H Clock UTC).
+// The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// create the resource.
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// The IP versions for cache cluster connections. IPv6 is supported with Redis engine 6.2 onword or Memcached version 1.6.6 for all Nitro system instances. Valid values are ipv4, ipv6 or dual_stack.
+NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
-	// east-1:012345678999:my_sns_topic.
-	NotificationTopicArn *string `json:"notificationTopicArn,omitempty" tf:"notification_topic_arn,omitempty"`
+// create the resource.
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// –  The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.
-	NumCacheNodes *float64 `json:"numCacheNodes,omitempty" tf:"num_cache_nodes,omitempty"`
+// east-1:012345678999:my_sns_topic.
+NotificationTopicArn *string `json:"notificationTopicArn,omitempty" tf:"notification_topic_arn,omitempty"`
 
-	// Specify the outpost mode that will apply to the cache cluster creation. Valid values are "single-outpost" and "cross-outpost", however AWS currently only supports "single-outpost" mode.
-	OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
+// –  The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.
+NumCacheNodes *float64 `json:"numCacheNodes,omitempty" tf:"num_cache_nodes,omitempty"`
 
-	// create the resource.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// Specify the outpost mode that will apply to the cache cluster creation. Valid values are "single-outpost" and "cross-outpost", however AWS currently only supports "single-outpost" mode.
+OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
 
-	// List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.
-	PreferredAvailabilityZones []*string `json:"preferredAvailabilityZones,omitempty" tf:"preferred_availability_zones,omitempty"`
+// create the resource.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The outpost ARN in which the cache cluster will be created.
-	PreferredOutpostArn *string `json:"preferredOutpostArn,omitempty" tf:"preferred_outpost_arn,omitempty"`
+// List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.
+PreferredAvailabilityZones []*string `json:"preferredAvailabilityZones,omitempty" tf:"preferred_availability_zones,omitempty"`
 
-	// element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.
-	SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
+// The outpost ARN in which the cache cluster will be created.
+PreferredOutpostArn *string `json:"preferredOutpostArn,omitempty" tf:"preferred_outpost_arn,omitempty"`
 
-	// Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
-	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
+// element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.
+SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
 
-	// Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
+SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
-	// Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterObservation struct {
 
-	// Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
-	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// The ARN of the created ElastiCache Cluster.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+// Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
+ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
-	// Only supported for engine type "redis" and if the engine version is 6 or higher.
-	// Defaults to true.
-	AutoMinorVersionUpgrade *string `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// The ARN of the created ElastiCache Cluster.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
+// Only supported for engine type "redis" and if the engine version is 6 or higher.
+// Defaults to true.
+AutoMinorVersionUpgrade *string `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
-	AzMode *string `json:"azMode,omitempty" tf:"az_mode,omitempty"`
+// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// List of node objects including id, address, port and availability_zone.
-	CacheNodes []CacheNodesObservation `json:"cacheNodes,omitempty" tf:"cache_nodes,omitempty"`
+// Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
+AzMode *string `json:"azMode,omitempty" tf:"az_mode,omitempty"`
 
-	// (Memcached only) DNS name of the cache cluster without the port appended.
-	ClusterAddress *string `json:"clusterAddress,omitempty" tf:"cluster_address,omitempty"`
+// List of node objects including id, address, port and availability_zone.
+CacheNodes []CacheNodesObservation `json:"cacheNodes,omitempty" tf:"cache_nodes,omitempty"`
 
-	// (Memcached only) Configuration endpoint to allow host discovery.
-	ConfigurationEndpoint *string `json:"configurationEndpoint,omitempty" tf:"configuration_endpoint,omitempty"`
+// (Memcached only) DNS name of the cache cluster without the port appended.
+ClusterAddress *string `json:"clusterAddress,omitempty" tf:"cluster_address,omitempty"`
 
-	// –  Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// (Memcached only) Configuration endpoint to allow host discovery.
+ConfigurationEndpoint *string `json:"configurationEndpoint,omitempty" tf:"configuration_endpoint,omitempty"`
 
-	// –  Version number of the cache engine to be used.
-	// If not set, defaults to the latest version.
-	// See Describe Cache Engine Versions in the AWS Documentation for supported versions.
-	// When engine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.2,
-	// or the minor version can be unspecified which will use the latest version at creation time, e.g., 6.x.
-	// Otherwise, specify the full version desired, e.g., 5.0.6.
-	// The actual engine version used is returned in the attribute engine_version_actual, see Attributes Reference below.
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// –  Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine.
-	EngineVersionActual *string `json:"engineVersionActual,omitempty" tf:"engine_version_actual,omitempty"`
+// –  Version number of the cache engine to be used.
+// If not set, defaults to the latest version.
+// See Describe Cache Engine Versions in the AWS Documentation for supported versions.
+// When engine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.2,
+// or the minor version can be unspecified which will use the latest version at creation time, e.g., 6.x.
+// Otherwise, specify the full version desired, e.g., 5.0.6.
+// The actual engine version used is returned in the attribute engine_version_actual, see Attributes Reference below.
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Name of your final cluster snapshot. If omitted, no final snapshot will be made.
-	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+// Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine.
+EngineVersionActual *string `json:"engineVersionActual,omitempty" tf:"engine_version_actual,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// Name of your final cluster snapshot. If omitted, no final snapshot will be made.
+FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
 
-	// The IP version to advertise in the discovery protocol. Valid values are ipv4 or ipv6.
-	IPDiscovery *string `json:"ipDiscovery,omitempty" tf:"ip_discovery,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
-	LogDeliveryConfiguration []LogDeliveryConfigurationObservation `json:"logDeliveryConfiguration,omitempty" tf:"log_delivery_configuration,omitempty"`
+// The IP version to advertise in the discovery protocol. Valid values are ipv4 or ipv6.
+IPDiscovery *string `json:"ipDiscovery,omitempty" tf:"ip_discovery,omitempty"`
 
-	// ddd:hh24:mi (24H Clock UTC).
-	// The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00.
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+LogDeliveryConfiguration []LogDeliveryConfigurationObservation `json:"logDeliveryConfiguration,omitempty" tf:"log_delivery_configuration,omitempty"`
 
-	// The IP versions for cache cluster connections. IPv6 is supported with Redis engine 6.2 onword or Memcached version 1.6.6 for all Nitro system instances. Valid values are ipv4, ipv6 or dual_stack.
-	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+// ddd:hh24:mi (24H Clock UTC).
+// The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00.
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// create the resource.
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// The IP versions for cache cluster connections. IPv6 is supported with Redis engine 6.2 onword or Memcached version 1.6.6 for all Nitro system instances. Valid values are ipv4, ipv6 or dual_stack.
+NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
-	// east-1:012345678999:my_sns_topic.
-	NotificationTopicArn *string `json:"notificationTopicArn,omitempty" tf:"notification_topic_arn,omitempty"`
+// create the resource.
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// –  The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.
-	NumCacheNodes *float64 `json:"numCacheNodes,omitempty" tf:"num_cache_nodes,omitempty"`
+// east-1:012345678999:my_sns_topic.
+NotificationTopicArn *string `json:"notificationTopicArn,omitempty" tf:"notification_topic_arn,omitempty"`
 
-	// Specify the outpost mode that will apply to the cache cluster creation. Valid values are "single-outpost" and "cross-outpost", however AWS currently only supports "single-outpost" mode.
-	OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
+// –  The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.
+NumCacheNodes *float64 `json:"numCacheNodes,omitempty" tf:"num_cache_nodes,omitempty"`
 
-	// –  The name of the parameter group to associate with this cache cluster.
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// Specify the outpost mode that will apply to the cache cluster creation. Valid values are "single-outpost" and "cross-outpost", however AWS currently only supports "single-outpost" mode.
+OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
 
-	// create the resource.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// –  The name of the parameter group to associate with this cache cluster.
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.
-	PreferredAvailabilityZones []*string `json:"preferredAvailabilityZones,omitempty" tf:"preferred_availability_zones,omitempty"`
+// create the resource.
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The outpost ARN in which the cache cluster will be created.
-	PreferredOutpostArn *string `json:"preferredOutpostArn,omitempty" tf:"preferred_outpost_arn,omitempty"`
+// List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.
+PreferredAvailabilityZones []*string `json:"preferredAvailabilityZones,omitempty" tf:"preferred_availability_zones,omitempty"`
 
-	// ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
-	ReplicationGroupID *string `json:"replicationGroupId,omitempty" tf:"replication_group_id,omitempty"`
+// The outpost ARN in which the cache cluster will be created.
+PreferredOutpostArn *string `json:"preferredOutpostArn,omitempty" tf:"preferred_outpost_arn,omitempty"`
 
-	// –  One or more VPC security groups associated with the cache cluster
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+// ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
+ReplicationGroupID *string `json:"replicationGroupId,omitempty" tf:"replication_group_id,omitempty"`
 
-	// element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.
-	SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
+// –  One or more VPC security groups associated with the cache cluster
+SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
-	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
+// element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.
+SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
 
-	// Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
+SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
-	// Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// create the resource.
-	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+// Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// create the resource.
+SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type ClusterParameters struct {
 
-	// Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
-	// +kubebuilder:validation:Optional
-	ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
-	// Only supported for engine type "redis" and if the engine version is 6 or higher.
-	// Defaults to true.
-	// +kubebuilder:validation:Optional
-	AutoMinorVersionUpgrade *string `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
+// Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
+// +kubebuilder:validation:Optional
+ApplyImmediately *bool `json:"applyImmediately,omitempty" tf:"apply_immediately,omitempty"`
 
-	// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
-	// +kubebuilder:validation:Optional
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+// Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
+// Only supported for engine type "redis" and if the engine version is 6 or higher.
+// Defaults to true.
+// +kubebuilder:validation:Optional
+AutoMinorVersionUpgrade *string `json:"autoMinorVersionUpgrade,omitempty" tf:"auto_minor_version_upgrade,omitempty"`
 
-	// Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
-	// +kubebuilder:validation:Optional
-	AzMode *string `json:"azMode,omitempty" tf:"az_mode,omitempty"`
+// Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.
+// +kubebuilder:validation:Optional
+AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// –  Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.
-	// +kubebuilder:validation:Optional
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
+// +kubebuilder:validation:Optional
+AzMode *string `json:"azMode,omitempty" tf:"az_mode,omitempty"`
 
-	// –  Version number of the cache engine to be used.
-	// If not set, defaults to the latest version.
-	// See Describe Cache Engine Versions in the AWS Documentation for supported versions.
-	// When engine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.2,
-	// or the minor version can be unspecified which will use the latest version at creation time, e.g., 6.x.
-	// Otherwise, specify the full version desired, e.g., 5.0.6.
-	// The actual engine version used is returned in the attribute engine_version_actual, see Attributes Reference below.
-	// +kubebuilder:validation:Optional
-	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+// –  Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.
+// +kubebuilder:validation:Optional
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Name of your final cluster snapshot. If omitted, no final snapshot will be made.
-	// +kubebuilder:validation:Optional
-	FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
+// –  Version number of the cache engine to be used.
+// If not set, defaults to the latest version.
+// See Describe Cache Engine Versions in the AWS Documentation for supported versions.
+// When engine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.2,
+// or the minor version can be unspecified which will use the latest version at creation time, e.g., 6.x.
+// Otherwise, specify the full version desired, e.g., 5.0.6.
+// The actual engine version used is returned in the attribute engine_version_actual, see Attributes Reference below.
+// +kubebuilder:validation:Optional
+EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// The IP version to advertise in the discovery protocol. Valid values are ipv4 or ipv6.
-	// +kubebuilder:validation:Optional
-	IPDiscovery *string `json:"ipDiscovery,omitempty" tf:"ip_discovery,omitempty"`
+// Name of your final cluster snapshot. If omitted, no final snapshot will be made.
+// +kubebuilder:validation:Optional
+FinalSnapshotIdentifier *string `json:"finalSnapshotIdentifier,omitempty" tf:"final_snapshot_identifier,omitempty"`
 
-	// Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
-	// +kubebuilder:validation:Optional
-	LogDeliveryConfiguration []LogDeliveryConfigurationParameters `json:"logDeliveryConfiguration,omitempty" tf:"log_delivery_configuration,omitempty"`
+// The IP version to advertise in the discovery protocol. Valid values are ipv4 or ipv6.
+// +kubebuilder:validation:Optional
+IPDiscovery *string `json:"ipDiscovery,omitempty" tf:"ip_discovery,omitempty"`
 
-	// ddd:hh24:mi (24H Clock UTC).
-	// The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00.
-	// +kubebuilder:validation:Optional
-	MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+// Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+// +kubebuilder:validation:Optional
+LogDeliveryConfiguration []LogDeliveryConfigurationParameters `json:"logDeliveryConfiguration,omitempty" tf:"log_delivery_configuration,omitempty"`
 
-	// The IP versions for cache cluster connections. IPv6 is supported with Redis engine 6.2 onword or Memcached version 1.6.6 for all Nitro system instances. Valid values are ipv4, ipv6 or dual_stack.
-	// +kubebuilder:validation:Optional
-	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+// ddd:hh24:mi (24H Clock UTC).
+// The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00.
+// +kubebuilder:validation:Optional
+MaintenanceWindow *string `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// create the resource.
-	// +kubebuilder:validation:Optional
-	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
+// The IP versions for cache cluster connections. IPv6 is supported with Redis engine 6.2 onword or Memcached version 1.6.6 for all Nitro system instances. Valid values are ipv4, ipv6 or dual_stack.
+// +kubebuilder:validation:Optional
+NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
-	// east-1:012345678999:my_sns_topic.
-	// +kubebuilder:validation:Optional
-	NotificationTopicArn *string `json:"notificationTopicArn,omitempty" tf:"notification_topic_arn,omitempty"`
+// create the resource.
+// +kubebuilder:validation:Optional
+NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// –  The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.
-	// +kubebuilder:validation:Optional
-	NumCacheNodes *float64 `json:"numCacheNodes,omitempty" tf:"num_cache_nodes,omitempty"`
+// east-1:012345678999:my_sns_topic.
+// +kubebuilder:validation:Optional
+NotificationTopicArn *string `json:"notificationTopicArn,omitempty" tf:"notification_topic_arn,omitempty"`
 
-	// Specify the outpost mode that will apply to the cache cluster creation. Valid values are "single-outpost" and "cross-outpost", however AWS currently only supports "single-outpost" mode.
-	// +kubebuilder:validation:Optional
-	OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
+// –  The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.
+// +kubebuilder:validation:Optional
+NumCacheNodes *float64 `json:"numCacheNodes,omitempty" tf:"num_cache_nodes,omitempty"`
 
-	// –  The name of the parameter group to associate with this cache cluster.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.ParameterGroup
-	// +kubebuilder:validation:Optional
-	ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
+// Specify the outpost mode that will apply to the cache cluster creation. Valid values are "single-outpost" and "cross-outpost", however AWS currently only supports "single-outpost" mode.
+// +kubebuilder:validation:Optional
+OutpostMode *string `json:"outpostMode,omitempty" tf:"outpost_mode,omitempty"`
 
-	// Reference to a ParameterGroup in elasticache to populate parameterGroupName.
-	// +kubebuilder:validation:Optional
-	ParameterGroupNameRef *v1.Reference `json:"parameterGroupNameRef,omitempty" tf:"-"`
+// –  The name of the parameter group to associate with this cache cluster.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.ParameterGroup
+// +kubebuilder:validation:Optional
+ParameterGroupName *string `json:"parameterGroupName,omitempty" tf:"parameter_group_name,omitempty"`
 
-	// Selector for a ParameterGroup in elasticache to populate parameterGroupName.
-	// +kubebuilder:validation:Optional
-	ParameterGroupNameSelector *v1.Selector `json:"parameterGroupNameSelector,omitempty" tf:"-"`
+// Reference to a ParameterGroup in elasticache to populate parameterGroupName.
+// +kubebuilder:validation:Optional
+ParameterGroupNameRef *v1.Reference `json:"parameterGroupNameRef,omitempty" tf:"-"`
 
-	// create the resource.
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+// Selector for a ParameterGroup in elasticache to populate parameterGroupName.
+// +kubebuilder:validation:Optional
+ParameterGroupNameSelector *v1.Selector `json:"parameterGroupNameSelector,omitempty" tf:"-"`
 
-	// List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.
-	// +kubebuilder:validation:Optional
-	PreferredAvailabilityZones []*string `json:"preferredAvailabilityZones,omitempty" tf:"preferred_availability_zones,omitempty"`
+// create the resource.
+// +kubebuilder:validation:Optional
+Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The outpost ARN in which the cache cluster will be created.
-	// +kubebuilder:validation:Optional
-	PreferredOutpostArn *string `json:"preferredOutpostArn,omitempty" tf:"preferred_outpost_arn,omitempty"`
+// List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.
+// +kubebuilder:validation:Optional
+PreferredAvailabilityZones []*string `json:"preferredAvailabilityZones,omitempty" tf:"preferred_availability_zones,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// The outpost ARN in which the cache cluster will be created.
+// +kubebuilder:validation:Optional
+PreferredOutpostArn *string `json:"preferredOutpostArn,omitempty" tf:"preferred_outpost_arn,omitempty"`
 
-	// ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.ReplicationGroup
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	ReplicationGroupID *string `json:"replicationGroupId,omitempty" tf:"replication_group_id,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Reference to a ReplicationGroup in elasticache to populate replicationGroupId.
-	// +kubebuilder:validation:Optional
-	ReplicationGroupIDRef *v1.Reference `json:"replicationGroupIdRef,omitempty" tf:"-"`
+// ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.ReplicationGroup
+// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+// +kubebuilder:validation:Optional
+ReplicationGroupID *string `json:"replicationGroupId,omitempty" tf:"replication_group_id,omitempty"`
 
-	// Selector for a ReplicationGroup in elasticache to populate replicationGroupId.
-	// +kubebuilder:validation:Optional
-	ReplicationGroupIDSelector *v1.Selector `json:"replicationGroupIdSelector,omitempty" tf:"-"`
+// Reference to a ReplicationGroup in elasticache to populate replicationGroupId.
+// +kubebuilder:validation:Optional
+ReplicationGroupIDRef *v1.Reference `json:"replicationGroupIdRef,omitempty" tf:"-"`
 
-	// References to SecurityGroup in ec2 to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
+// Selector for a ReplicationGroup in elasticache to populate replicationGroupId.
+// +kubebuilder:validation:Optional
+ReplicationGroupIDSelector *v1.Selector `json:"replicationGroupIdSelector,omitempty" tf:"-"`
 
-	// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+// References to SecurityGroup in ec2 to populate securityGroupIds.
+// +kubebuilder:validation:Optional
+SecurityGroupIDRefs []v1.Reference `json:"securityGroupIdRefs,omitempty" tf:"-"`
 
-	// –  One or more VPC security groups associated with the cache cluster
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
-	// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
-	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
-	// +kubebuilder:validation:Optional
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+// Selector for a list of SecurityGroup in ec2 to populate securityGroupIds.
+// +kubebuilder:validation:Optional
+SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.
-	// +kubebuilder:validation:Optional
-	SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
+// –  One or more VPC security groups associated with the cache cluster
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.SecurityGroup
+// +crossplane:generate:reference:refFieldName=SecurityGroupIDRefs
+// +crossplane:generate:reference:selectorFieldName=SecurityGroupIDSelector
+// +kubebuilder:validation:Optional
+SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
-	// +kubebuilder:validation:Optional
-	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
+// element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.
+// +kubebuilder:validation:Optional
+SnapshotArns []*string `json:"snapshotArns,omitempty" tf:"snapshot_arns,omitempty"`
 
-	// Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
-	// +kubebuilder:validation:Optional
-	SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
+// Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
+// +kubebuilder:validation:Optional
+SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
-	// Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
-	// +kubebuilder:validation:Optional
-	SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
+// Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+// +kubebuilder:validation:Optional
+SnapshotRetentionLimit *float64 `json:"snapshotRetentionLimit,omitempty" tf:"snapshot_retention_limit,omitempty"`
 
-	// create the resource.
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.SubnetGroup
-	// +kubebuilder:validation:Optional
-	SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
+// Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
+// +kubebuilder:validation:Optional
+SnapshotWindow *string `json:"snapshotWindow,omitempty" tf:"snapshot_window,omitempty"`
 
-	// Reference to a SubnetGroup in elasticache to populate subnetGroupName.
-	// +kubebuilder:validation:Optional
-	SubnetGroupNameRef *v1.Reference `json:"subnetGroupNameRef,omitempty" tf:"-"`
+// create the resource.
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/elasticache/v1alpha1.SubnetGroup
+// +kubebuilder:validation:Optional
+SubnetGroupName *string `json:"subnetGroupName,omitempty" tf:"subnet_group_name,omitempty"`
 
-	// Selector for a SubnetGroup in elasticache to populate subnetGroupName.
-	// +kubebuilder:validation:Optional
-	SubnetGroupNameSelector *v1.Selector `json:"subnetGroupNameSelector,omitempty" tf:"-"`
+// Reference to a SubnetGroup in elasticache to populate subnetGroupName.
+// +kubebuilder:validation:Optional
+SubnetGroupNameRef *v1.Reference `json:"subnetGroupNameRef,omitempty" tf:"-"`
 
-	// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Selector for a SubnetGroup in elasticache to populate subnetGroupName.
+// +kubebuilder:validation:Optional
+SubnetGroupNameSelector *v1.Selector `json:"subnetGroupNameSelector,omitempty" tf:"-"`
 
-	// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type LogDeliveryConfigurationInitParameters struct {
 
-	// Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
 
-	// For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+// Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
 
-	// Valid values are json or text
-	LogFormat *string `json:"logFormat,omitempty" tf:"log_format,omitempty"`
+// For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
 
-	// Valid values are  slow-log or engine-log. Max 1 of each.
-	LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
+// Valid values are json or text
+LogFormat *string `json:"logFormat,omitempty" tf:"log_format,omitempty"`
+
+// Valid values are  slow-log or engine-log. Max 1 of each.
+LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
 }
+
 
 type LogDeliveryConfigurationObservation struct {
 
-	// Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
 
-	// For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+// Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
 
-	// Valid values are json or text
-	LogFormat *string `json:"logFormat,omitempty" tf:"log_format,omitempty"`
+// For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
 
-	// Valid values are  slow-log or engine-log. Max 1 of each.
-	LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
+// Valid values are json or text
+LogFormat *string `json:"logFormat,omitempty" tf:"log_format,omitempty"`
+
+// Valid values are  slow-log or engine-log. Max 1 of each.
+LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
 }
+
 
 type LogDeliveryConfigurationParameters struct {
 
-	// Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
-	// +kubebuilder:validation:Optional
-	Destination *string `json:"destination" tf:"destination,omitempty"`
 
-	// For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
-	// +kubebuilder:validation:Optional
-	DestinationType *string `json:"destinationType" tf:"destination_type,omitempty"`
+// Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+// +kubebuilder:validation:Optional
+Destination *string `json:"destination" tf:"destination,omitempty"`
 
-	// Valid values are json or text
-	// +kubebuilder:validation:Optional
-	LogFormat *string `json:"logFormat" tf:"log_format,omitempty"`
+// For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+// +kubebuilder:validation:Optional
+DestinationType *string `json:"destinationType" tf:"destination_type,omitempty"`
 
-	// Valid values are  slow-log or engine-log. Max 1 of each.
-	// +kubebuilder:validation:Optional
-	LogType *string `json:"logType" tf:"log_type,omitempty"`
+// Valid values are json or text
+// +kubebuilder:validation:Optional
+LogFormat *string `json:"logFormat" tf:"log_format,omitempty"`
+
+// Valid values are  slow-log or engine-log. Max 1 of each.
+// +kubebuilder:validation:Optional
+LogType *string `json:"logType" tf:"log_type,omitempty"`
 }
 
 // ClusterSpec defines the desired state of Cluster
 type ClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClusterParameters `json:"forProvider"`
+	ForProvider       ClusterParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -466,13 +488,13 @@ type ClusterSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ClusterInitParameters `json:"initProvider,omitempty"`
+	InitProvider       ClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterStatus defines the observed state of Cluster.
 type ClusterStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClusterObservation `json:"atProvider,omitempty"`
+	AtProvider          ClusterObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -487,9 +509,9 @@ type ClusterStatus struct {
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   ClusterSpec   `json:"spec"`
-	Status ClusterStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              ClusterSpec   `json:"spec"`
+	Status            ClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

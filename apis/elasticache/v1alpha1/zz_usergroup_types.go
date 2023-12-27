@@ -15,80 +15,89 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type UserGroupInitParameters struct {
 
-	// The current supported value is REDIS.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The current supported value is REDIS.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type UserGroupObservation struct {
 
-	// The ARN that identifies the user group.
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The current supported value is REDIS.
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+// The ARN that identifies the user group.
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// The user group identifier.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+// The current supported value is REDIS.
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// The user group identifier.
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The list of user IDs that belong to the user group.
-	UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+
+// The list of user IDs that belong to the user group.
+UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 }
+
 
 type UserGroupParameters struct {
 
-	// The current supported value is REDIS.
-	// +kubebuilder:validation:Optional
-	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// The current supported value is REDIS.
+// +kubebuilder:validation:Optional
+Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// References to User to populate userIds.
-	// +kubebuilder:validation:Optional
-	UserIDRefs []v1.Reference `json:"userIdRefs,omitempty" tf:"-"`
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 
-	// Selector for a list of User to populate userIds.
-	// +kubebuilder:validation:Optional
-	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
+// References to User to populate userIds.
+// +kubebuilder:validation:Optional
+UserIDRefs []v1.Reference `json:"userIdRefs,omitempty" tf:"-"`
 
-	// The list of user IDs that belong to the user group.
-	// +crossplane:generate:reference:type=User
-	// +crossplane:generate:reference:refFieldName=UserIDRefs
-	// +crossplane:generate:reference:selectorFieldName=UserIDSelector
-	// +kubebuilder:validation:Optional
-	UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
+// Selector for a list of User to populate userIds.
+// +kubebuilder:validation:Optional
+UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
+
+// The list of user IDs that belong to the user group.
+// +crossplane:generate:reference:type=User
+// +crossplane:generate:reference:refFieldName=UserIDRefs
+// +crossplane:generate:reference:selectorFieldName=UserIDSelector
+// +kubebuilder:validation:Optional
+UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 }
 
 // UserGroupSpec defines the desired state of UserGroup
 type UserGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     UserGroupParameters `json:"forProvider"`
+	ForProvider       UserGroupParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -99,13 +108,13 @@ type UserGroupSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider UserGroupInitParameters `json:"initProvider,omitempty"`
+	InitProvider       UserGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // UserGroupStatus defines the observed state of UserGroup.
 type UserGroupStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        UserGroupObservation `json:"atProvider,omitempty"`
+	AtProvider          UserGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -120,10 +129,10 @@ type UserGroupStatus struct {
 type UserGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engine) || (has(self.initProvider) && has(self.initProvider.engine))",message="spec.forProvider.engine is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   UserGroupSpec   `json:"spec"`
-	Status UserGroupStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.engine) || (has(self.initProvider) && has(self.initProvider.engine))",message="spec.forProvider.engine is a required parameter"
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              UserGroupSpec   `json:"spec"`
+	Status            UserGroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

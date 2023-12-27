@@ -15,77 +15,87 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+
 )
+
+
+
 
 type SubnetGroupInitParameters struct {
 
-	// –  Description for the cache subnet group.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// –  Description for the cache subnet group.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SubnetGroupObservation struct {
-	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// –  Description for the cache subnet group.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
-	// –  List of VPC Subnet IDs for the cache subnet group
-	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+// –  Description for the cache subnet group.
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// –  List of VPC Subnet IDs for the cache subnet group
+SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
+
 
 type SubnetGroupParameters struct {
 
-	// –  Description for the cache subnet group.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Region is the region you'd like your resource to be created in.
-	// +upjet:crd:field:TFTag=-
-	// +kubebuilder:validation:Optional
-	Region *string `json:"region,omitempty" tf:"-"`
+// –  Description for the cache subnet group.
+// +kubebuilder:validation:Optional
+Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// References to Subnet in ec2 to populate subnetIds.
-	// +kubebuilder:validation:Optional
-	SubnetIDRefs []v1.Reference `json:"subnetIdRefs,omitempty" tf:"-"`
+// Region is the region you'd like your resource to be created in.
+// +upjet:crd:field:TFTag=-
+// +kubebuilder:validation:Optional
+Region *string `json:"region,omitempty" tf:"-"`
 
-	// Selector for a list of Subnet in ec2 to populate subnetIds.
-	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+// References to Subnet in ec2 to populate subnetIds.
+// +kubebuilder:validation:Optional
+SubnetIDRefs []v1.Reference `json:"subnetIdRefs,omitempty" tf:"-"`
 
-	// –  List of VPC Subnet IDs for the cache subnet group
-	// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet
-	// +crossplane:generate:reference:refFieldName=SubnetIDRefs
-	// +crossplane:generate:reference:selectorFieldName=SubnetIDSelector
-	// +kubebuilder:validation:Optional
-	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+// Selector for a list of Subnet in ec2 to populate subnetIds.
+// +kubebuilder:validation:Optional
+SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-	// +kubebuilder:validation:Optional
-	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+// –  List of VPC Subnet IDs for the cache subnet group
+// +crossplane:generate:reference:type=kubedb.dev/provider-aws/apis/ec2/v1alpha1.Subnet
+// +crossplane:generate:reference:refFieldName=SubnetIDRefs
+// +crossplane:generate:reference:selectorFieldName=SubnetIDSelector
+// +kubebuilder:validation:Optional
+SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
-	// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-	// +kubebuilder:validation:Optional
-	TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
+// Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+// +kubebuilder:validation:Optional
+Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+// A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+// +kubebuilder:validation:Optional
+TagsAll map[string]*string `json:"tagsAll,omitempty" tf:"tags_all,omitempty"`
 }
 
 // SubnetGroupSpec defines the desired state of SubnetGroup
 type SubnetGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SubnetGroupParameters `json:"forProvider"`
+	ForProvider       SubnetGroupParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -96,13 +106,13 @@ type SubnetGroupSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider SubnetGroupInitParameters `json:"initProvider,omitempty"`
+	InitProvider       SubnetGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // SubnetGroupStatus defines the observed state of SubnetGroup.
 type SubnetGroupStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SubnetGroupObservation `json:"atProvider,omitempty"`
+	AtProvider          SubnetGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -117,9 +127,9 @@ type SubnetGroupStatus struct {
 type SubnetGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
-	Spec   SubnetGroupSpec   `json:"spec"`
-	Status SubnetGroupStatus `json:"status,omitempty"`
+// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region)",message="spec.forProvider.region is a required parameter"
+	Spec              SubnetGroupSpec   `json:"spec"`
+	Status            SubnetGroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
