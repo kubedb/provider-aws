@@ -188,6 +188,10 @@ require (
 	github.com/yuin/goldmark v1.4.13 // indirect
 	github.com/zclconf/go-cty v1.13.2 // indirect
 	github.com/zclconf/go-cty-yaml v1.0.3 // indirect
+	go.bytebuilders.dev/audit v0.0.46
+	go.bytebuilders.dev/license-proxyserver v0.0.24
+	go.bytebuilders.dev/license-verifier v0.14.10
+	go.bytebuilders.dev/license-verifier/kubernetes v0.14.10
 	go.opentelemetry.io/otel v1.20.0 // indirect
 	go.opentelemetry.io/otel/trace v1.20.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
@@ -203,6 +207,7 @@ require (
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.18.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.4.0 // indirect
+	gomodules.xyz/password-generator v0.2.9
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231120223509-83a465c0220f // indirect
 	google.golang.org/grpc v1.61.0 // indirect
@@ -213,6 +218,13 @@ require (
 	k8s.io/component-base v0.29.2 // indirect
 	k8s.io/kube-openapi v0.0.0-20240228011516-70dd3763d340 // indirect
 	k8s.io/utils v0.0.0-20240102154912-e7106e64919e // indirect
+	kmodules.xyz/client-go v0.34.2
+	kmodules.xyz/custom-resources v0.34.0
+	kmodules.xyz/go-containerregistry v0.0.15
+	kmodules.xyz/monitoring-agent-api v0.34.0
+	kmodules.xyz/resource-metadata v0.40.2
+	kmodules.xyz/webhook-runtime v0.34.0
+	kubedb.dev/apimachinery 3fb97b259
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
@@ -221,3 +233,11 @@ require (
 replace golang.org/x/exp => golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
 
 replace github.com/hashicorp/terraform-provider-aws => github.com/upbound/terraform-provider-aws v0.0.0-20231026091456-f2d38ee240d7
+
+replace github.com/Masterminds/sprig/v3 => github.com/gomodules/sprig/v3 v3.2.3-0.20220405051441-0a8a99bac1b8
+
+replace sigs.k8s.io/controller-runtime => github.com/kmodules/controller-runtime f0112646
+
+replace github.com/imdario/mergo => github.com/imdario/mergo v0.3.6
+
+replace k8s.io/apiserver => github.com/kmodules/apiserver 07fa35efc
