@@ -1,16 +1,14 @@
 module kubedb.dev/provider-aws
 
-go 1.22.0
-
-toolchain go1.22.2
+go 1.24
 
 require (
 	dario.cat/mergo v1.0.0
-	github.com/aws/aws-sdk-go-v2 v1.18.0
+	github.com/aws/aws-sdk-go-v2 v1.41.5
 	github.com/aws/aws-sdk-go-v2/config v1.18.12
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.12
 	github.com/aws/aws-sdk-go-v2/service/sts v1.18.11
-	github.com/aws/smithy-go v1.13.5
+	github.com/aws/smithy-go v1.24.2
 	github.com/crossplane/crossplane-runtime v1.15.1
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
 	github.com/crossplane/upjet v1.0.0
@@ -51,10 +49,10 @@ require (
 	github.com/antchfx/xpath v1.2.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/aws/aws-sdk-go v1.44.261 // indirect
-	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.4.10 // indirect
+	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.8 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.13.3 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.33 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.27 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.21 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.21 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.29 // indirect
 	github.com/aws/aws-sdk-go-v2/service/accessanalyzer v1.19.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/account v1.10.6 // indirect
@@ -77,7 +75,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.14.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ivschat v1.4.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/kendra v1.40.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/lambda v1.34.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/lambda v1.88.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/medialive v1.31.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/oam v1.1.11 // indirect
 	github.com/aws/aws-sdk-go-v2/service/opensearchserverless v1.2.4 // indirect
